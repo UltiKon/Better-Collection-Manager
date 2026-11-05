@@ -25,6 +25,7 @@ internal static class Program
             string path = Path.Combine(directory, "preferences.cfg");
             LoaderPreferences.Initialize(new ConfigFile(path, false));
             Check(LoaderPreferences.LoadJsonBackups, "A missing CFG allows the initial JSON import.");
+            ModMetadata.BindFirestoneMetadata(LoaderPreferences.Config);
             Check(!LoaderPreferences.Config.SaveOnConfigSet, "The adapter must preserve batched saves.");
             var category = LoaderPreferences.CreateCategory("BetterCollectionManager");
             var order = category.CreateEntry("PremiumOrder", "Signature,Diamond,Golden,Normal", "Premium order");
@@ -41,6 +42,19 @@ internal static class Program
 
             // Bind in a different order after restart. Unbound sections must survive.
             LoaderPreferences.Initialize(new ConfigFile(path, false));
+            ModMetadata.BindFirestoneMetadata(LoaderPreferences.Config);
+            Check(LoaderPreferences.Config.Bind("General", "Name", "").Value == ModMetadata.Name,
+                "Firestone must receive the display name.");
+            Check(LoaderPreferences.Config.Bind("General", "Guid", "").Value == "BetterCollectionManager",
+                "Firestone's GUID must match the DLL and CFG filenames.");
+            Check(LoaderPreferences.Config.Bind("General", "DownloadLink", "").Value == ModMetadata.RepositoryUrl,
+                "Firestone's download link must point to the repository root.");
+            Check(LoaderPreferences.Config.Bind("General", "Description", "").Value == ModMetadata.Description,
+                "Firestone must receive the tooltip description.");
+            LoaderPreferences.Config.Bind("General", "Version", "").Value = "0.0.0";
+            ModMetadata.BindFirestoneMetadata(LoaderPreferences.Config);
+            Check(LoaderPreferences.Config.Bind("General", "Version", "").Value == ModMetadata.Version,
+                "Upgrades must replace stale release metadata.");
             Check(!LoaderPreferences.LoadJsonBackups, "An existing CFG must take precedence over old JSON backups.");
             fps = LoaderPreferences.CreateCategory("BetterCollectionManagerBehavior")
                 .CreateEntry("CustomFrameRate", 144, "FPS");
@@ -58,10 +72,16 @@ internal static class Program
             Check(new ConfigFile(path, false).Bind("BetterCollectionManager", "CollapseEnabled", false).Value,
                 "Updated values must be persisted by the real BepInEx backend.");
 
-            if (args.Length != 2) throw new ArgumentException("Pass the BepInEx DLL and MelonLoader DLL paths.");
-            VerifyAssembly(args[0], true);
-            VerifyAssembly(args[1], false);
-            Console.WriteLine($"Passed {s_checks} real BepInEx configuration and assembly checks.");
+            bool configOnly = args.Length == 1 && args[0] == "--config-only";
+            if (!configOnly)
+            {
+                if (args.Length != 2) throw new ArgumentException("Pass the BepInEx DLL and MelonLoader DLL paths, or --config-only.");
+                VerifyAssembly(args[0], true);
+                VerifyAssembly(args[1], false);
+            }
+            Console.WriteLine(configOnly
+                ? $"Passed {s_checks} real BepInEx configuration and Firestone checks."
+                : $"Passed {s_checks} real BepInEx configuration and assembly checks.");
         }
         finally { Directory.Delete(directory, true); }
     }
@@ -91,7 +111,7 @@ internal static class Program
                 metadata.GetString(metadata.GetTypeReference((TypeReferenceHandle)
                     metadata.GetMemberReference((MemberReferenceHandle)attribute.Constructor).Parent).Name) == "BepInPlugin");
             var value = metadata.GetBlobReader(plugin.Value);
-            Check(value.ReadUInt16() == 1 && value.ReadSerializedString() == "bettercollectionmanager"
+            Check(value.ReadUInt16() == 1 && value.ReadSerializedString() == "BetterCollectionManager"
                 && value.ReadSerializedString() == "Better Collection Manager" && value.ReadSerializedString() == "0.1.0",
                 "BepInEx must receive the stable plugin GUID, display name and version.");
             var callbacks = entryType.GetMethods().Select(handle => metadata.GetString(metadata.GetMethodDefinition(handle).Name)).ToArray();

@@ -1,5 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Include="ModMetadata.cs" />
     <Compile Include="ComboCardTemplate.cs" />
     <Compile Include="ComboCardText.cs" />
     <Compile Include="ComboPortraitMapping.cs" />

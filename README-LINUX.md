@@ -49,4 +49,5 @@ run them. Inspect that output before sharing it. Diagnostics and the optional
 mod. Loader startup failures require separate investigation; building the mod
 does not fix loader initialization errors.
 
-See [README.md](README.md) for current features and in-game validation steps.
+See the [overview](README.md) for current features and the
+[technical reference](TECHNICAL-REFERENCE.md) for in-game validation steps.

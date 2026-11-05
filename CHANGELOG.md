@@ -1,10 +1,21 @@
 # Changelog
 
-Changes are grouped by UTC commit date. The README documents the current
-behavior in detail; this file records the features and fixes delivered on each
+Changes are grouped by UTC commit date. The [user guide](USER-GUIDE.md) and
+[technical reference](TECHNICAL-REFERENCE.md) document the current behavior;
+this file records the features and fixes delivered on each
 date. Superseded intermediate layouts and experiments are not separate features.
 
 ## 0.1.0 — 2026-11-05
+
+- Added Firestone mod-list metadata in the BepInEx CFG's General section. The
+  plugin GUID and CFG filename now match `BetterCollectionManager.dll`; the
+  previous lowercase CFG is imported when no current config exists.
+- Reworked the English README around an abstract and installation steps, added
+  a user guide and release guide, and preserved implementation details in a
+  separate technical reference.
+- Added clean-checkout CI, self-contained installer test payloads, documentation
+  link checks and release-packaging regressions. Packaged READMEs now resolve
+  source documentation links correctly; archive names use the central version.
 
 - Renamed the project, namespaces, DLLs, loader entries and release archives to
   **Better Collection Manager**. New installs use the supplied CFG's preferences

@@ -1,91 +1,93 @@
-# Better Collection Manager distribution
+# Better Collection Manager
 
-Updated: 2026-11-05 · Mod version: 0.1.0 · Target: .NET Framework 4.7.2
+## Abstract
 
-This Hearthstone mod combines collection cards by preferred quality. It also
-provides split Normal/Golden tiles, ownership counters, collection filters,
-categories, combos, packages, and a Mods settings menu. The experimental
-hub/Darkmoon features are disabled in the current source.
+Better Collection Manager is a Hearthstone mod that groups card qualities and
+adds split Normal/Golden cards, ownership counters, filters, categories, combos
+and packages. Each quality keeps its own inventory count and deck rules.
+
+This package contains the **MelonLoader** mod DLL and source code. For the separate
+BepInEx build, use the [BepInEx guide](README-BEPINEX.md). Hub/Darkmoon experiments
+are disabled. Game or loader updates may require a new build; compilation does
+not confirm compatibility with your client.
+
+Version: **0.1.0** · Documentation updated: **2026-11-05**
 
 ## Installation
 
-1. Prepare Hearthstone with a compatible, working MelonLoader installation.
-2. Close Hearthstone completely.
-3. Remove the previous mod DLL when upgrading to the renamed build.
-   Copy `Mods/BetterCollectionManager.dll` from this package into your own
-   Hearthstone installation's `Mods` directory. Create that directory if needed.
-4. Restart Hearthstone. Settings are under **Settings → Mods**; the extended
-   filter menu is available through the collection's expansion selector.
+### If you have never installed a mod loader
 
-Only the mod DLL belongs in the game's `Mods` directory. Default categories and
-packages are embedded in the DLL. Preferences and custom edits are stored locally
-in the recipient's MelonLoader UserData directory.
+Use the separate **`BetterCollectionManager-0.1.0-installer.zip`** and follow the
+[installer guide](Installer/README.md). It contains the mod, setup scripts and
+five reviewed Mono libraries, downloads the pinned MelonLoader release and
+configures Battle.net. It requires **Python 3.10+**. Native macOS setup is
+experimental; Windows Hearthstone under Wine/CrossOver uses the Windows loader.
 
-This build uses the available client references. Hearthstone or MelonLoader
-updates may require a new build. Successful compilation does not replace testing
-in the intended game client.
+This smaller shareable ZIP assumes that MelonLoader already starts successfully.
+It does not install the loader or its runtime workarounds.
 
-For automated installation, use the separate `BetterCollectionManager-0.1.0-installer.zip`.
-It contains the mod, five full Mono libraries, and setup scripts that download
-MelonLoader and configure Battle.net. It requires Python 3.10+. See
-`Source/Installer/README.md` for platform details and native macOS limitations.
+### If MelonLoader is already working
 
-## Contents
+1. Close Hearthstone completely.
+2. Find the game folder containing `Hearthstone.exe` and `Hearthstone_Data` for
+   Windows Hearthstone, including Wine/CrossOver installations.
+3. Extract this mod ZIP. Copy **only** `Mods/BetterCollectionManager.dll` into the
+   game's `Mods/` directory. Create `Mods/` if needed.
+4. Remove any older copy of the mod, including one with its previous name. Keep
+   your settings files. Run one loader and one copy of this mod per launch.
+5. Restart the game, open **Collection Manager**, then **Settings → Mods**.
+6. Check `MelonLoader/Latest.log` for `Better Collection Manager loading...` and
+   `Collection hooks ready`. Change a setting and restart once to check saving.
 
-- `Mods/BetterCollectionManager.dll`: a fresh Release build without debug symbols.
-- `Source/`: complete mod source, projects, tests, catalog data, documentation,
-  and optional diagnostic tools.
-- `Source/README.md`: detailed features and build instructions.
-- `Source/README-LINUX.md`: building with the .NET SDK and an explicit game directory.
-- `SHA256SUMS.txt`: SHA-256 checksums for every other file in the archive.
+For Windows Hearthstone, the installed mod belongs here:
 
-Game and loader DLLs are not included in this source distribution. Building
-requires references from your own installation. The build scripts have no fixed
-personal installation paths. Windows builds go to `bin/Release/`; SDK/Linux builds
-go to `linux-build/`. Copy the result manually, or explicitly enable `DeployMod=true`
-in the Windows project.
-
-## Privacy preparation
-
-This package excludes Git history, game logs, screenshots, recordings, personal
-preferences, runtime caches, old builds, debug symbols, and local reference archives.
-ZIP entries use relative paths and normalized timestamps and permissions. The mod
-uses a neutral project name in its author field.
-
-Optional diagnostics print details of the recipient's own installation when run.
-Review any newly generated output before sharing it.
-
-## License
-
-The mod, installer and original project code are provided under the MIT License.
-The included `LICENSE` contains the permissions, copyright notice, and warranty
-and liability disclaimer. Keep it when redistributing the project.
-Third-party components retain their own licenses; see
-`Source/Installer/ThirdParty/NOTICES.md`.
-
-## Build and package again
-
-From `Source/`, using Bash and an installed .NET SDK:
-
-```sh
-./build-linux.sh
-python3 Tools/package_release.py --dll linux-build/BetterCollectionManager.dll
+```text
+Hearthstone/
+├── Hearthstone.exe
+├── Hearthstone_Data/
+├── MelonLoader/
+└── Mods/
+    └── BetterCollectionManager.dll
 ```
 
-The build script uses `$HOME/Games/battlenet/drive_c/Program Files (x86)/Hearthstone`
-by default. For another installation, run
-`GAME_DIR="/path/to/Hearthstone" ./build-linux.sh` instead.
+The BepInEx DLL has the same filename but cannot be used in `Mods/`.
+Default categories and packages are embedded; you do not need loose catalog
+files, source code or a .NET SDK for installation.
 
-The resulting ZIP is written under `dist/`. The packager selects source files and
-checks for typical private paths and credentials. Review any new content before
-distributing it.
+## First use and troubleshooting
 
-## Package hover fix
+Fresh installs prefer **Diamond → Signature → Golden → Normal**. Use the
+collection's **expansion selector** for the extended filters. If cards appear to
+be missing, clear the search box and filters: the mod can open with a search for
+new or refundable cards.
 
-Package hover now activates the native glow container and its nested renderers
-from the first hover. It also restores private glow renderers after native state
-changes. Collection hover follows the slot's mouse interaction even when the
-carrier card is unowned or newly acquired. Opening a package editor first is no
-longer needed for this initialization.
-Automated regression checks cover cold glow hierarchies and renderer resets;
-visual validation in Hearthstone remains necessary.
+No loader log means the loader has not initialized. A log with no mention of
+this mod usually means the wrong DLL or folder; also check for load errors.
+If the plugin starts but its UI is missing, open Collection Manager before
+Settings and look for initialization errors.
+
+See the [user guide](USER-GUIDE.md) for display controls and more troubleshooting.
+
+## Update or remove
+
+Close the game before replacing the DLL; hot reload is unsupported. Keep the
+loader's preferences under `UserData/` and the mod's JSON backups under
+`Mods/BetterCollectionManager/`. Existing preferences take precedence over defaults.
+Disable the mod by moving its DLL out of `Mods/`.
+
+## Included files
+
+| Location in the ZIP | Contents |
+| --- | --- |
+| `Mods/BetterCollectionManager.dll` | MelonLoader Release DLL |
+| `Source/` | Source code, tests, documentation and catalogs |
+| `LICENSE` | MIT License for the original project code |
+| `SHA256SUMS.txt` | SHA-256 checksums of the other archive entries |
+
+Build instructions are in the [source overview](README.md#build-from-source);
+packaging instructions are in the [release guide](RELEASING.md). Game and loader
+reference DLLs are not included. Personal settings, logs, caches and debug symbols
+are excluded from release packages.
+
+By UltiKon, Imik and contributors. See the [MIT License](LICENSE) and
+[third-party notices](Installer/ThirdParty/NOTICES.md).

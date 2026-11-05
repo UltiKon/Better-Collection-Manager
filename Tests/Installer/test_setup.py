@@ -2,6 +2,7 @@ import argparse
 import contextlib
 import importlib.util
 import io
+import hashlib
 import json
 from pathlib import Path
 import plistlib
@@ -163,7 +164,26 @@ class WineAndMac(unittest.TestCase):
 
 
 class Installation(unittest.TestCase):
-    def test_real_payload_and_pinned_archives(self):
+    def setUp(self):
+        # Installation/rollback tests must also work in a clean source checkout.
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.payload_root = Path(temporary.name)
+        self.payload = {'Mods/BetterCollectionManager.dll': b'MZ\0BSJB mod fixture'}
+        self.payload.update({'CustomCorlib-Unity6000/' + name: b'MZ\0BSJB ' + name.encode()
+                             for name in setup.CORLIBS})
+        manifest = {}
+        for name, data in self.payload.items():
+            path = self.payload_root / 'payload' / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            manifest['payload/' + name] = hashlib.sha256(data).hexdigest()
+        (self.payload_root / 'payload.json').write_text(json.dumps({'files': manifest}))
+        root_patch = patch.object(setup, 'ROOT', self.payload_root)
+        root_patch.start()
+        self.addCleanup(root_patch.stop)
+
+    def test_payload_and_pinned_archives(self):
         payload = setup.payload_files()
         self.assertEqual(len(payload), 6)
         archives = [('windows', REPO / 'artifacts/startup-investigation/MelonLoader-0.7.3-x64.zip'),
@@ -173,6 +193,11 @@ class Installation(unittest.TestCase):
                 files = setup.loader_files(archive, kind)
                 self.assertIn('MelonLoader/net35/MelonLoader.dll', files)
                 self.assertFalse(any(name.endswith(('.pdb', '.mdb')) for name in files))
+
+    def test_tampered_payload_refused(self):
+        (self.payload_root / 'payload/Mods/BetterCollectionManager.dll').write_bytes(b'tampered')
+        with self.assertRaisesRegex(setup.SetupError, 'checksum mismatch'):
+            setup.payload_files()
 
     def test_tampered_archive_refused(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -219,9 +244,9 @@ class Installation(unittest.TestCase):
             (game / 'version.dll').write_bytes(b'previous proxy')
             with patch.object(setup.platform, 'system', return_value='Linux'), patch.object(setup, 'require_stopped'), contextlib.redirect_stdout(io.StringIO()):
                 backup = setup.install(parameters(game))
-            self.assertEqual((game / 'Mods/BetterCollectionManager.dll').read_bytes(), (REPO / 'linux-build/BetterCollectionManager.dll').read_bytes())
+            self.assertEqual((game / 'Mods/BetterCollectionManager.dll').read_bytes(), self.payload['Mods/BetterCollectionManager.dll'])
             for name in setup.CORLIBS:
-                self.assertEqual((game / 'MelonLoader/CustomCorlib-Unity6000' / name).read_bytes(), (REPO / 'CustomCorlib-Unity6000' / name).read_bytes())
+                self.assertEqual((game / 'MelonLoader/CustomCorlib-Unity6000' / name).read_bytes(), self.payload['CustomCorlib-Unity6000/' + name])
             installed = setup.checked_json(config.read_bytes(), 'fixture')
             self.assertEqual(installed['Games']['wow']['AdditionalLaunchArguments'], '-other')
             self.assertEqual(installed['Client']['Language'], 'deDE')

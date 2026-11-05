@@ -37,4 +37,5 @@ The second command verifies actual field and method signatures in the supplied
 client assembly without executing it. The fixtures do not run Unity or Harmony
 detours and cannot establish that the old BG textures are present, validate
 button rendering, or measure the startup stall. Build with the actual installed
-game/loader references and compare fresh game starts as described in README.md.
+game/loader references and compare fresh game starts as described in the
+[technical reference](../../TECHNICAL-REFERENCE.md#experimental-hub-menu-and-static-darkmoon-entry).

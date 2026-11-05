@@ -4,10 +4,10 @@ using HarmonyLib;
 
 namespace BetterCollectionManager
 {
-    [BepInPlugin(PluginGuid, "Better Collection Manager", "0.1.0")]
+    [BepInPlugin(PluginGuid, ModMetadata.Name, ModMetadata.Version)]
     public sealed class BetterCollectionManagerPlugin : BaseUnityPlugin
     {
-        public const string PluginGuid = "bettercollectionmanager";
+        public const string PluginGuid = ModMetadata.Guid;
         private BetterCollectionManagerRuntime m_runtime;
         private Harmony m_harmony;
         private bool m_stopped;
@@ -22,6 +22,7 @@ namespace BetterCollectionManager
             }
             catch (Exception ex) { DebugLog.Exception("Previous settings import failed", ex); }
             LoaderPreferences.Initialize(Config);
+            ModMetadata.BindFirestoneMetadata(Config);
             LoaderCoroutines.Host = this;
             m_harmony = new Harmony(PluginGuid);
             m_runtime = new BetterCollectionManagerRuntime();

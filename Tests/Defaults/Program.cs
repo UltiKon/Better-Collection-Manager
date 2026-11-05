@@ -122,6 +122,22 @@ internal static class Program
                 "An existing new CFG must never be replaced.");
             Check(File.ReadAllText(oldPath) == legacy, "The original standalone CFG must stay intact.");
 
+            string caseDirectory = Path.Combine(temporary, "case-migration");
+            Directory.CreateDirectory(caseDirectory);
+            File.WriteAllText(Path.Combine(caseDirectory, LegacySettings.OldPluginGuid + ".cfg"), legacy);
+            string lowercase = Path.Combine(caseDirectory, "bettercollectionmanager.cfg");
+            string current = Path.Combine(caseDirectory, "BetterCollectionManager.cfg");
+            string saved = "[BetterCollectionManager]\nPremiumOrder = GOLDEN,NORMAL,DIAMOND,SIGNATURE\n";
+            File.WriteAllText(lowercase, saved);
+            LegacySettings.ImportStandaloneConfig(current);
+            Check(File.ReadAllText(current) == saved,
+                "The lowercase BCM config must take precedence over the older mod name.");
+            Check(File.ReadAllText(lowercase) == saved,
+                "The lowercase config must remain available after migration.");
+            File.WriteAllText(current, "current settings");
+            Check(!LegacySettings.ImportStandaloneConfig(current) && File.ReadAllText(current) == "current settings",
+                "Repeated migration must preserve the current config.");
+
             string shared = Path.Combine(temporary, "MelonPreferences.cfg");
             string original = "[OtherMod]\nKeep = 42\n\n" + legacy + "\n[BetterCollectionManager]\nCollapseEnabled = false\n";
             File.WriteAllText(shared, original);
@@ -161,6 +177,7 @@ internal static class Program
             line = line.Trim();
             if (line.Length == 0 || line.StartsWith("#")) continue;
             if (line.StartsWith("[") && line.EndsWith("]")) { section = line.Substring(1, line.Length - 2); continue; }
+            if (section == "General") continue; // BepInEx/Firestone metadata, not shared preferences.
             int separator = line.IndexOf('=');
             if (separator > 0) values.Add(section + "/" + line.Substring(0, separator).Trim(), line.Substring(separator + 1).Trim());
         }

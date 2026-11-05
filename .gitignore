@@ -15,3 +15,16 @@ Tests/**/obj/
 /BCM-Setup-Backups/
 
 /bepinex-build/
+
+# Local references, logs and personal settings are not source.
+/hearthstone-build-refs.zip
+/Hearthstone_Data/
+/MelonLoader/
+/BepInEx/
+/CustomCorlib-Unity6000/
+/UserData/
+/Mods/
+*.log
+*.bak
+.DS_Store
+Thumbs.db

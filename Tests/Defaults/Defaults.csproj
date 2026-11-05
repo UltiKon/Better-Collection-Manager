@@ -11,6 +11,6 @@
     <Compile Include="../../QualityOptions.cs" />
     <Compile Include="../../PreferredPremiumPrefs.cs" />
     <Compile Include="../../PreferredPremiumHelper.cs" />
-    <EmbeddedResource Include="../../bettercollectionmanager.cfg" LogicalName="RequestedDefaults.cfg" />
+    <EmbeddedResource Include="../../BetterCollectionManager.cfg" LogicalName="RequestedDefaults.cfg" />
   </ItemGroup>
 </Project>

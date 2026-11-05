@@ -8,10 +8,10 @@ import stat
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE_DIRS = ('Data', 'Patches', 'Properties', 'Tests', 'Tools', 'Diagnostics', 'Installer')
-SOURCE_SUFFIXES = {'.cs', '.csproj', '.props', '.sln', '.md', '.json', '.tsv', '.py', '.sh', '.cmd', '.command'}
+SOURCE_DIRS = ('.github', 'Data', 'Patches', 'Properties', 'Tests', 'Tools', 'Diagnostics', 'Installer')
+SOURCE_SUFFIXES = {'.cs', '.csproj', '.props', '.sln', '.md', '.json', '.tsv', '.py', '.sh', '.cmd', '.command', '.yml', '.yaml'}
 EXCLUDED_PARTS = {'bin', 'obj', '__pycache__', '.git', '.vs'}
-TOP_LEVEL_FILES = {'.gitignore', 'LICENSE', 'build-linux.sh', 'diagnose-startup-linux.sh', 'bettercollectionmanager.cfg'}
+TOP_LEVEL_FILES = {'.gitignore', 'LICENSE', 'build-linux.sh', 'diagnose-startup-linux.sh', 'BetterCollectionManager.cfg'}
 # Match actual paths, including UTF-16 assembly strings, without embedding any
 # particular builder's account or machine name in this program.
 PRIVATE_PATTERNS = (
@@ -58,6 +58,27 @@ def add_entry(archive, name, data, executable=False):
     archive.writestr(entry, data)
 
 
+def release_version():
+    metadata = (ROOT / 'ModMetadata.cs').read_text(encoding='utf-8')
+    match = re.search(r'const string Version = "([0-9]+\.[0-9]+\.[0-9]+)";', metadata)
+    if not match:
+        raise ValueError('ModMetadata.cs must declare the release version')
+    return match.group(1)
+
+
+def distribution_readme(name):
+    """Rebase source-relative documentation links when the README moves to ZIP root."""
+    text = (ROOT / name).read_text(encoding='utf-8')
+
+    def rebase(match):
+        target = match.group(2)
+        if not target.startswith(('#', '/')) and not re.match(r'[A-Za-z][A-Za-z0-9+.-]*:', target):
+            target = 'Source/' + target
+        return match.group(1) + target + ')'
+
+    return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)\)', rebase, text).encode('utf-8')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dll', type=Path, required=True, help='Fresh Release mod DLL (no symbols)')
@@ -66,7 +87,7 @@ def main():
     args = parser.parse_args()
     if args.output is None:
         suffix = 'bepinex' if args.loader == 'bepinex' else 'shareable'
-        args.output = ROOT / f'dist/BetterCollectionManager-0.1.0-{suffix}.zip'
+        args.output = ROOT / f'dist/BetterCollectionManager-{release_version()}-{suffix}.zip'
     if args.dll.name != 'BetterCollectionManager.dll' or not args.dll.is_file():
         parser.error('--dll must point to BetterCollectionManager.dll')
     dll = args.dll.read_bytes()
@@ -86,7 +107,7 @@ def main():
             parser.error('--loader melonloader requires the MelonLoader build')
         readme = 'DISTRIBUTION.md'
         dll_path = 'Mods/BetterCollectionManager.dll'
-    contents = {'README.md': (ROOT / readme).read_bytes(),
+    contents = {'README.md': distribution_readme(readme),
                 'LICENSE': (ROOT / 'LICENSE').read_bytes(),
                 dll_path: dll}
     for path in source_files():

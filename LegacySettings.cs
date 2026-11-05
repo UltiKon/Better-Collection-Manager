@@ -32,7 +32,11 @@ namespace BetterCollectionManager
         internal static bool ImportStandaloneConfig(string destination)
         {
             if (File.Exists(destination)) return false;
-            string source = Path.Combine(Path.GetDirectoryName(destination), OldPluginGuid + ".cfg");
+            string parent = Path.GetDirectoryName(destination);
+            // The first BCM release used a lowercase GUID and CFG filename.
+            // Prefer that newer configuration over the pre-rename settings.
+            string source = Path.Combine(parent, "bettercollectionmanager.cfg");
+            if (!File.Exists(source)) source = Path.Combine(parent, OldPluginGuid + ".cfg");
             if (!File.Exists(source)) return false;
             string contents = File.ReadAllText(source);
             foreach (string suffix in new[] { "", "Behavior", "Hub" })

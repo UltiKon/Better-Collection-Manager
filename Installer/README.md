@@ -1,11 +1,18 @@
 # Better Collection Manager setup
 
+## Abstract
+
+This installer sets up the **MelonLoader** version of the Hearthstone collection
+mod. It does not install BepInEx. Use the complete
+**`BetterCollectionManager-0.1.0-installer.zip`**, which contains `payload/`;
+the setup scripts in a source checkout alone do not contain that payload.
+
 This package contains the mod and the five reviewed Unity/Mono base libraries.
 No separate Unity Editor installation or .NET SDK is required. You need
 **Python 3.10 or newer**, Hearthstone, and an existing Battle.net installation.
 Setup downloads MelonLoader 0.7.3 from GitHub and verifies its pinned SHA-256 checksum.
 
-## Running setup
+## How to install
 
 Extract the entire ZIP. Close Hearthstone and Battle.net completely. Under
 Wine/CrossOver, also stop the prefix's Wine processes: setup edits its registry
@@ -23,7 +30,10 @@ settings files; the renamed mod imports them on its first launch.
   Python 3.10+ is required here too. If macOS restricts direct execution, use the
   Terminal command. Setup does not change Gatekeeper or code-signing settings.
 
-Setup asks for the Hearthstone game directory. On macOS, you can also select
+Setup asks for the Hearthstone game directory: for Windows Hearthstone, this is
+the folder containing `Hearthstone.exe` and `Hearthstone_Data`, including when
+running through Wine/CrossOver. Select the installed game, not the extracted ZIP
+or the Battle.net launcher folder. On macOS, you can also select
 `Hearthstone.app`. It detects the operating system and Wine prefix where the
 existing files allow an unambiguous choice. If multiple Battle.net profiles or
 Hearthstone editions exist, it asks which one to configure.
@@ -36,6 +46,25 @@ python3 setup.py --game-dir "<Hearthstone directory>" --dry-run
 
 On Windows, you can use `py -3 setup.py` instead. Replace example placeholders
 with your own paths.
+
+## Check your installation
+
+After setup finishes, start the game through Battle.net. For native macOS, use
+`Start-BCM.command` as described below. Open **Collection Manager**, then
+**Settings → Mods**. The collection's **expansion selector** opens the extended
+filters. In `MelonLoader/Latest.log`, look for `Better Collection Manager loading...`
+and `Collection hooks ready`.
+
+If the collection looks small, clear the search box and filters. Fresh installs
+can search for new or refundable cards automatically.
+
+| Problem | What to try |
+| --- | --- |
+| Python is missing or too old | Install Python 3.10 or newer, then rerun setup. |
+| No Hearthstone entry in Battle.net configuration | Start Hearthstone through Battle.net once, close both, then retry. |
+| More than one profile or installation is found | Select the intended installation; explicit path options are below. |
+| No loader log after launching | Check the loader/bootstrap setup and launch route; native macOS needs its wrapper. |
+| Setup reports a checksum mismatch | Use an unchanged official loader archive and a complete installer ZIP. |
 
 ## What setup installs
 

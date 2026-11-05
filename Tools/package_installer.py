@@ -32,7 +32,7 @@ def check_user_paths(name, data):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=REPO / 'dist/BetterCollectionManager-0.1.0-installer.zip')
+    parser.add_argument('--output', type=Path, default=REPO / f'dist/BetterCollectionManager-{release.release_version()}-installer.zip')
     args = parser.parse_args()
     contents = {'LICENSE': (REPO / 'LICENSE').read_bytes()}
     scripts = ['setup.py', 'install.cmd', 'install.sh', 'install.command', 'README.md', 'payload.json',
