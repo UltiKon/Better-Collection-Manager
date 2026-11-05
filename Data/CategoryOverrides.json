@@ -1,0 +1,4589 @@
+{
+  "cards": {
+    "AT_035": {
+      "name": "Beneath the Grounds",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "AT_043": {
+      "name": "Astral Communion",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "AT_044": {
+      "name": "Mulch",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "AT_045": {
+      "name": "Aviana",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "AT_054": {
+      "name": "The Mistcaller",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "AT_063": {
+      "name": "Acidmaw",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal",
+        "unique-effects"
+      ]
+    },
+    "AT_081": {
+      "name": "Eadric the Pure",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "AT_086": {
+      "name": "Saboteur",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "AT_122": {
+      "name": "Gormok the Impaler",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "AT_124": {
+      "name": "Bolf Ramshield",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "AT_127": {
+      "name": "Nexus-Champion Saraad",
+      "reason": "Reviewed printed Titan abilities/resource effect; no direct AoE, draw or face-damage ability",
+      "add": [],
+      "remove": [
+        "smorc"
+      ]
+    },
+    "AV_100": {
+      "name": "Drek'Thar",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "AV_145": {
+      "name": "Captain Galvangar",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "AV_403": {
+      "name": "Cera'thine Fleetrunner",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "BAR_038": {
+      "name": "Tavish Stormpike",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BAR_074": {
+      "name": "Far Watch Post",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "BAR_080": {
+      "name": "Shadow Hunter Vol'jin",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal",
+        "unique-effects"
+      ]
+    },
+    "BAR_315": {
+      "name": "Serena Bloodfeather",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal"
+      ]
+    },
+    "BAR_333": {
+      "name": "Kurtrus Ashfallen",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "BAR_430": {
+      "name": "Horde Operative",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "BAR_547": {
+      "name": "Mordresh Fire Eye",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "BAR_721": {
+      "name": "Mankrik",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "BAR_748": {
+      "name": "Varden Dawngrasp",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "BAR_879": {
+      "name": "Cannonmaster Smythe",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "BAR_913": {
+      "name": "Altar of Fire",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "BAR_918": {
+      "name": "Tamsin Roame",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "BAR_919": {
+      "name": "Neeru Fireblade",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "BE_004": {
+      "name": "Rajh",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "BE_009": {
+      "name": "Mastermind Yogg-Saron",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ]
+    },
+    "BE_013": {
+      "name": "C'Thun, Eye of the Empire",
+      "add": [
+        "unique-effects",
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed Old God selectable abilities and archetype payoff"
+    },
+    "BE_017": {
+      "name": "N'Zoth, Dream's End",
+      "reason": "Domain of N'Zoth grants a board-wide damaging deathrattle",
+      "add": [
+        "aoe",
+        "unique-effects",
+        "value",
+        "win-conditions"
+      ]
+    },
+    "BE_036": {
+      "name": "M.O.T.H.E.R.",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BE_055": {
+      "name": "Archaedas",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BE_227": {
+      "name": "Blade of The Black Empire",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "BE_287": {
+      "name": "G'huun",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "BE_557": {
+      "name": "Setesh",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BE_588": {
+      "name": "Mimiron",
+      "reason": "Discovers a targeted tech answer",
+      "add": [
+        "techw",
+        "value"
+      ]
+    },
+    "BE_725": {
+      "name": "The Unknowable One",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "BE_781": {
+      "name": "Fetid Devourer",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "BE_784": {
+      "name": "Y'Shaarj, Titan Bane",
+      "reason": "Gaze of Y'Shaarj forces all enemy minions to attack it",
+      "add": [
+        "aoe",
+        "unique-effects",
+        "value",
+        "win-conditions"
+      ]
+    },
+    "BE_790": {
+      "name": "Zer'Ontu",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BG31_BOB": {
+      "name": "Bob the Bartender",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "BOT_069": {
+      "name": "The Boomship",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "aoe",
+        "value"
+      ]
+    },
+    "BOT_087": {
+      "name": "Academic Espionage",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "BOT_238": {
+      "name": "Dr. Boom, Mad Genius",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "BOT_242": {
+      "name": "Myra's Unstable Element",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "BOT_245": {
+      "name": "The Storm Bringer",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "BOT_257": {
+      "name": "Luna's Pocket Galaxy",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "BOT_424": {
+      "name": "Mecha'thun",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BOT_429": {
+      "name": "Flark's Boom-Zooka",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "aoe",
+        "value"
+      ]
+    },
+    "BOT_433": {
+      "name": "Dr. Morrigan",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BOT_544": {
+      "name": "Loose Specimen",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "BOT_555": {
+      "name": "Harbinger Celestia",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BOT_567": {
+      "name": "Zerek's Cloning Gallery",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "BOT_913": {
+      "name": "Demonic Project",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "BOT_914": {
+      "name": "Whizbang the Wonderful",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "BRM_013": {
+      "name": "Quick Shot",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BRM_027": {
+      "name": "Majordomo Executus",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "BRM_028": {
+      "name": "Emperor Thaurissan",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "BRM_029": {
+      "name": "Rend Blackhand",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "BRM_030": {
+      "name": "Nefarian",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BT_024": {
+      "name": "Libram of Hope",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "BT_126": {
+      "name": "Teron Gorefiend",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "BT_128": {
+      "name": "Fungal Fortunes",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BT_214": {
+      "name": "Beastmaster Leoroxx",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "BT_255": {
+      "name": "Kael'thas Sunstrider",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "BT_307": {
+      "name": "Darkglare",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "BT_491": {
+      "name": "Spectral Sight",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BT_514": {
+      "name": "Immolation Aura",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BT_601": {
+      "name": "Skull of Gul'dan",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "BT_737": {
+      "name": "Maiev Shadowsong",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal",
+        "unique-effects"
+      ]
+    },
+    "BT_753": {
+      "name": "Mana Burn",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "CAP_405": {
+      "name": "Godfather Kazakus",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "CATA_213": {
+      "name": "Vyranoth",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "CATA_470": {
+      "name": "Victor Nefarius",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "CATA_481": {
+      "name": "Iso'rath",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "CATA_615": {
+      "name": "Genn, Cursed King",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "CATA_720": {
+      "name": "Warmaster Blackhorn",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "CFM_020": {
+      "name": "Raza the Chained",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "CFM_333": {
+      "name": "Knuckles",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "CFM_341": {
+      "name": "Sergeant Sally",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "CFM_621": {
+      "name": "Kazakus",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CFM_656": {
+      "name": "Streetwise Investigator",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "CFM_670": {
+      "name": "Mayor Noggenfogger",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "CFM_687": {
+      "name": "Inkmaster Solia",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "CFM_790": {
+      "name": "Dirty Rat",
+      "add": [
+        "techw",
+        "unique-effects"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "CFM_807": {
+      "name": "Auctionmaster Beardo",
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine",
+      "add": [
+        "value",
+        "win-conditions"
+      ]
+    },
+    "CS1_112": {
+      "name": "Holy Nova",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS1_113": {
+      "name": "Mind Control",
+      "reason": "Card or board resource acquisition",
+      "add": [
+        "value"
+      ]
+    },
+    "CS2_003": {
+      "name": "Mind Vision",
+      "reason": "Card or board resource acquisition",
+      "add": [
+        "value"
+      ]
+    },
+    "CS2_012": {
+      "name": "Swipe",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_022": {
+      "name": "Polymorph",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_023": {
+      "name": "Arcane Intellect",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_024": {
+      "name": "Frostbolt",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_028": {
+      "name": "Blizzard",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_029": {
+      "name": "Fireball",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_032": {
+      "name": "Flamestrike",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_062": {
+      "name": "Hellfire",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_076": {
+      "name": "Assassinate",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_077": {
+      "name": "Sprint",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_093": {
+      "name": "Consecration",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_108": {
+      "name": "Execute",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_112": {
+      "name": "Arcanite Reaper",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_124": {
+      "name": "Wolfrider",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_171": {
+      "name": "Stonetusk Boar",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "CS2_203": {
+      "name": "Ironbeak Owl",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "CS2_213": {
+      "name": "Reckless Rocketeer",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_234": {
+      "name": "Shadow Word: Pain",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS2_235": {
+      "name": "Northshire Cleric",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "CS3_027": {
+      "name": "Focused Will",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "CS3_031": {
+      "name": "Alexstrasza the Life-Binder",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "CS3_035": {
+      "name": "Nozdormu the Eternal",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DAL_010": {
+      "name": "Togwaggle's Scheme",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "DAL_357": {
+      "name": "Lucentbark",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "DAL_379": {
+      "name": "Vereesa Windrunner",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "smorc",
+        "value"
+      ]
+    },
+    "DAL_422": {
+      "name": "Arch-Villain Rafaam",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "DAL_538": {
+      "name": "Unseen Saboteur",
+      "add": [
+        "techw",
+        "unique-effects"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DAL_554": {
+      "name": "Chef Nomi",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "DAL_558": {
+      "name": "Archmage Vargoth",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "DAL_573": {
+      "name": "Commander Rhyssa",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "DAL_575": {
+      "name": "Khadgar",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "DAL_735": {
+      "name": "Dalaran Librarian",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "DAL_736": {
+      "name": "Archivist Elysiana",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "DAL_752": {
+      "name": "Jepetto Joybuzz",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DAL_800": {
+      "name": "Zayle, Shadow Cloak",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "DED_006": {
+      "name": "Mr. Smite",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "DED_522": {
+      "name": "Cookie the Cook",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "smorc",
+        "value"
+      ]
+    },
+    "DED_523": {
+      "name": "Golakka Glutton",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DED_525": {
+      "name": "Goliath, Sneed's Masterpiece",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "DINO_132": {
+      "name": "Asphyxiodon",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "DMF_004": {
+      "name": "Yogg-Saron, Master of Fate",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "DMF_056": {
+      "name": "G'huun the Blood God",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "DMF_074": {
+      "name": "Silas Darkmoon",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DMF_089": {
+      "name": "Maxima Blastenheimer",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "DMF_108": {
+      "name": "Deck of Lunacy",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DMF_116": {
+      "name": "The Nameless One",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal"
+      ]
+    },
+    "DMF_118": {
+      "name": "Tickatus",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DMF_188": {
+      "name": "Y'Shaarj, the Defiler",
+      "add": [
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "DMF_230": {
+      "name": "Il'gynoth",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "DMF_254": {
+      "name": "C'Thun, the Shattered",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "DMF_519": {
+      "name": "Prize Plunderer",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "DMF_529": {
+      "name": "E.T.C., God of Metal",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "DMF_534": {
+      "name": "Deck of Chaos",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DRG_026": {
+      "name": "Deathwing, Mad Aspect",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "DRG_037": {
+      "name": "Flik Skyshiv",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DRG_068": {
+      "name": "Living Dragonbreath",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DRG_069": {
+      "name": "Platebreaker",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DRG_071": {
+      "name": "Bad Luck Albatross",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DRG_082": {
+      "name": "Kobold Stickyfinger",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DRG_089": {
+      "name": "Dragonqueen Alexstrasza",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "DRG_090": {
+      "name": "Murozond the Infinite",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DRG_095": {
+      "name": "Veranus",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal"
+      ]
+    },
+    "DRG_235": {
+      "name": "Dragonrider Talritha",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "DRG_257": {
+      "name": "Frizz Kindleroost",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DRG_309": {
+      "name": "Nozdormu the Timeless",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "DRG_401": {
+      "name": "Grizzled Wizard",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "DRG_402": {
+      "name": "Sathrovarr",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "DRG_403": {
+      "name": "Blowtorch Saboteur",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "DRG_610": {
+      "name": "Galakrond, the Nightmare",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "DRG_650": {
+      "name": "Galakrond, the Unbreakable",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "DS1_233": {
+      "name": "Mind Blast",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EDR_031": {
+      "name": "Ohn'ahra",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "EDR_209": {
+      "name": "Forest Lord Cenarius",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "EDR_258": {
+      "name": "Toreth the Unbreaking",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "EDR_259": {
+      "name": "Ursol",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "EDR_489": {
+      "name": "Agamaggan",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "EDR_526": {
+      "name": "Renferal, the Malignant",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "EDR_818": {
+      "name": "Nythendra",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "END_037": {
+      "name": "Endtime Murozond",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "ETC_071": {
+      "name": "Rin, Orchestrator of Doom",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ETC_078": {
+      "name": "MC Blingtron",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "ETC_080": {
+      "name": "E.T.C., Band Manager",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ETC_101": {
+      "name": "Cowbell Soloist",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "ETC_113": {
+      "name": "Photographer Fizzle",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ETC_210": {
+      "name": "Climactic Necrotic Explosion",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "ETC_329": {
+      "name": "Kangor, Dancing King",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "ETC_330": {
+      "name": "Starlight Groove",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "ETC_335": {
+      "name": "Love Everlasting",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "ETC_387": {
+      "name": "Rhythm and Roots",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "ETC_395": {
+      "name": "DJ Manastorm",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "ETC_409": {
+      "name": "The One-Amalgam Band",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "ETC_417": {
+      "name": "Blackrock 'n' Roll",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value",
+        "win-conditions"
+      ]
+    },
+    "ETC_425": {
+      "name": "Pozzik, Audio Engineer",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "ETC_528": {
+      "name": "Lightshow",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine"
+    },
+    "ETC_541": {
+      "name": "Tony, King of Piracy",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_002": {
+      "name": "The Black Knight",
+      "add": [
+        "single-target-removal",
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_005": {
+      "name": "Big Game Hunter",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_007": {
+      "name": "Acolyte of Pain",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_015": {
+      "name": "Novice Engineer",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_048": {
+      "name": "Spellbreaker",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_050": {
+      "name": "Coldlight Oracle",
+      "add": [
+        "draw",
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_066": {
+      "name": "Acidic Swamp Ooze",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_083": {
+      "name": "Tinkmaster Overspark",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal"
+      ]
+    },
+    "EX1_091": {
+      "name": "Cabal Shadow Priest",
+      "reason": "Card or board resource acquisition",
+      "add": [
+        "value"
+      ]
+    },
+    "EX1_095": {
+      "name": "Gadgetzan Auctioneer",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_096": {
+      "name": "Loot Hoarder",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_100": {
+      "name": "Lorewalker Cho",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_102": {
+      "name": "Demolisher",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "EX1_116": {
+      "name": "Leeroy Jenkins",
+      "add": [
+        "smorc",
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_124": {
+      "name": "Eviscerate",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_161": {
+      "name": "Naturalize",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_164": {
+      "name": "Nourish",
+      "add": [
+        "draw",
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_186": {
+      "name": "SI:7 Infiltrator",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_193": {
+      "name": "Psychic Conjurer",
+      "reason": "Card or board resource acquisition",
+      "add": [
+        "value"
+      ]
+    },
+    "EX1_238": {
+      "name": "Lightning Bolt",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_241": {
+      "name": "Lava Burst",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_246": {
+      "name": "Hex",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_259": {
+      "name": "Lightning Storm",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_295": {
+      "name": "Ice Block",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "EX1_298": {
+      "name": "Ragnaros the Firelord",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "EX1_308": {
+      "name": "Soulfire",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_309": {
+      "name": "Siphon Soul",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_312": {
+      "name": "Twisting Nether",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "EX1_349": {
+      "name": "Divine Favor",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_350": {
+      "name": "Prophet Velen",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "EX1_383": {
+      "name": "Tirion Fordring",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "smorc",
+        "value"
+      ]
+    },
+    "EX1_392": {
+      "name": "Battle Rage",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_407": {
+      "name": "Brawl",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_410": {
+      "name": "Shield Slam",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_414": {
+      "name": "Grommash Hellscream",
+      "add": [
+        "smorc",
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_536": {
+      "name": "Eaglehorn Bow",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_539": {
+      "name": "Kill Command",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_544": {
+      "name": "Flare",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_558": {
+      "name": "Harrison Jones",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_559": {
+      "name": "Archmage Antonidas",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "EX1_560": {
+      "name": "Nozdormu",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_561": {
+      "name": "Alexstrasza",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "EX1_563": {
+      "name": "Malygos",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_567": {
+      "name": "Doomhammer",
+      "add": [
+        "smorc"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_572": {
+      "name": "Ysera",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_573": {
+      "name": "Cenarius",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "EX1_616": {
+      "name": "Mana Wraith",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "EX1_617": {
+      "name": "Deadly Shot",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "EX1_622": {
+      "name": "Shadow Word: Death",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "FIR_959": {
+      "name": "Fyrakk the Blazing",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value",
+        "win-conditions"
+      ]
+    },
+    "FP1_009": {
+      "name": "Deathlord",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "FP1_017": {
+      "name": "Nerub'ar Weblord",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "FP1_030": {
+      "name": "Loatheb",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "GDB_126": {
+      "name": "Black Hole",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "GDB_131": {
+      "name": "Velen, Leader of the Exiled",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "GDB_142": {
+      "name": "The Ceaseless Expanse",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "GDB_143": {
+      "name": "Nexus-Prince Shaffar",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "GDB_144": {
+      "name": "Lumia",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "GDB_235": {
+      "name": "Exarch Akama",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "GDB_447": {
+      "name": "Farseer Nobundo",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "GDB_454": {
+      "name": "Overzealous Healer",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "GDB_470": {
+      "name": "Exarch Maladaar",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "GDB_477": {
+      "name": "The 8 Hands From Beyond",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw",
+        "unique-effects"
+      ]
+    },
+    "GDB_854": {
+      "name": "Uluu, the Everdrifter",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "GIFT_01": {
+      "name": "Harth Stonebrew",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "GIL_142": {
+      "name": "Chameleos",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "GIL_598": {
+      "name": "Tess Greymane",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "GIL_618": {
+      "name": "Glinda Crowskin",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value",
+        "win-conditions"
+      ]
+    },
+    "GIL_648": {
+      "name": "Chief Inspector",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "GIL_692": {
+      "name": "Genn Greymane",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule"
+    },
+    "GIL_800": {
+      "name": "Duskfallen Aviana",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value",
+        "win-conditions"
+      ]
+    },
+    "GIL_820": {
+      "name": "Shudderwock",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "GIL_826": {
+      "name": "Baku the Mooneater",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule"
+    },
+    "GIL_840": {
+      "name": "Lady in White",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "unique-effects",
+        "value"
+      ]
+    },
+    "GVG_006": {
+      "name": "Mechwarper",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "GVG_008": {
+      "name": "Lightbomb",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "GVG_014": {
+      "name": "Vol'jin",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal"
+      ]
+    },
+    "GVG_028": {
+      "name": "Trade Prince Gallywix",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "GVG_035": {
+      "name": "Malorne",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "GVG_049": {
+      "name": "Gahz'rilla",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "GVG_056": {
+      "name": "Iron Juggernaut",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "GVG_074": {
+      "name": "Kezan Mystic",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "GVG_111": {
+      "name": "Mimiron's Head",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "GVG_112": {
+      "name": "Mogor the Ogre",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "GVG_120": {
+      "name": "Hemet Nesingwary",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "ICC_041": {
+      "name": "Defile",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "ICC_314": {
+      "name": "The Lich King",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "ICC_407": {
+      "name": "Gnomeferatu",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "ICC_701": {
+      "name": "Skulking Geist",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "ICC_706": {
+      "name": "Nerubian Unraveler",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "ICC_828": {
+      "name": "Deathstalker Rexxar",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "ICC_829": {
+      "name": "Uther of the Ebon Blade",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "ICC_830": {
+      "name": "Shadowreaper Anduin",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "ICC_831": {
+      "name": "Bloodreaver Gul'dan",
+      "add": [
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "ICC_833": {
+      "name": "Frost Lich Jaina",
+      "add": [
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "ICC_851": {
+      "name": "Prince Keleseth",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ICC_852": {
+      "name": "Prince Taldaram",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ICC_853": {
+      "name": "Prince Valanar",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ICC_902": {
+      "name": "Mindbreaker",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "JAM_034": {
+      "name": "Speaker Stomper",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "KAR_009": {
+      "name": "Babbling Book",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "KAR_096": {
+      "name": "Prince Malchezaar",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "LEG_CS3_031": {
+      "name": "Alexstrasza the Life-Binder",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "LEG_RLK_125": {
+      "name": "Obliterate",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "LOE_011": {
+      "name": "Reno Jackson",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOE_076": {
+      "name": "Sir Finley Mrrgglton",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOE_077": {
+      "name": "Brann Bronzebeard",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "LOE_079": {
+      "name": "Elise Starseeker",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_008": {
+      "name": "Psychic Scream",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "LOOT_085": {
+      "name": "Rhok'delar",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_106": {
+      "name": "Deck of Wonders",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_122": {
+      "name": "Corrosive Sludge",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "LOOT_357": {
+      "name": "Marin the Fox",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_415": {
+      "name": "Rin, the First Disciple",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_526": {
+      "name": "The Darkness",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_538": {
+      "name": "Temporus",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "LOOT_541": {
+      "name": "King Togwaggle",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "MAW_034": {
+      "name": "The Jailer",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule"
+    },
+    "NEW1_003": {
+      "name": "Sacrificial Pact",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "NEW1_007": {
+      "name": "Starfall",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "NEW1_017": {
+      "name": "Hungry Crab",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "NEW1_025": {
+      "name": "Bloodsail Corsair",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "NEW1_029": {
+      "name": "Millhouse Manastorm",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "NX2_034": {
+      "name": "Rivendare, Warrider",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "OG_042": {
+      "name": "Y'Shaarj, Rage Unbound",
+      "add": [
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "OG_118": {
+      "name": "Renounce Darkness",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "OG_121": {
+      "name": "Cho'gall",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "OG_133": {
+      "name": "N'Zoth, the Corruptor",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "OG_173": {
+      "name": "Blood of The Ancient One",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "OG_209": {
+      "name": "Hallazeal the Ascended",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "OG_229": {
+      "name": "Ragnaros, Lightlord",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "OG_254": {
+      "name": "Eater of Secrets",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "OG_280": {
+      "name": "C'Thun",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "ONY_005": {
+      "name": "Kazakusan",
+      "add": [
+        "unique-effects",
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "PRO_001": {
+      "name": "Elite Tauren Chieftain",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "REV_011": {
+      "name": "The Harvester of Envy",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "REV_018": {
+      "name": "Prince Renathal",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "REV_023": {
+      "name": "Demolition Renovator",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "REV_238": {
+      "name": "Theotar, the Mad Duke",
+      "add": [
+        "techw",
+        "unique-effects"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "REV_906": {
+      "name": "Sire Denathrius",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "REV_921": {
+      "name": "The Stonewright",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "REV_946": {
+      "name": "Steamcleaner",
+      "add": [
+        "techw",
+        "unique-effects"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "REV_960": {
+      "name": "Ashen Elemental",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "RLK_035": {
+      "name": "Corpse Explosion",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "RLK_087": {
+      "name": "Asphyxiate",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "RLK_125": {
+      "name": "Obliterate",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "RLK_222": {
+      "name": "Astalor Bloodsworn",
+      "add": [
+        "aoe",
+        "smorc",
+        "value",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "RLK_590": {
+      "name": "The Sunwell",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "RLK_730": {
+      "name": "Blood Boil",
+      "add": [
+        "aoe",
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "RLK_741": {
+      "name": "Soulstealer",
+      "add": [
+        "aoe",
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "SCH_159": {
+      "name": "Mindrender Illucia",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "SCH_356": {
+      "name": "Glide",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "SCH_400": {
+      "name": "Mozaki, Master Duelist",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "SCH_428": {
+      "name": "Lorekeeper Polkelt",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "SCH_514": {
+      "name": "Raise Dead",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "SCH_621": {
+      "name": "Rattlegore",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "SCH_713": {
+      "name": "Cult Neophyte",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "SC_004": {
+      "name": "Kerrigan, Queen of Blades",
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine",
+      "add": [
+        "aoe",
+        "win-conditions"
+      ]
+    },
+    "SC_020": {
+      "name": "Consume",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "SC_400": {
+      "name": "Jim Raynor",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "SC_754": {
+      "name": "Artanis",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "SW_044": {
+      "name": "Jace Darkweaver",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "SW_050": {
+      "name": "Maestra of the Masquerade",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "SW_072": {
+      "name": "Rustrot Viper",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "SW_075": {
+      "name": "Elwynn Boar",
+      "add": [
+        "smorc",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "SW_078": {
+      "name": "Lady Prestor",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "SW_091": {
+      "name": "The Demon Seed",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine"
+    },
+    "SW_115": {
+      "name": "Bolner Hammerbeak",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "SW_446": {
+      "name": "Voidtouched Attendant",
+      "add": [
+        "smorc",
+        "win-conditions"
+      ],
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier"
+    },
+    "SW_450": {
+      "name": "Sorcerer's Gambit",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TID_709": {
+      "name": "Lady Naz'jar",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "TID_718": {
+      "name": "Immolate",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "TIME_024": {
+      "name": "Murozond, Unbounded",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "TIME_706": {
+      "name": "The Fins Beyond Time",
+      "add": [
+        "unique-effects",
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "TIME_875": {
+      "name": "Garona Halforcen",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "TIME_876": {
+      "name": "Shapeshifter",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "TIME_EVENT_998": {
+      "name": "Runi, Temporal Guardian",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "TLC_100": {
+      "name": "Elise the Navigator",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "TLC_106": {
+      "name": "Endbringer Umbra",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "TLC_257": {
+      "name": "Loh, the Living Legend",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "TLC_463": {
+      "name": "Razidir",
+      "reason": "Conditional discard from the opponent's hand",
+      "add": [
+        "techw"
+      ]
+    },
+    "TLC_522": {
+      "name": "Opu the Unseen",
+      "add": [
+        "aoe",
+        "draw"
+      ],
+      "reason": "Casts Fan of Knives on battlecry, combo and deathrattle"
+    },
+    "TLC_836": {
+      "name": "Niri of the Crater",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "TLC_841": {
+      "name": "Entomologist Toru",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "TOY_330": {
+      "name": "Zilliax Deluxe 3000",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine"
+    },
+    "TOY_373": {
+      "name": "Puzzlemaster Khadgar",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "TOY_378": {
+      "name": "The Galactic Projection Orb",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "TOY_385": {
+      "name": "Timewinder Zarimi",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "TOY_501": {
+      "name": "Shudderblock",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TOY_529": {
+      "name": "Wheel of DEATH!!!",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TOY_700": {
+      "name": "Splendiferous Whizbang",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "TOY_703": {
+      "name": "Colifero the Artist",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TOY_807": {
+      "name": "Owlonius",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TOY_813": {
+      "name": "Toy Captain Tarim",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal"
+      ]
+    },
+    "TOY_829": {
+      "name": "The Headless Horseman",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_060": {
+      "name": "Spirit of the Frog",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_065": {
+      "name": "Zul'jin",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "TRL_092": {
+      "name": "Spirit of the Shark",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_126": {
+      "name": "Captain Hooktusk",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "TRL_241": {
+      "name": "Gonk, the Raptor",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "TRL_246": {
+      "name": "Void Contract",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "TRL_258": {
+      "name": "Mass Hysteria",
+      "add": [
+        "aoe"
+      ],
+      "reason": "Established curated selection"
+    },
+    "TRL_259": {
+      "name": "Princess Talanji",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "TRL_306": {
+      "name": "Immortal Prelate",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_307": {
+      "name": "Flash of Light",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "TRL_308": {
+      "name": "High Priest Thekal",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "TRL_343": {
+      "name": "Wardruid Loti",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "TRL_528": {
+      "name": "Linecracker",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_537": {
+      "name": "Da Undatakah",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_541": {
+      "name": "Hakkar, the Soulflayer",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TRL_564": {
+      "name": "Mojomaster Zihi",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "TSC_032": {
+      "name": "Blademaster Okani",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "TSC_218": {
+      "name": "Lady S'theno",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TSC_219": {
+      "name": "Xhilag of the Abyss",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "TSC_641": {
+      "name": "Queen Azshara",
+      "add": [
+        "unique-effects",
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "TSC_908": {
+      "name": "Sir Finley, Sea Guide",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "TSC_926": {
+      "name": "Smothering Starfish",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "TSC_934": {
+      "name": "Pirate Admiral Hooktusk",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "TSC_950": {
+      "name": "Hydralodon",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "TSC_962": {
+      "name": "Gigafin",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "TTN_071": {
+      "name": "Sif",
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine",
+      "add": [
+        "win-conditions"
+      ]
+    },
+    "TTN_075": {
+      "name": "Norgannon",
+      "reason": "Printed selectable abilities or established archetype engine",
+      "add": [
+        "single-target-removal",
+        "smorc",
+        "techw",
+        "value"
+      ]
+    },
+    "TTN_092": {
+      "name": "Aggramar, the Avenger",
+      "reason": "Printed selectable abilities or established archetype engine",
+      "add": [
+        "draw",
+        "single-target-removal",
+        "smorc",
+        "value"
+      ]
+    },
+    "TTN_415": {
+      "name": "Khaz'goroth",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Printed selectable abilities or established archetype engine"
+    },
+    "TTN_429": {
+      "name": "Aman'Thul",
+      "reason": "Printed selectable abilities or established archetype engine",
+      "add": [
+        "aoe",
+        "single-target-removal",
+        "value"
+      ]
+    },
+    "TTN_455": {
+      "name": "Tomb Traitor",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "TTN_717": {
+      "name": "Algalon the Observer",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "TTN_737": {
+      "name": "The Primus",
+      "reason": "Reviewed printed Titan abilities/resource effect; no direct AoE, draw or face-damage ability",
+      "add": [
+        "single-target-removal",
+        "value"
+      ],
+      "remove": [
+        "aoe",
+        "draw",
+        "smorc"
+      ]
+    },
+    "TTN_741": {
+      "name": "Disguised K'thir",
+      "reason": "Self-effect, ordinary defensive answer or own package synergy; not a dedicated counter",
+      "remove": [
+        "techw"
+      ]
+    },
+    "TTN_751": {
+      "name": "Ignis, the Eternal Flame",
+      "add": [
+        "unique-effects",
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "TTN_752": {
+      "name": "Hodir, Father of Giants",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TTN_800": {
+      "name": "Golganneth, the Thunderer",
+      "reason": "Titan abilities: draw 3 Overload cards, single-minion damage, and damage all enemies",
+      "add": [
+        "aoe",
+        "draw",
+        "smorc",
+        "value"
+      ]
+    },
+    "TTN_811": {
+      "name": "Odyn, Prime Designate",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TTN_842": {
+      "name": "Jotun, the Eternal",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "TTN_850": {
+      "name": "Helya",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "TTN_903": {
+      "name": "Eonar, the Life-Binder",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TTN_920": {
+      "name": "Mimiron, the Mastermind",
+      "reason": "Selectable Titan/resource abilities",
+      "add": [
+        "value"
+      ]
+    },
+    "TTN_924": {
+      "name": "Razorscale",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "TTN_940": {
+      "name": "Freya, Keeper of Nature",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "TTN_960": {
+      "name": "Sargeras, the Destroyer",
+      "add": [
+        "aoe",
+        "single-target-removal",
+        "win-conditions"
+      ],
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability"
+    },
+    "ULD_003": {
+      "name": "Zephrys the Great",
+      "add": [
+        "unique-effects",
+        "value"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ULD_177": {
+      "name": "Octosari",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ULD_238": {
+      "name": "Reno the Relicologist",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "ULD_258": {
+      "name": "Armagedillo",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "ULD_288": {
+      "name": "Anka, the Buried",
+      "add": [
+        "unique-effects",
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "ULD_703": {
+      "name": "Desert Obelisk",
+      "add": [
+        "smorc",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "ULD_705": {
+      "name": "Mogu Cultist",
+      "add": [
+        "aoe",
+        "smorc",
+        "win-conditions"
+      ],
+      "reason": "Reviewed archetype payoff, indirect summoned/reward effect, or repeatable late-game win engine"
+    },
+    "UNG_015": {
+      "name": "Sunkeeper Tarim",
+      "add": [
+        "aoe",
+        "unique-effects"
+      ],
+      "reason": "Sets all minion stats to 3, serving as a board-wide neutralization effect"
+    },
+    "UNG_028": {
+      "name": "Open the Waygate",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "UNG_064": {
+      "name": "Vilespine Slayer",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Established curated selection"
+    },
+    "UNG_065": {
+      "name": "Sherazin, Corpse Flower",
+      "add": [
+        "unique-effects",
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "UNG_067": {
+      "name": "The Caverns Below",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine"
+    },
+    "UNG_072": {
+      "name": "Stonehill Defender",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "UNG_116": {
+      "name": "Jungle Giants",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype-defining payoff, scalable finisher or established mana/damage combo engine"
+    },
+    "UNG_211": {
+      "name": "Kalimos, Primal Lord",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "UNG_807": {
+      "name": "Golakka Crawler",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "UNG_832": {
+      "name": "Bloodbloom",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "UNG_840": {
+      "name": "Hemet, Jungle Hunter",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "UNG_851": {
+      "name": "Elise the Trailblazer",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "UNG_920": {
+      "name": "The Marsh Queen",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "UNG_941": {
+      "name": "Primordial Glyph",
+      "add": [
+        "value"
+      ],
+      "reason": "Established curated selection"
+    },
+    "UNG_942": {
+      "name": "Unite the Murlocs",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "UNG_946": {
+      "name": "Gluttonous Ooze",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "UNG_954": {
+      "name": "The Last Kaleidosaur",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "VAC_321": {
+      "name": "Incindius",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "VAC_336": {
+      "name": "Maestra, Mask Merchant",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "VAC_415": {
+      "name": "Sasquawk",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "VAC_449": {
+      "name": "Carress, Cabaret Star",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "VAC_450": {
+      "name": "Carefree Cookie",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "VAC_507": {
+      "name": "Sunsapper Lynessa",
+      "reason": "Printed selectable abilities or established archetype engine",
+      "add": [
+        "smorc",
+        "win-conditions"
+      ]
+    },
+    "VAC_524": {
+      "name": "King Tide",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "VAC_702": {
+      "name": "Marin the Manager",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "WC_017": {
+      "name": "Savory Deviate Delight",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "WC_026": {
+      "name": "Kresh, Lord of Turtling",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "WC_030": {
+      "name": "Mutanus the Devourer",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "WON_011": {
+      "name": "Malorne",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "WON_012": {
+      "name": "Aviana",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "WON_024": {
+      "name": "Acidmaw",
+      "reason": "Reviewed minion neutralization, banish, theft or combat effect",
+      "add": [
+        "single-target-removal",
+        "unique-effects"
+      ]
+    },
+    "WON_105": {
+      "name": "Cho'gall",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Established curated selection"
+    },
+    "WON_114": {
+      "name": "Iron Juggernaut",
+      "reason": "Reviewed weapon, repeat attack, hero-targeting ability or damage multiplier",
+      "add": [
+        "smorc"
+      ]
+    },
+    "WON_133": {
+      "name": "Emperor Thaurissan",
+      "add": [
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "WON_135": {
+      "name": "C'Thun",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Established curated selection"
+    },
+    "WON_145": {
+      "name": "Avatar of Hearthstone",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "WON_336": {
+      "name": "Hallazeal the Ascended",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "WON_345": {
+      "name": "Valstann Staghelm",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "WON_357": {
+      "name": "Acolyte of Pain",
+      "add": [
+        "draw"
+      ],
+      "reason": "Established curated selection"
+    },
+    "WORK_027": {
+      "name": "Dreamplanner Zephrys",
+      "reason": "Reviewed generated body/weapon, recursion, repeated spell, resource or mana engine",
+      "add": [
+        "value"
+      ]
+    },
+    "WORK_030": {
+      "name": "Icecrown Brochure",
+      "reason": "Single target, self-only effect or once-per-turn single ping is not AoE",
+      "remove": [
+        "aoe"
+      ]
+    },
+    "WORK_043": {
+      "name": "Travelmaster Dungar",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "WW_010": {
+      "name": "Doctor Holli'dae",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "WW_026": {
+      "name": "Skarr, the Catastrophe",
+      "add": [
+        "win-conditions"
+      ],
+      "reason": "Archetype finisher or established combo engine"
+    },
+    "WW_0700": {
+      "name": "Reno, Lone Ranger",
+      "add": [
+        "aoe",
+        "unique-effects",
+        "win-conditions"
+      ],
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability"
+    },
+    "WW_357": {
+      "name": "Maw and Paw",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "WW_359": {
+      "name": "Sheriff Barrelbrim",
+      "add": [
+        "single-target-removal"
+      ],
+      "reason": "Badlands Jail removes an opposing minion temporarily"
+    },
+    "WW_364": {
+      "name": "Velarok Windblade",
+      "reason": "Reviewed special resource, deck, turn, targeting or transformation rule",
+      "add": [
+        "unique-effects"
+      ]
+    },
+    "WW_372": {
+      "name": "Boomboss Tho'grun",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "WW_384": {
+      "name": "Benevolent Banker",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "WW_401": {
+      "name": "Gunslinger Kurtrus",
+      "reason": "Reviewed hand/deck/hero-power disruption or explicit anti-strategy lockout",
+      "add": [
+        "techw"
+      ]
+    },
+    "WW_430": {
+      "name": "Tae'thelan Bloodwatcher",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    },
+    "WW_440": {
+      "name": "Thunderbringer",
+      "add": [
+        "value"
+      ],
+      "reason": "Reviewed generated resource, body, replay, recursion or mana advantage"
+    },
+    "YOD_009": {
+      "name": "The Amazing Reno",
+      "reason": "Reviewed multi-target combat, split health stealing, board clear or selectable AoE ability",
+      "add": [
+        "aoe"
+      ]
+    },
+    "YOD_033": {
+      "name": "Boompistol Bully",
+      "add": [
+        "techw"
+      ],
+      "reason": "Targeted counterplay or disruption, not generic defensive removal"
+    },
+    "YOD_042": {
+      "name": "The Fist of Ra-den",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "YOG_530": {
+      "name": "Cho'gall, Twilight Chieftain",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Distinct deck/game-rule alteration or nonstandard resource engine"
+    },
+    "YOP_035": {
+      "name": "Moonfang",
+      "add": [
+        "unique-effects"
+      ],
+      "reason": "Reviewed special resource conversion, transformation or game-rule engine"
+    }
+  },
+  "packages": [
+    {
+      "id": "package-wildseeds",
+      "name": "Wildseeds",
+      "kind": "Parasitic",
+      "class": "HUNTER",
+      "reason": "Wild Spirits accelerates the shared Wildseed tokens.",
+      "cards": [
+        "REV_360",
+        "REV_361",
+        "REV_363",
+        "REV_364"
+      ]
+    },
+    {
+      "id": "package-rituals",
+      "name": "Rituals",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "Kith'ix requires another completed Ritual.",
+      "cards": [
+        "BE_005",
+        "BE_085",
+        "BE_090",
+        "BE_726"
+      ]
+    },
+    {
+      "id": "package-jade-golems-druid",
+      "name": "Jade Golems · Druid",
+      "kind": "Parasitic",
+      "class": "DRUID",
+      "reason": "Each Jade Golem grows with earlier Jade summons.",
+      "cards": [
+        "CFM_343",
+        "CFM_602",
+        "CFM_713",
+        "CFM_715",
+        "CFM_902",
+        "WON_118",
+        "WON_136",
+        "WON_303"
+      ]
+    },
+    {
+      "id": "package-jade-golems-rogue",
+      "name": "Jade Golems · Rogue",
+      "kind": "Parasitic",
+      "class": "ROGUE",
+      "reason": "Each Jade Golem grows with earlier Jade summons.",
+      "cards": [
+        "CFM_690",
+        "CFM_691",
+        "CFM_715",
+        "CFM_902",
+        "WON_067",
+        "WON_070",
+        "WON_078",
+        "WON_118",
+        "WON_136"
+      ]
+    },
+    {
+      "id": "package-jade-golems-shaman",
+      "name": "Jade Golems · Shaman",
+      "kind": "Parasitic",
+      "class": "SHAMAN",
+      "reason": "Each Jade Golem grows with earlier Jade summons.",
+      "cards": [
+        "CFM_312",
+        "CFM_707",
+        "CFM_715",
+        "CFM_717",
+        "CFM_902",
+        "WON_082",
+        "WON_084",
+        "WON_118",
+        "WON_136"
+      ]
+    },
+    {
+      "id": "package-relics",
+      "name": "Relics",
+      "kind": "Parasitic",
+      "class": "DEMONHUNTER",
+      "reason": "Relics upgrade later Relics; Relic Vault and Xy'mox explicitly support them.",
+      "cards": [
+        "REV_508",
+        "REV_834",
+        "REV_937",
+        "REV_942",
+        "REV_943"
+      ]
+    },
+    {
+      "id": "package-soul-fragments-demonhunter",
+      "name": "Soul Fragments · Demon Hunter",
+      "kind": "Parasitic",
+      "class": "DEMONHUNTER",
+      "reason": "Generators shuffle the same resource consumed by dedicated payoffs.",
+      "cards": [
+        "SCH_252",
+        "SCH_355",
+        "SCH_700",
+        "SCH_701",
+        "SCH_703",
+        "SCH_704",
+        "YOP_003"
+      ]
+    },
+    {
+      "id": "package-soul-fragments-warlock",
+      "name": "Soul Fragments · Warlock",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "Generators shuffle the same resource consumed by dedicated payoffs.",
+      "cards": [
+        "SCH_307",
+        "SCH_343",
+        "SCH_517",
+        "SCH_700",
+        "SCH_701",
+        "SCH_703",
+        "YOP_003"
+      ]
+    },
+    {
+      "id": "package-librams",
+      "name": "Librams",
+      "kind": "Parasitic",
+      "class": "PALADIN",
+      "reason": "Dedicated discounts and recasts require Libram spells.",
+      "cards": [
+        "BT_011",
+        "BT_020",
+        "BT_024",
+        "BT_025",
+        "BT_026",
+        "BT_334",
+        "GDB_137",
+        "GDB_138",
+        "GDB_139",
+        "GDB_141",
+        "GDB_721",
+        "GDB_726",
+        "GDB_728",
+        "YOP_011"
+      ]
+    },
+    {
+      "id": "package-galakrond-priest",
+      "name": "Galakrond · Priest",
+      "kind": "Parasitic",
+      "class": "PRIEST",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        "DRG_050",
+        "DRG_099",
+        "DRG_242",
+        "DRG_246",
+        "DRG_300",
+        "DRG_303",
+        "DRG_660"
+      ]
+    },
+    {
+      "id": "package-galakrond-rogue",
+      "name": "Galakrond · Rogue",
+      "kind": "Parasitic",
+      "class": "ROGUE",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        "DRG_027",
+        "DRG_030",
+        "DRG_050",
+        "DRG_099",
+        "DRG_242",
+        "DRG_247",
+        "DRG_610"
+      ]
+    },
+    {
+      "id": "package-galakrond-shaman",
+      "name": "Galakrond · Shaman",
+      "kind": "Parasitic",
+      "class": "SHAMAN",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        "DRG_050",
+        "DRG_099",
+        "DRG_217",
+        "DRG_218",
+        "DRG_242",
+        "DRG_248",
+        "DRG_620"
+      ]
+    },
+    {
+      "id": "package-galakrond-warlock",
+      "name": "Galakrond · Warlock",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        "DRG_050",
+        "DRG_099",
+        "DRG_202",
+        "DRG_203",
+        "DRG_242",
+        "DRG_250",
+        "DRG_600"
+      ]
+    },
+    {
+      "id": "package-galakrond-warrior",
+      "name": "Galakrond · Warrior",
+      "kind": "Parasitic",
+      "class": "WARRIOR",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        "DRG_019",
+        "DRG_021",
+        "DRG_050",
+        "DRG_099",
+        "DRG_242",
+        "DRG_249",
+        "DRG_650"
+      ]
+    },
+    {
+      "id": "package-cthun-druid",
+      "name": "C'Thun · Druid",
+      "kind": "Parasitic",
+      "class": "DRUID",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_131",
+        "OG_162",
+        "OG_188",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_293",
+        "OG_321",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-cthun-mage",
+      "name": "C'Thun · Mage",
+      "kind": "Parasitic",
+      "class": "MAGE",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_131",
+        "OG_162",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_303",
+        "OG_321",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-cthun-priest",
+      "name": "C'Thun · Priest",
+      "kind": "Parasitic",
+      "class": "PRIEST",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_096",
+        "OG_131",
+        "OG_162",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_321",
+        "OG_334",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-cthun-rogue",
+      "name": "C'Thun · Rogue",
+      "kind": "Parasitic",
+      "class": "ROGUE",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_131",
+        "OG_162",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_282",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_321",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-cthun-warlock",
+      "name": "C'Thun · Warlock",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_131",
+        "OG_162",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_302",
+        "OG_321",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-cthun-warrior",
+      "name": "C'Thun · Warrior",
+      "kind": "Parasitic",
+      "class": "WARRIOR",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_131",
+        "OG_162",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_301",
+        "OG_321",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-cthun-neutral",
+      "name": "C'Thun · Neutral",
+      "kind": "Parasitic",
+      "class": "NEUTRAL",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        "OG_131",
+        "OG_162",
+        "OG_255",
+        "OG_280",
+        "OG_281",
+        "OG_283",
+        "OG_284",
+        "OG_286",
+        "OG_321",
+        "OG_339"
+      ]
+    },
+    {
+      "id": "package-lackeys-priest",
+      "name": "Lackeys · Priest",
+      "kind": "Parasitic",
+      "class": "PRIEST",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        "DAL_400",
+        "DAL_413",
+        "DRG_301",
+        "YOD_035"
+      ]
+    },
+    {
+      "id": "package-lackeys-rogue",
+      "name": "Lackeys · Rogue",
+      "kind": "Parasitic",
+      "class": "ROGUE",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        "DAL_400",
+        "DAL_415",
+        "DAL_417",
+        "YOD_035"
+      ]
+    },
+    {
+      "id": "package-lackeys-shaman",
+      "name": "Lackeys · Shaman",
+      "kind": "Parasitic",
+      "class": "SHAMAN",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        "DAL_400",
+        "DAL_433",
+        "ULD_170",
+        "ULD_276",
+        "YOD_035"
+      ]
+    },
+    {
+      "id": "package-lackeys-warlock",
+      "name": "Lackeys · Warlock",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        "DAL_400",
+        "DAL_606",
+        "ULD_160",
+        "ULD_162",
+        "ULD_168",
+        "YOD_035"
+      ]
+    },
+    {
+      "id": "package-lackeys-warrior",
+      "name": "Lackeys · Warrior",
+      "kind": "Parasitic",
+      "class": "WARRIOR",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        "DAL_400",
+        "DAL_769",
+        "DRG_020",
+        "ULD_708",
+        "YOD_023",
+        "YOD_035"
+      ]
+    },
+    {
+      "id": "package-abyssal-curses",
+      "name": "Abyssal Curses",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "Curse damage progresses across generators; dedicated Curse payoffs.",
+      "cards": [
+        "REV_373",
+        "TSC_924",
+        "TSC_955",
+        "TSC_956",
+        "TSC_959"
+      ]
+    },
+    {
+      "id": "package-plagues",
+      "name": "Plagues",
+      "kind": "Parasitic",
+      "class": "DEATHKNIGHT",
+      "reason": "Helya, Tomb Traitor and Chained Guardian explicitly require Plagues.",
+      "cards": [
+        "TTN_450",
+        "TTN_454",
+        "TTN_455",
+        "TTN_459",
+        "TTN_736",
+        "TTN_850"
+      ]
+    },
+    {
+      "id": "package-bombs",
+      "name": "Bombs",
+      "kind": "Parasitic",
+      "class": "WARRIOR",
+      "reason": "Blastmaster Boom requires Bombs shuffled by the other members.",
+      "cards": [
+        "BOT_511",
+        "DAL_060",
+        "DAL_063",
+        "DAL_064",
+        "MIS_308",
+        "MIS_711",
+        "WON_115"
+      ]
+    },
+    {
+      "id": "package-treants-druid",
+      "name": "Treants · Druid",
+      "kind": "Parasitic",
+      "class": "DRUID",
+      "reason": "Treant-specific discounts, buffs and death counters require Treant generators.",
+      "cards": [
+        "BOT_419",
+        "BOT_420",
+        "BOT_422",
+        "BOT_523",
+        "CATA_134",
+        "DAL_256",
+        "DMF_061",
+        "DRG_311",
+        "DRG_312",
+        "DRG_314",
+        "DRG_319",
+        "EDR_271",
+        "END_009",
+        "ETC_373",
+        "EX1_158",
+        "EX1_571",
+        "EX1_573",
+        "FP1_019",
+        "GIL_663",
+        "MEND_046",
+        "MIS_301",
+        "REV_307",
+        "REV_336",
+        "SCH_612",
+        "SW_422",
+        "TLC_230",
+        "TRL_341",
+        "TTN_926",
+        "TTN_927",
+        "TTN_954",
+        "ULD_137",
+        "UNG_111",
+        "YOG_403",
+        "YOP_026"
+      ]
+    },
+    {
+      "id": "package-concoctions",
+      "name": "Concoctions",
+      "kind": "Parasitic",
+      "class": "ROGUE",
+      "reason": "Mixed Concoctions and dedicated Concoction payoffs share this resource.",
+      "cards": [
+        "RLK_568",
+        "RLK_569",
+        "RLK_570",
+        "RLK_571",
+        "RLK_572"
+      ]
+    },
+    {
+      "id": "package-pogo-hoppers",
+      "name": "Pogo-Hoppers",
+      "kind": "Parasitic",
+      "class": "ROGUE",
+      "reason": "Pogo-Hopper scales with repeats; Lab Recruiter supplies repeat copies.",
+      "cards": [
+        "BOT_283",
+        "BOT_288"
+      ]
+    },
+    {
+      "id": "package-silver-hand",
+      "name": "Silver Hand Recruits",
+      "kind": "Parasitic",
+      "class": "PALADIN",
+      "reason": "Recruit-specific buffs and discounts require Recruit generators.",
+      "cards": [
+        "AT_075",
+        "AT_100",
+        "BAR_871",
+        "CS3_029",
+        "DEEP_017",
+        "DMF_235",
+        "DMF_240",
+        "GVG_060",
+        "GVG_061",
+        "LOOT_333",
+        "LOOT_363",
+        "MAW_015",
+        "MEND_800",
+        "MEND_801",
+        "MEND_802",
+        "MEND_803",
+        "MEND_804",
+        "OG_273",
+        "REV_952",
+        "REV_955",
+        "UNG_960",
+        "UNG_962",
+        "WORK_003",
+        "YOD_012"
+      ]
+    },
+    {
+      "id": "package-skeletons",
+      "name": "Volatile Skeletons",
+      "kind": "Parasitic",
+      "class": "MAGE",
+      "reason": "Kel'Thuzad requires the Volatile Skeletons generated by other members.",
+      "cards": [
+        "REV_505",
+        "REV_514",
+        "REV_602",
+        "REV_840",
+        "REV_845"
+      ]
+    },
+    {
+      "id": "package-cthun-empire-demonhunter",
+      "name": "C'Thun Abilities · Demon Hunter",
+      "kind": "Parasitic",
+      "class": "DEMONHUNTER",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        "BE_013",
+        "BE_014",
+        "BE_204",
+        "BE_771"
+      ]
+    },
+    {
+      "id": "package-cthun-empire-priest",
+      "name": "C'Thun Abilities · Priest",
+      "kind": "Parasitic",
+      "class": "PRIEST",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        "BE_012",
+        "BE_013",
+        "BE_014",
+        "BE_204"
+      ]
+    },
+    {
+      "id": "package-cthun-empire-shaman",
+      "name": "C'Thun Abilities · Shaman",
+      "kind": "Parasitic",
+      "class": "SHAMAN",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        "BE_013",
+        "BE_014",
+        "BE_204",
+        "BE_778"
+      ]
+    },
+    {
+      "id": "package-cthun-empire-warlock",
+      "name": "C'Thun Abilities · Warlock",
+      "kind": "Parasitic",
+      "class": "WARLOCK",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        "BE_013",
+        "BE_014",
+        "BE_204",
+        "BE_726"
+      ]
+    },
+    {
+      "id": "package-cthun-empire-neutral",
+      "name": "C'Thun Abilities · Neutral",
+      "kind": "Parasitic",
+      "class": "NEUTRAL",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        "BE_013",
+        "BE_014",
+        "BE_204"
+      ]
+    },
+    {
+      "id": "package-earthen",
+      "name": "Earthen",
+      "kind": "Parasitic",
+      "class": "PALADIN",
+      "reason": "Each Earthen scales with earlier Earthen summons.",
+      "cards": [
+        "TTN_856",
+        "TTN_900"
+      ]
+    },
+    {
+      "id": "package-riffs",
+      "name": "Riffs",
+      "kind": "Parasitic",
+      "class": "WARRIOR",
+      "reason": "A Riff replays the previously played Riff.",
+      "cards": [
+        "ETC_363",
+        "ETC_364",
+        "ETC_365"
+      ]
+    },
+    {
+      "id": "package-asteroids",
+      "name": "Asteroids",
+      "kind": "Parasitic",
+      "class": "SHAMAN",
+      "reason": "Bolide Behemoth upgrades Asteroids from all included generators.",
+      "cards": [
+        "GDB_434",
+        "GDB_435",
+        "GDB_445",
+        "GDB_901"
+      ]
+    },
+    {
+      "id": "package-leylines",
+      "name": "Leylines",
+      "kind": "Parasitic",
+      "class": "MAGE",
+      "reason": "Dedicated cost, effect and repeat upgrades apply only to Leylines.",
+      "cards": [
+        "MEND_500",
+        "MEND_501",
+        "MEND_502",
+        "MEND_503",
+        "MEND_504",
+        "MEND_505",
+        "MEND_506"
+      ]
+    },
+    {
+      "id": "package-ogre-gang",
+      "name": "Ogre-Gang",
+      "kind": "Parasitic",
+      "class": "NEUTRAL",
+      "reason": "Kingpin Pud specifically resurrects the three Ogre-Gang members.",
+      "cards": [
+        "WW_418",
+        "WW_419",
+        "WW_420",
+        "WW_421"
+      ]
+    },
+    {
+      "id": "package-zerg-deathknight",
+      "name": "Zerg · Death Knight",
+      "kind": "Factions",
+      "class": "DEATHKNIGHT",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_000",
+        "SC_001",
+        "SC_002",
+        "SC_003",
+        "SC_004",
+        "SC_010",
+        "SC_015",
+        "SC_018"
+      ]
+    },
+    {
+      "id": "package-zerg-demonhunter",
+      "name": "Zerg · Demon Hunter",
+      "kind": "Factions",
+      "class": "DEMONHUNTER",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_000",
+        "SC_003",
+        "SC_004",
+        "SC_009",
+        "SC_010",
+        "SC_011",
+        "SC_015",
+        "SC_022"
+      ]
+    },
+    {
+      "id": "package-zerg-hunter",
+      "name": "Zerg · Hunter",
+      "kind": "Factions",
+      "class": "HUNTER",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_000",
+        "SC_003",
+        "SC_004",
+        "SC_008",
+        "SC_010",
+        "SC_012",
+        "SC_015",
+        "SC_021"
+      ]
+    },
+    {
+      "id": "package-zerg-warlock",
+      "name": "Zerg · Warlock",
+      "kind": "Factions",
+      "class": "WARLOCK",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_000",
+        "SC_003",
+        "SC_004",
+        "SC_010",
+        "SC_015",
+        "SC_019",
+        "SC_020",
+        "SC_023"
+      ]
+    },
+    {
+      "id": "package-terran-paladin",
+      "name": "Terran · Paladin",
+      "kind": "Factions",
+      "class": "PALADIN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_400",
+        "SC_401",
+        "SC_403",
+        "SC_404",
+        "SC_405",
+        "SC_408",
+        "SC_410",
+        "SC_412"
+      ]
+    },
+    {
+      "id": "package-terran-shaman",
+      "name": "Terran · Shaman",
+      "kind": "Factions",
+      "class": "SHAMAN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_400",
+        "SC_401",
+        "SC_403",
+        "SC_407",
+        "SC_408",
+        "SC_409",
+        "SC_410",
+        "SC_413"
+      ]
+    },
+    {
+      "id": "package-terran-warrior",
+      "name": "Terran · Warrior",
+      "kind": "Factions",
+      "class": "WARRIOR",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_400",
+        "SC_401",
+        "SC_403",
+        "SC_406",
+        "SC_408",
+        "SC_410",
+        "SC_411",
+        "SC_414"
+      ]
+    },
+    {
+      "id": "package-protoss-druid",
+      "name": "Protoss · Druid",
+      "kind": "Factions",
+      "class": "DRUID",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_750",
+        "SC_751",
+        "SC_753",
+        "SC_754",
+        "SC_755",
+        "SC_756",
+        "SC_763",
+        "SC_783"
+      ]
+    },
+    {
+      "id": "package-protoss-mage",
+      "name": "Protoss · Mage",
+      "kind": "Factions",
+      "class": "MAGE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_750",
+        "SC_751",
+        "SC_753",
+        "SC_754",
+        "SC_758",
+        "SC_759",
+        "SC_760",
+        "SC_783"
+      ]
+    },
+    {
+      "id": "package-protoss-priest",
+      "name": "Protoss · Priest",
+      "kind": "Factions",
+      "class": "PRIEST",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_750",
+        "SC_751",
+        "SC_753",
+        "SC_754",
+        "SC_757",
+        "SC_762",
+        "SC_764",
+        "SC_783"
+      ]
+    },
+    {
+      "id": "package-protoss-rogue",
+      "name": "Protoss · Rogue",
+      "kind": "Factions",
+      "class": "ROGUE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "SC_750",
+        "SC_751",
+        "SC_752",
+        "SC_753",
+        "SC_754",
+        "SC_761",
+        "SC_765",
+        "SC_783"
+      ]
+    },
+    {
+      "id": "faction-grimy-goons-hunter",
+      "name": "Grimy Goons · Hunter",
+      "kind": "Factions",
+      "class": "HUNTER",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_026",
+        "CFM_334",
+        "CFM_336",
+        "CFM_338",
+        "CFM_685",
+        "CFM_853",
+        "WON_137"
+      ]
+    },
+    {
+      "id": "faction-grimy-goons-paladin",
+      "name": "Grimy Goons · Paladin",
+      "kind": "Factions",
+      "class": "PALADIN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_305",
+        "CFM_639",
+        "CFM_650",
+        "CFM_685",
+        "CFM_753",
+        "CFM_853",
+        "WON_137"
+      ]
+    },
+    {
+      "id": "faction-grimy-goons-warrior",
+      "name": "Grimy Goons · Warrior",
+      "kind": "Factions",
+      "class": "WARRIOR",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_631",
+        "CFM_643",
+        "CFM_685",
+        "CFM_754",
+        "CFM_755",
+        "CFM_853",
+        "WON_137"
+      ]
+    },
+    {
+      "id": "faction-jade-lotus-druid",
+      "name": "Jade Lotus · Druid",
+      "kind": "Factions",
+      "class": "DRUID",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_343",
+        "CFM_602",
+        "CFM_713",
+        "CFM_715",
+        "CFM_852",
+        "CFM_902",
+        "WON_118",
+        "WON_136"
+      ]
+    },
+    {
+      "id": "faction-jade-lotus-rogue",
+      "name": "Jade Lotus · Rogue",
+      "kind": "Factions",
+      "class": "ROGUE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_690",
+        "CFM_691",
+        "CFM_715",
+        "CFM_852",
+        "CFM_902",
+        "WON_118",
+        "WON_136"
+      ]
+    },
+    {
+      "id": "faction-jade-lotus-shaman",
+      "name": "Jade Lotus · Shaman",
+      "kind": "Factions",
+      "class": "SHAMAN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_312",
+        "CFM_707",
+        "CFM_715",
+        "CFM_717",
+        "CFM_852",
+        "CFM_902",
+        "WON_118",
+        "WON_136"
+      ]
+    },
+    {
+      "id": "faction-kabal-mage",
+      "name": "Kabal · Mage",
+      "kind": "Factions",
+      "class": "MAGE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_621",
+        "CFM_687"
+      ]
+    },
+    {
+      "id": "faction-kabal-priest",
+      "name": "Kabal · Priest",
+      "kind": "Factions",
+      "class": "PRIEST",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_020",
+        "CFM_621"
+      ]
+    },
+    {
+      "id": "faction-kabal-warlock",
+      "name": "Kabal · Warlock",
+      "kind": "Factions",
+      "class": "WARLOCK",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        "CFM_621",
+        "CFM_750",
+        "WON_324"
+      ]
+    }
+  ]
+}

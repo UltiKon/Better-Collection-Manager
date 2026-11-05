@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>BetterCollectionManager.BepInExChecks</AssemblyName>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <DefineConstants>$(DefineConstants);BEPINEX</DefineConstants>
+    <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$(GAME_DIR)/BepInEx/core</BepInExCoreDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../LoaderPreferences.cs" />
+    <Reference Include="BepInEx"><HintPath>$(BepInExCoreDir)/BepInEx.dll</HintPath></Reference>
+  </ItemGroup>
+  <Target Name="ValidateBepInEx" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(BepInExCoreDir)/BepInEx.dll')" Text="Set BepInExCoreDir to an official BepInEx 5 core directory." />
+  </Target>
+</Project>

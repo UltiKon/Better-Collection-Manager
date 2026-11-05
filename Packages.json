@@ -1,0 +1,2661 @@
+{
+  "version": 1,
+  "catalogRevision": 4,
+  "source": "https://api.hearthstonejson.com/v1/255790/enUS/cards.collectible.json",
+  "sourceSha256": "71be4da8bada839392c8b823af12ddd9e771a05fc6b974db8cea64b00c30f805",
+  "note": "Complete Constructed catalog pass; data-assisted role assignments with explicit editorial overrides. See Data/CategoryAudit.tsv and Data/Categories.md for coverage and definitions.",
+  "entries": [
+    {
+      "id": "package-wildseeds",
+      "name": "Wildseeds",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "HUNTER",
+      "reason": "Wild Spirits accelerates the shared Wildseed tokens.",
+      "cards": [
+        {
+          "id": "REV_360",
+          "count": 1
+        },
+        {
+          "id": "REV_361",
+          "count": 1
+        },
+        {
+          "id": "REV_363",
+          "count": 1
+        },
+        {
+          "id": "REV_364",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-rituals",
+      "name": "Rituals",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "Kith'ix requires another completed Ritual.",
+      "cards": [
+        {
+          "id": "BE_005",
+          "count": 1
+        },
+        {
+          "id": "BE_085",
+          "count": 1
+        },
+        {
+          "id": "BE_090",
+          "count": 1
+        },
+        {
+          "id": "BE_726",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-jade-golems-druid",
+      "name": "Jade Golems · Druid",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DRUID",
+      "reason": "Each Jade Golem grows with earlier Jade summons.",
+      "cards": [
+        {
+          "id": "CFM_343",
+          "count": 1
+        },
+        {
+          "id": "CFM_602",
+          "count": 1
+        },
+        {
+          "id": "CFM_713",
+          "count": 1
+        },
+        {
+          "id": "CFM_715",
+          "count": 1
+        },
+        {
+          "id": "CFM_902",
+          "count": 1
+        },
+        {
+          "id": "WON_118",
+          "count": 1
+        },
+        {
+          "id": "WON_136",
+          "count": 1
+        },
+        {
+          "id": "WON_303",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-jade-golems-rogue",
+      "name": "Jade Golems · Rogue",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "ROGUE",
+      "reason": "Each Jade Golem grows with earlier Jade summons.",
+      "cards": [
+        {
+          "id": "CFM_690",
+          "count": 1
+        },
+        {
+          "id": "CFM_691",
+          "count": 1
+        },
+        {
+          "id": "CFM_715",
+          "count": 1
+        },
+        {
+          "id": "CFM_902",
+          "count": 1
+        },
+        {
+          "id": "WON_067",
+          "count": 1
+        },
+        {
+          "id": "WON_070",
+          "count": 1
+        },
+        {
+          "id": "WON_078",
+          "count": 1
+        },
+        {
+          "id": "WON_118",
+          "count": 1
+        },
+        {
+          "id": "WON_136",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-jade-golems-shaman",
+      "name": "Jade Golems · Shaman",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "SHAMAN",
+      "reason": "Each Jade Golem grows with earlier Jade summons.",
+      "cards": [
+        {
+          "id": "CFM_312",
+          "count": 1
+        },
+        {
+          "id": "CFM_707",
+          "count": 1
+        },
+        {
+          "id": "CFM_715",
+          "count": 1
+        },
+        {
+          "id": "CFM_717",
+          "count": 1
+        },
+        {
+          "id": "CFM_902",
+          "count": 1
+        },
+        {
+          "id": "WON_082",
+          "count": 1
+        },
+        {
+          "id": "WON_084",
+          "count": 1
+        },
+        {
+          "id": "WON_118",
+          "count": 1
+        },
+        {
+          "id": "WON_136",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-relics",
+      "name": "Relics",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DEMONHUNTER",
+      "reason": "Relics upgrade later Relics; Relic Vault and Xy'mox explicitly support them.",
+      "cards": [
+        {
+          "id": "REV_508",
+          "count": 1
+        },
+        {
+          "id": "REV_834",
+          "count": 1
+        },
+        {
+          "id": "REV_937",
+          "count": 1
+        },
+        {
+          "id": "REV_942",
+          "count": 1
+        },
+        {
+          "id": "REV_943",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-soul-fragments-demonhunter",
+      "name": "Soul Fragments · Demon Hunter",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DEMONHUNTER",
+      "reason": "Generators shuffle the same resource consumed by dedicated payoffs.",
+      "cards": [
+        {
+          "id": "SCH_252",
+          "count": 1
+        },
+        {
+          "id": "SCH_355",
+          "count": 1
+        },
+        {
+          "id": "SCH_700",
+          "count": 1
+        },
+        {
+          "id": "SCH_701",
+          "count": 1
+        },
+        {
+          "id": "SCH_703",
+          "count": 1
+        },
+        {
+          "id": "SCH_704",
+          "count": 1
+        },
+        {
+          "id": "YOP_003",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-soul-fragments-warlock",
+      "name": "Soul Fragments · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "Generators shuffle the same resource consumed by dedicated payoffs.",
+      "cards": [
+        {
+          "id": "SCH_307",
+          "count": 1
+        },
+        {
+          "id": "SCH_343",
+          "count": 1
+        },
+        {
+          "id": "SCH_517",
+          "count": 1
+        },
+        {
+          "id": "SCH_700",
+          "count": 1
+        },
+        {
+          "id": "SCH_701",
+          "count": 1
+        },
+        {
+          "id": "SCH_703",
+          "count": 1
+        },
+        {
+          "id": "YOP_003",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-librams",
+      "name": "Librams",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PALADIN",
+      "reason": "Dedicated discounts and recasts require Libram spells.",
+      "cards": [
+        {
+          "id": "BT_011",
+          "count": 1
+        },
+        {
+          "id": "BT_020",
+          "count": 1
+        },
+        {
+          "id": "BT_024",
+          "count": 1
+        },
+        {
+          "id": "BT_025",
+          "count": 1
+        },
+        {
+          "id": "BT_026",
+          "count": 1
+        },
+        {
+          "id": "BT_334",
+          "count": 1
+        },
+        {
+          "id": "GDB_137",
+          "count": 1
+        },
+        {
+          "id": "GDB_138",
+          "count": 1
+        },
+        {
+          "id": "GDB_139",
+          "count": 1
+        },
+        {
+          "id": "GDB_141",
+          "count": 1
+        },
+        {
+          "id": "GDB_721",
+          "count": 1
+        },
+        {
+          "id": "GDB_726",
+          "count": 1
+        },
+        {
+          "id": "GDB_728",
+          "count": 1
+        },
+        {
+          "id": "YOP_011",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-galakrond-priest",
+      "name": "Galakrond · Priest",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PRIEST",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        {
+          "id": "DRG_050",
+          "count": 1
+        },
+        {
+          "id": "DRG_099",
+          "count": 1
+        },
+        {
+          "id": "DRG_242",
+          "count": 1
+        },
+        {
+          "id": "DRG_246",
+          "count": 1
+        },
+        {
+          "id": "DRG_300",
+          "count": 1
+        },
+        {
+          "id": "DRG_303",
+          "count": 1
+        },
+        {
+          "id": "DRG_660",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-galakrond-rogue",
+      "name": "Galakrond · Rogue",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "ROGUE",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        {
+          "id": "DRG_027",
+          "count": 1
+        },
+        {
+          "id": "DRG_030",
+          "count": 1
+        },
+        {
+          "id": "DRG_050",
+          "count": 1
+        },
+        {
+          "id": "DRG_099",
+          "count": 1
+        },
+        {
+          "id": "DRG_242",
+          "count": 1
+        },
+        {
+          "id": "DRG_247",
+          "count": 1
+        },
+        {
+          "id": "DRG_610",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-galakrond-shaman",
+      "name": "Galakrond · Shaman",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "SHAMAN",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        {
+          "id": "DRG_050",
+          "count": 1
+        },
+        {
+          "id": "DRG_099",
+          "count": 1
+        },
+        {
+          "id": "DRG_217",
+          "count": 1
+        },
+        {
+          "id": "DRG_218",
+          "count": 1
+        },
+        {
+          "id": "DRG_242",
+          "count": 1
+        },
+        {
+          "id": "DRG_248",
+          "count": 1
+        },
+        {
+          "id": "DRG_620",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-galakrond-warlock",
+      "name": "Galakrond · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        {
+          "id": "DRG_050",
+          "count": 1
+        },
+        {
+          "id": "DRG_099",
+          "count": 1
+        },
+        {
+          "id": "DRG_202",
+          "count": 1
+        },
+        {
+          "id": "DRG_203",
+          "count": 1
+        },
+        {
+          "id": "DRG_242",
+          "count": 1
+        },
+        {
+          "id": "DRG_250",
+          "count": 1
+        },
+        {
+          "id": "DRG_600",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-galakrond-warrior",
+      "name": "Galakrond · Warrior",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARRIOR",
+      "reason": "Invoke advances the class Galakrond and enables dedicated Invoke payoffs.",
+      "cards": [
+        {
+          "id": "DRG_019",
+          "count": 1
+        },
+        {
+          "id": "DRG_021",
+          "count": 1
+        },
+        {
+          "id": "DRG_050",
+          "count": 1
+        },
+        {
+          "id": "DRG_099",
+          "count": 1
+        },
+        {
+          "id": "DRG_242",
+          "count": 1
+        },
+        {
+          "id": "DRG_249",
+          "count": 1
+        },
+        {
+          "id": "DRG_650",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-druid",
+      "name": "C'Thun · Druid",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DRUID",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_188",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_293",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-mage",
+      "name": "C'Thun · Mage",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "MAGE",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_303",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-priest",
+      "name": "C'Thun · Priest",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PRIEST",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_096",
+          "count": 1
+        },
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_334",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-rogue",
+      "name": "C'Thun · Rogue",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "ROGUE",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_282",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-warlock",
+      "name": "C'Thun · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_302",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-warrior",
+      "name": "C'Thun · Warrior",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARRIOR",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_301",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-neutral",
+      "name": "C'Thun · Neutral",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "NEUTRAL",
+      "reason": "Cultists specifically buff C'Thun and enable C'Thun thresholds.",
+      "cards": [
+        {
+          "id": "OG_131",
+          "count": 1
+        },
+        {
+          "id": "OG_162",
+          "count": 1
+        },
+        {
+          "id": "OG_255",
+          "count": 1
+        },
+        {
+          "id": "OG_280",
+          "count": 1
+        },
+        {
+          "id": "OG_281",
+          "count": 1
+        },
+        {
+          "id": "OG_283",
+          "count": 1
+        },
+        {
+          "id": "OG_284",
+          "count": 1
+        },
+        {
+          "id": "OG_286",
+          "count": 1
+        },
+        {
+          "id": "OG_321",
+          "count": 1
+        },
+        {
+          "id": "OG_339",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-lackeys-priest",
+      "name": "Lackeys · Priest",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PRIEST",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        {
+          "id": "DAL_400",
+          "count": 1
+        },
+        {
+          "id": "DAL_413",
+          "count": 1
+        },
+        {
+          "id": "DRG_301",
+          "count": 1
+        },
+        {
+          "id": "YOD_035",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-lackeys-rogue",
+      "name": "Lackeys · Rogue",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "ROGUE",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        {
+          "id": "DAL_400",
+          "count": 1
+        },
+        {
+          "id": "DAL_415",
+          "count": 1
+        },
+        {
+          "id": "DAL_417",
+          "count": 1
+        },
+        {
+          "id": "YOD_035",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-lackeys-shaman",
+      "name": "Lackeys · Shaman",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "SHAMAN",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        {
+          "id": "DAL_400",
+          "count": 1
+        },
+        {
+          "id": "DAL_433",
+          "count": 1
+        },
+        {
+          "id": "ULD_170",
+          "count": 1
+        },
+        {
+          "id": "ULD_276",
+          "count": 1
+        },
+        {
+          "id": "YOD_035",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-lackeys-warlock",
+      "name": "Lackeys · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        {
+          "id": "DAL_400",
+          "count": 1
+        },
+        {
+          "id": "DAL_606",
+          "count": 1
+        },
+        {
+          "id": "ULD_160",
+          "count": 1
+        },
+        {
+          "id": "ULD_162",
+          "count": 1
+        },
+        {
+          "id": "ULD_168",
+          "count": 1
+        },
+        {
+          "id": "YOD_035",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-lackeys-warrior",
+      "name": "Lackeys · Warrior",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARRIOR",
+      "reason": "Dedicated payoffs require or improve Lackeys generated by these cards.",
+      "cards": [
+        {
+          "id": "DAL_400",
+          "count": 1
+        },
+        {
+          "id": "DAL_769",
+          "count": 1
+        },
+        {
+          "id": "DRG_020",
+          "count": 1
+        },
+        {
+          "id": "ULD_708",
+          "count": 1
+        },
+        {
+          "id": "YOD_023",
+          "count": 1
+        },
+        {
+          "id": "YOD_035",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-abyssal-curses",
+      "name": "Abyssal Curses",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "Curse damage progresses across generators; dedicated Curse payoffs.",
+      "cards": [
+        {
+          "id": "REV_373",
+          "count": 1
+        },
+        {
+          "id": "TSC_924",
+          "count": 1
+        },
+        {
+          "id": "TSC_955",
+          "count": 1
+        },
+        {
+          "id": "TSC_956",
+          "count": 1
+        },
+        {
+          "id": "TSC_959",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-plagues",
+      "name": "Plagues",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DEATHKNIGHT",
+      "reason": "Helya, Tomb Traitor and Chained Guardian explicitly require Plagues.",
+      "cards": [
+        {
+          "id": "TTN_450",
+          "count": 1
+        },
+        {
+          "id": "TTN_454",
+          "count": 1
+        },
+        {
+          "id": "TTN_455",
+          "count": 1
+        },
+        {
+          "id": "TTN_459",
+          "count": 1
+        },
+        {
+          "id": "TTN_736",
+          "count": 1
+        },
+        {
+          "id": "TTN_850",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-bombs",
+      "name": "Bombs",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARRIOR",
+      "reason": "Blastmaster Boom requires Bombs shuffled by the other members.",
+      "cards": [
+        {
+          "id": "BOT_511",
+          "count": 1
+        },
+        {
+          "id": "DAL_060",
+          "count": 1
+        },
+        {
+          "id": "DAL_063",
+          "count": 1
+        },
+        {
+          "id": "DAL_064",
+          "count": 1
+        },
+        {
+          "id": "MIS_308",
+          "count": 1
+        },
+        {
+          "id": "MIS_711",
+          "count": 1
+        },
+        {
+          "id": "WON_115",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-treants-druid",
+      "name": "Treants · Druid",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DRUID",
+      "reason": "Treant-specific discounts, buffs and death counters require Treant generators.",
+      "cards": [
+        {
+          "id": "BOT_419",
+          "count": 1
+        },
+        {
+          "id": "BOT_420",
+          "count": 1
+        },
+        {
+          "id": "BOT_422",
+          "count": 1
+        },
+        {
+          "id": "BOT_523",
+          "count": 1
+        },
+        {
+          "id": "CATA_134",
+          "count": 1
+        },
+        {
+          "id": "DAL_256",
+          "count": 1
+        },
+        {
+          "id": "DMF_061",
+          "count": 1
+        },
+        {
+          "id": "DRG_311",
+          "count": 1
+        },
+        {
+          "id": "DRG_312",
+          "count": 1
+        },
+        {
+          "id": "DRG_314",
+          "count": 1
+        },
+        {
+          "id": "DRG_319",
+          "count": 1
+        },
+        {
+          "id": "EDR_271",
+          "count": 1
+        },
+        {
+          "id": "END_009",
+          "count": 1
+        },
+        {
+          "id": "ETC_373",
+          "count": 1
+        },
+        {
+          "id": "EX1_158",
+          "count": 1
+        },
+        {
+          "id": "EX1_571",
+          "count": 1
+        },
+        {
+          "id": "EX1_573",
+          "count": 1
+        },
+        {
+          "id": "FP1_019",
+          "count": 1
+        },
+        {
+          "id": "GIL_663",
+          "count": 1
+        },
+        {
+          "id": "MEND_046",
+          "count": 1
+        },
+        {
+          "id": "MIS_301",
+          "count": 1
+        },
+        {
+          "id": "REV_307",
+          "count": 1
+        },
+        {
+          "id": "REV_336",
+          "count": 1
+        },
+        {
+          "id": "SCH_612",
+          "count": 1
+        },
+        {
+          "id": "SW_422",
+          "count": 1
+        },
+        {
+          "id": "TLC_230",
+          "count": 1
+        },
+        {
+          "id": "TRL_341",
+          "count": 1
+        },
+        {
+          "id": "TTN_926",
+          "count": 1
+        },
+        {
+          "id": "TTN_927",
+          "count": 1
+        },
+        {
+          "id": "TTN_954",
+          "count": 1
+        },
+        {
+          "id": "ULD_137",
+          "count": 1
+        },
+        {
+          "id": "UNG_111",
+          "count": 1
+        },
+        {
+          "id": "YOG_403",
+          "count": 1
+        },
+        {
+          "id": "YOP_026",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-concoctions",
+      "name": "Concoctions",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "ROGUE",
+      "reason": "Mixed Concoctions and dedicated Concoction payoffs share this resource.",
+      "cards": [
+        {
+          "id": "RLK_568",
+          "count": 1
+        },
+        {
+          "id": "RLK_569",
+          "count": 1
+        },
+        {
+          "id": "RLK_570",
+          "count": 1
+        },
+        {
+          "id": "RLK_571",
+          "count": 1
+        },
+        {
+          "id": "RLK_572",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-pogo-hoppers",
+      "name": "Pogo-Hoppers",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "ROGUE",
+      "reason": "Pogo-Hopper scales with repeats; Lab Recruiter supplies repeat copies.",
+      "cards": [
+        {
+          "id": "BOT_283",
+          "count": 1
+        },
+        {
+          "id": "BOT_288",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-silver-hand",
+      "name": "Silver Hand Recruits",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PALADIN",
+      "reason": "Recruit-specific buffs and discounts require Recruit generators.",
+      "cards": [
+        {
+          "id": "AT_075",
+          "count": 1
+        },
+        {
+          "id": "AT_100",
+          "count": 1
+        },
+        {
+          "id": "BAR_871",
+          "count": 1
+        },
+        {
+          "id": "CS3_029",
+          "count": 1
+        },
+        {
+          "id": "DEEP_017",
+          "count": 1
+        },
+        {
+          "id": "DMF_235",
+          "count": 1
+        },
+        {
+          "id": "DMF_240",
+          "count": 1
+        },
+        {
+          "id": "GVG_060",
+          "count": 1
+        },
+        {
+          "id": "GVG_061",
+          "count": 1
+        },
+        {
+          "id": "LOOT_333",
+          "count": 1
+        },
+        {
+          "id": "LOOT_363",
+          "count": 1
+        },
+        {
+          "id": "MAW_015",
+          "count": 1
+        },
+        {
+          "id": "MEND_800",
+          "count": 1
+        },
+        {
+          "id": "MEND_801",
+          "count": 1
+        },
+        {
+          "id": "MEND_802",
+          "count": 1
+        },
+        {
+          "id": "MEND_803",
+          "count": 1
+        },
+        {
+          "id": "MEND_804",
+          "count": 1
+        },
+        {
+          "id": "OG_273",
+          "count": 1
+        },
+        {
+          "id": "REV_952",
+          "count": 1
+        },
+        {
+          "id": "REV_955",
+          "count": 1
+        },
+        {
+          "id": "UNG_960",
+          "count": 1
+        },
+        {
+          "id": "UNG_962",
+          "count": 1
+        },
+        {
+          "id": "WORK_003",
+          "count": 1
+        },
+        {
+          "id": "YOD_012",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-skeletons",
+      "name": "Volatile Skeletons",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "MAGE",
+      "reason": "Kel'Thuzad requires the Volatile Skeletons generated by other members.",
+      "cards": [
+        {
+          "id": "REV_505",
+          "count": 1
+        },
+        {
+          "id": "REV_514",
+          "count": 1
+        },
+        {
+          "id": "REV_602",
+          "count": 1
+        },
+        {
+          "id": "REV_840",
+          "count": 1
+        },
+        {
+          "id": "REV_845",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-empire-demonhunter",
+      "name": "C'Thun Abilities · Demon Hunter",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "DEMONHUNTER",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        {
+          "id": "BE_013",
+          "count": 1
+        },
+        {
+          "id": "BE_014",
+          "count": 1
+        },
+        {
+          "id": "BE_204",
+          "count": 1
+        },
+        {
+          "id": "BE_771",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-empire-priest",
+      "name": "C'Thun Abilities · Priest",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PRIEST",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        {
+          "id": "BE_012",
+          "count": 1
+        },
+        {
+          "id": "BE_013",
+          "count": 1
+        },
+        {
+          "id": "BE_014",
+          "count": 1
+        },
+        {
+          "id": "BE_204",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-empire-shaman",
+      "name": "C'Thun Abilities · Shaman",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "SHAMAN",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        {
+          "id": "BE_013",
+          "count": 1
+        },
+        {
+          "id": "BE_014",
+          "count": 1
+        },
+        {
+          "id": "BE_204",
+          "count": 1
+        },
+        {
+          "id": "BE_778",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-empire-warlock",
+      "name": "C'Thun Abilities · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARLOCK",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        {
+          "id": "BE_013",
+          "count": 1
+        },
+        {
+          "id": "BE_014",
+          "count": 1
+        },
+        {
+          "id": "BE_204",
+          "count": 1
+        },
+        {
+          "id": "BE_726",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-cthun-empire-neutral",
+      "name": "C'Thun Abilities · Neutral",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "NEUTRAL",
+      "reason": "The Old God explicitly counts the four triggered C'Thun abilities.",
+      "cards": [
+        {
+          "id": "BE_013",
+          "count": 1
+        },
+        {
+          "id": "BE_014",
+          "count": 1
+        },
+        {
+          "id": "BE_204",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-earthen",
+      "name": "Earthen",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "PALADIN",
+      "reason": "Each Earthen scales with earlier Earthen summons.",
+      "cards": [
+        {
+          "id": "TTN_856",
+          "count": 1
+        },
+        {
+          "id": "TTN_900",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-riffs",
+      "name": "Riffs",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "WARRIOR",
+      "reason": "A Riff replays the previously played Riff.",
+      "cards": [
+        {
+          "id": "ETC_363",
+          "count": 1
+        },
+        {
+          "id": "ETC_364",
+          "count": 1
+        },
+        {
+          "id": "ETC_365",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-asteroids",
+      "name": "Asteroids",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "SHAMAN",
+      "reason": "Bolide Behemoth upgrades Asteroids from all included generators.",
+      "cards": [
+        {
+          "id": "GDB_434",
+          "count": 1
+        },
+        {
+          "id": "GDB_435",
+          "count": 1
+        },
+        {
+          "id": "GDB_445",
+          "count": 1
+        },
+        {
+          "id": "GDB_901",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-leylines",
+      "name": "Leylines",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "MAGE",
+      "reason": "Dedicated cost, effect and repeat upgrades apply only to Leylines.",
+      "cards": [
+        {
+          "id": "MEND_500",
+          "count": 1
+        },
+        {
+          "id": "MEND_501",
+          "count": 1
+        },
+        {
+          "id": "MEND_502",
+          "count": 1
+        },
+        {
+          "id": "MEND_503",
+          "count": 1
+        },
+        {
+          "id": "MEND_504",
+          "count": 1
+        },
+        {
+          "id": "MEND_505",
+          "count": 1
+        },
+        {
+          "id": "MEND_506",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-ogre-gang",
+      "name": "Ogre-Gang",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Parasitic",
+      "packageClass": "NEUTRAL",
+      "reason": "Kingpin Pud specifically resurrects the three Ogre-Gang members.",
+      "cards": [
+        {
+          "id": "WW_418",
+          "count": 1
+        },
+        {
+          "id": "WW_419",
+          "count": 1
+        },
+        {
+          "id": "WW_420",
+          "count": 1
+        },
+        {
+          "id": "WW_421",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-zerg-deathknight",
+      "name": "Zerg · Death Knight",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "DEATHKNIGHT",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_000",
+          "count": 1
+        },
+        {
+          "id": "SC_001",
+          "count": 1
+        },
+        {
+          "id": "SC_002",
+          "count": 1
+        },
+        {
+          "id": "SC_003",
+          "count": 1
+        },
+        {
+          "id": "SC_004",
+          "count": 1
+        },
+        {
+          "id": "SC_010",
+          "count": 1
+        },
+        {
+          "id": "SC_015",
+          "count": 1
+        },
+        {
+          "id": "SC_018",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-zerg-demonhunter",
+      "name": "Zerg · Demon Hunter",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "DEMONHUNTER",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_000",
+          "count": 1
+        },
+        {
+          "id": "SC_003",
+          "count": 1
+        },
+        {
+          "id": "SC_004",
+          "count": 1
+        },
+        {
+          "id": "SC_009",
+          "count": 1
+        },
+        {
+          "id": "SC_010",
+          "count": 1
+        },
+        {
+          "id": "SC_011",
+          "count": 1
+        },
+        {
+          "id": "SC_015",
+          "count": 1
+        },
+        {
+          "id": "SC_022",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-zerg-hunter",
+      "name": "Zerg · Hunter",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "HUNTER",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_000",
+          "count": 1
+        },
+        {
+          "id": "SC_003",
+          "count": 1
+        },
+        {
+          "id": "SC_004",
+          "count": 1
+        },
+        {
+          "id": "SC_008",
+          "count": 1
+        },
+        {
+          "id": "SC_010",
+          "count": 1
+        },
+        {
+          "id": "SC_012",
+          "count": 1
+        },
+        {
+          "id": "SC_015",
+          "count": 1
+        },
+        {
+          "id": "SC_021",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-zerg-warlock",
+      "name": "Zerg · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "WARLOCK",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_000",
+          "count": 1
+        },
+        {
+          "id": "SC_003",
+          "count": 1
+        },
+        {
+          "id": "SC_004",
+          "count": 1
+        },
+        {
+          "id": "SC_010",
+          "count": 1
+        },
+        {
+          "id": "SC_015",
+          "count": 1
+        },
+        {
+          "id": "SC_019",
+          "count": 1
+        },
+        {
+          "id": "SC_020",
+          "count": 1
+        },
+        {
+          "id": "SC_023",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-terran-paladin",
+      "name": "Terran · Paladin",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "PALADIN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_400",
+          "count": 1
+        },
+        {
+          "id": "SC_401",
+          "count": 1
+        },
+        {
+          "id": "SC_403",
+          "count": 1
+        },
+        {
+          "id": "SC_404",
+          "count": 1
+        },
+        {
+          "id": "SC_405",
+          "count": 1
+        },
+        {
+          "id": "SC_408",
+          "count": 1
+        },
+        {
+          "id": "SC_410",
+          "count": 1
+        },
+        {
+          "id": "SC_412",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-terran-shaman",
+      "name": "Terran · Shaman",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "SHAMAN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_400",
+          "count": 1
+        },
+        {
+          "id": "SC_401",
+          "count": 1
+        },
+        {
+          "id": "SC_403",
+          "count": 1
+        },
+        {
+          "id": "SC_407",
+          "count": 1
+        },
+        {
+          "id": "SC_408",
+          "count": 1
+        },
+        {
+          "id": "SC_409",
+          "count": 1
+        },
+        {
+          "id": "SC_410",
+          "count": 1
+        },
+        {
+          "id": "SC_413",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-terran-warrior",
+      "name": "Terran · Warrior",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "WARRIOR",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_400",
+          "count": 1
+        },
+        {
+          "id": "SC_401",
+          "count": 1
+        },
+        {
+          "id": "SC_403",
+          "count": 1
+        },
+        {
+          "id": "SC_406",
+          "count": 1
+        },
+        {
+          "id": "SC_408",
+          "count": 1
+        },
+        {
+          "id": "SC_410",
+          "count": 1
+        },
+        {
+          "id": "SC_411",
+          "count": 1
+        },
+        {
+          "id": "SC_414",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-protoss-druid",
+      "name": "Protoss · Druid",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "DRUID",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_750",
+          "count": 1
+        },
+        {
+          "id": "SC_751",
+          "count": 1
+        },
+        {
+          "id": "SC_753",
+          "count": 1
+        },
+        {
+          "id": "SC_754",
+          "count": 1
+        },
+        {
+          "id": "SC_755",
+          "count": 1
+        },
+        {
+          "id": "SC_756",
+          "count": 1
+        },
+        {
+          "id": "SC_763",
+          "count": 1
+        },
+        {
+          "id": "SC_783",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-protoss-mage",
+      "name": "Protoss · Mage",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "MAGE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_750",
+          "count": 1
+        },
+        {
+          "id": "SC_751",
+          "count": 1
+        },
+        {
+          "id": "SC_753",
+          "count": 1
+        },
+        {
+          "id": "SC_754",
+          "count": 1
+        },
+        {
+          "id": "SC_758",
+          "count": 1
+        },
+        {
+          "id": "SC_759",
+          "count": 1
+        },
+        {
+          "id": "SC_760",
+          "count": 1
+        },
+        {
+          "id": "SC_783",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-protoss-priest",
+      "name": "Protoss · Priest",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "PRIEST",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_750",
+          "count": 1
+        },
+        {
+          "id": "SC_751",
+          "count": 1
+        },
+        {
+          "id": "SC_753",
+          "count": 1
+        },
+        {
+          "id": "SC_754",
+          "count": 1
+        },
+        {
+          "id": "SC_757",
+          "count": 1
+        },
+        {
+          "id": "SC_762",
+          "count": 1
+        },
+        {
+          "id": "SC_764",
+          "count": 1
+        },
+        {
+          "id": "SC_783",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "package-protoss-rogue",
+      "name": "Protoss · Rogue",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "ROGUE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "SC_750",
+          "count": 1
+        },
+        {
+          "id": "SC_751",
+          "count": 1
+        },
+        {
+          "id": "SC_752",
+          "count": 1
+        },
+        {
+          "id": "SC_753",
+          "count": 1
+        },
+        {
+          "id": "SC_754",
+          "count": 1
+        },
+        {
+          "id": "SC_761",
+          "count": 1
+        },
+        {
+          "id": "SC_765",
+          "count": 1
+        },
+        {
+          "id": "SC_783",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-grimy-goons-hunter",
+      "name": "Grimy Goons · Hunter",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "HUNTER",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_026",
+          "count": 1
+        },
+        {
+          "id": "CFM_334",
+          "count": 1
+        },
+        {
+          "id": "CFM_336",
+          "count": 1
+        },
+        {
+          "id": "CFM_338",
+          "count": 1
+        },
+        {
+          "id": "CFM_685",
+          "count": 1
+        },
+        {
+          "id": "CFM_853",
+          "count": 1
+        },
+        {
+          "id": "WON_137",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-grimy-goons-paladin",
+      "name": "Grimy Goons · Paladin",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "PALADIN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_305",
+          "count": 1
+        },
+        {
+          "id": "CFM_639",
+          "count": 1
+        },
+        {
+          "id": "CFM_650",
+          "count": 1
+        },
+        {
+          "id": "CFM_685",
+          "count": 1
+        },
+        {
+          "id": "CFM_753",
+          "count": 1
+        },
+        {
+          "id": "CFM_853",
+          "count": 1
+        },
+        {
+          "id": "WON_137",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-grimy-goons-warrior",
+      "name": "Grimy Goons · Warrior",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "WARRIOR",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_631",
+          "count": 1
+        },
+        {
+          "id": "CFM_643",
+          "count": 1
+        },
+        {
+          "id": "CFM_685",
+          "count": 1
+        },
+        {
+          "id": "CFM_754",
+          "count": 1
+        },
+        {
+          "id": "CFM_755",
+          "count": 1
+        },
+        {
+          "id": "CFM_853",
+          "count": 1
+        },
+        {
+          "id": "WON_137",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-jade-lotus-druid",
+      "name": "Jade Lotus · Druid",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "DRUID",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_343",
+          "count": 1
+        },
+        {
+          "id": "CFM_602",
+          "count": 1
+        },
+        {
+          "id": "CFM_713",
+          "count": 1
+        },
+        {
+          "id": "CFM_715",
+          "count": 1
+        },
+        {
+          "id": "CFM_852",
+          "count": 1
+        },
+        {
+          "id": "CFM_902",
+          "count": 1
+        },
+        {
+          "id": "WON_118",
+          "count": 1
+        },
+        {
+          "id": "WON_136",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-jade-lotus-rogue",
+      "name": "Jade Lotus · Rogue",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "ROGUE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_690",
+          "count": 1
+        },
+        {
+          "id": "CFM_691",
+          "count": 1
+        },
+        {
+          "id": "CFM_715",
+          "count": 1
+        },
+        {
+          "id": "CFM_852",
+          "count": 1
+        },
+        {
+          "id": "CFM_902",
+          "count": 1
+        },
+        {
+          "id": "WON_118",
+          "count": 1
+        },
+        {
+          "id": "WON_136",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-jade-lotus-shaman",
+      "name": "Jade Lotus · Shaman",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "SHAMAN",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_312",
+          "count": 1
+        },
+        {
+          "id": "CFM_707",
+          "count": 1
+        },
+        {
+          "id": "CFM_715",
+          "count": 1
+        },
+        {
+          "id": "CFM_717",
+          "count": 1
+        },
+        {
+          "id": "CFM_852",
+          "count": 1
+        },
+        {
+          "id": "CFM_902",
+          "count": 1
+        },
+        {
+          "id": "WON_118",
+          "count": 1
+        },
+        {
+          "id": "WON_136",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-kabal-mage",
+      "name": "Kabal · Mage",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "MAGE",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_621",
+          "count": 1
+        },
+        {
+          "id": "CFM_687",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-kabal-priest",
+      "name": "Kabal · Priest",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "PRIEST",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_020",
+          "count": 1
+        },
+        {
+          "id": "CFM_621",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "faction-kabal-warlock",
+      "name": "Kabal · Warlock",
+      "categories": [
+        "packages"
+      ],
+      "packageKind": "Factions",
+      "packageClass": "WARLOCK",
+      "reason": "Named faction branch restricted to one playable class and its shared legal members.",
+      "cards": [
+        {
+          "id": "CFM_621",
+          "count": 1
+        },
+        {
+          "id": "CFM_750",
+          "count": 1
+        },
+        {
+          "id": "WON_324",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../LoaderPreferences.cs" />
+    <Compile Include="../../LoaderCoroutines.cs" />
+    <Compile Include="../../ComboCardTemplate.cs" Link="ComboCardTemplate.cs" />
+    <Compile Include="../../ComboCardText.cs" Link="ComboCardText.cs" />
+    <Compile Include="../../ComboPortraitMapping.cs" Link="ComboPortraitMapping.cs" />
+    <Compile Include="../../ComboEditorOptions.cs" Link="ComboEditorOptions.cs" />
+    <Compile Include="../../ComboNativeArrow.cs" Link="ComboNativeArrow.cs" />
+    <Compile Include="../../ComboFlavorPane.cs" Link="ComboFlavorPane.cs" />
+    <Compile Include="../../ComboNativeInput.cs" Link="ComboNativeInput.cs" />
+    <Compile Include="../../ExpansionFilterState.cs" Link="ExpansionFilterState.cs" />
+    <Compile Include="../../CategoryCatalog.cs" Link="CategoryCatalog.cs" />
+    <Compile Include="../../CategoryCombos.cs" Link="CategoryCombos.cs" />
+    <Compile Include="../../CatalogTransfer.cs" />
+    <Compile Include="../../CatalogTransferMenu.cs" />
+    <Compile Include="../../PackageCatalog.cs" />
+    <Compile Include="../../PackageViewState.cs" />
+    <Compile Include="../../PackageBrowser.cs" />
+    <Compile Include="../../ComboCollectionCards.Browser.cs" />
+    <Compile Include="../../ComboSceneGeometry.cs" Link="ComboSceneGeometry.cs" />
+    <Compile Include="../../ComboInspectLayout.cs" Link="ComboInspectLayout.cs" />
+    <Compile Include="../../PackageNavigation.cs" />
+    <Compile Include="../../PackagePicker.cs" />
+    <Compile Include="../../PackageNativeTile.cs" />
+    <Compile Include="../../PackageArtwork.cs" />
+    <Compile Include="../../ComboPopup.Packages.cs" />
+    <Compile Include="../../ComboPopup.Cards.cs" />
+    <Compile Include="../../ComboQuantityControl.cs" />
+    <Compile Include="../../ComboMemberScrollbar.cs" />
+    <Compile Include="../../NativeScrollbarArt.cs" />
+    <Compile Include="../../DropdownScrollbar.cs" />
+    <Compile Include="../../ComboPopup.cs" Link="ComboPopup.cs" />
+    <Compile Include="../../ComboNativeSkin.cs" Link="ComboNativeSkin.cs" />
+    <Compile Include="../../NativePopupDiagnostics.cs" Link="NativePopupDiagnostics.cs" />
+    <Compile Include="../../ComboCollectionCards.Packages.cs" />
+    <Compile Include="../../ComboCollectionCards.cs" Link="ComboCollectionCards.cs" />
+    <Compile Include="../../ComboCollectionCards.Native.cs" Link="ComboCollectionCards.Native.cs" />
+    <Compile Include="../../ComboCollectionCards.Loading.cs" />
+    <Compile Include="../../ComboCollectionCards.Deck.cs" Link="ComboCollectionCards.Deck.cs" />
+    <Compile Include="../../ComboCollectionCards.Input.cs" Link="ComboCollectionCards.Input.cs" />
+    <Compile Include="../../CategoryDeckImport.cs" Link="CategoryDeckImport.cs" />
+    <Compile Include="../../EditedCategoryDeckImport.cs" Link="EditedCategoryDeckImport.cs" />
+    <Compile Include="../../FilterModes.cs" Link="FilterModes.cs" />
+    <Compile Include="../../FilterBitSet.cs" Link="FilterBitSet.cs" />
+    <Compile Include="../../CollectionClickInspect.cs" Link="CollectionClickInspect.cs" />
+    <Compile Include="../../InspectCollectionRefresh.cs" Link="InspectCollectionRefresh.cs" />
+    <Compile Include="../../DisenchantPlan.cs" />
+    <Compile Include="../../StableNewSearch.cs" />
+    <Compile Include="../../CollectionOpenSearch.cs" />
+    <Compile Include="../../DisenchantChoices.cs" />
+    <Compile Include="../../DisenchantChoiceMenu.cs" />
+    <Compile Include="../../Patches/CollectibleCardClassFilterPatches.cs" />
+    <Compile Include="../../CollectionQualitySettings.cs" Link="CollectionQualitySettings.cs" />
+    <Compile Include="../../CustomFrameRate.cs" Link="CustomFrameRate.cs" />
+    <Compile Include="../../CustomFpsControl.cs" Link="CustomFpsControl.cs" />
+    <Compile Include="../../QualityOptions.cs" Link="QualityOptions.cs" />
+    <Compile Include="../../QualityDeckInput.cs" Link="QualityDeckInput.cs" />
+    <Compile Include="../../Patches/QualityDeckInputPatches.cs" Link="QualityDeckInputPatches.cs" />
+    <Compile Include="../../Patches/CollectionThemePatches.cs" />
+    <Compile Include="../../Patches/DropdownReadabilityPatches.cs" Link="DropdownReadabilityPatches.cs" />
+    <Compile Include="../../QualityChoiceMenu.cs" Link="QualityChoiceMenu.cs" />
+    <Compile Include="../../ModsSettingsMenu.Scrollbar.cs" Link="ModsSettingsMenu.Scrollbar.cs" />
+    <Compile Include="../../ModsSettingsMenu.Clip.cs" />
+    <Compile Include="../../SettingsTextClip.cs" />
+    <Compile Include="../../ModsSettingsMenu.Scroll.cs" Link="ModsSettingsMenu.Scroll.cs" />
+    <Compile Include="../../ModsSettingsMenu.cs" Link="ModsSettingsMenu.cs" />
+    <Compile Include="../../FilterGridLayout.cs" Link="FilterGridLayout.cs" />
+    <Compile Include="../../FilterPointerGesture.cs" Link="FilterPointerGesture.cs" />
+    <Compile Include="../../FilterButtonFeedback.cs" Link="FilterButtonFeedback.cs" />
+    <Compile Include="../../FilterTrayGeometry.cs" Link="FilterTrayGeometry.cs" />
+    <Compile Include="../../KeywordSetTray.Grid.cs" Link="KeywordSetTray.Grid.cs" />
+    <Compile Include="../../KeywordFilterUi.FilterChanges.cs" Link="KeywordFilterUi.FilterChanges.cs" />
+    <Compile Include="../../KeywordGroups.cs" Link="KeywordGroups.cs" />
+    <Compile Include="../../KeywordSetTray.Modes.cs" Link="KeywordSetTray.Modes.cs" />
+    <Compile Include="../../KeywordSetTray.Controls.cs" />
+    <Compile Include="../../KeywordSetTray.Keywords.cs" Link="KeywordSetTray.Keywords.cs" />
+    <Compile Include="../../KeywordSetTray.Rows.cs" Link="KeywordSetTray.Rows.cs" />
+    <Compile Include="../../KeywordSetTray.Extras.cs" Link="KeywordSetTray.Extras.cs" />
+    <Compile Include="../../ExtraFilterCatalog.cs" Link="ExtraFilterCatalog.cs" />
+    <Compile Include="../../KeywordFilterState.cs" Link="KeywordFilterState.cs" />
+    <Compile Include="../../KeywordSetTray.Back.cs" Link="KeywordSetTray.Back.cs" />
+    <Compile Include="../../KeywordSetTray.Visibility.cs" Link="KeywordSetTray.Visibility.cs" />
+    <Compile Include="../../KeywordSetTray.Input.cs" Link="KeywordSetTray.Input.cs" />
+    <Compile Include="../../KeywordSetTray.Interaction.cs" Link="KeywordSetTray.Interaction.cs" />
+    <Compile Include="../../KeywordSetTray.Expansions.cs" Link="KeywordSetTray.Expansions.cs" />
+    <Compile Include="../../CollectionFilterMenu.cs" Link="CollectionFilterMenu.cs" />
+    <Compile Include="../../ExpansionIconMarker.cs" Link="ExpansionIconMarker.cs" />
+    <Compile Include="../../CollectionPageDiagnostics.cs" />
+    <Compile Include="../../CollectionPageAnchor.cs" Link="CollectionPageAnchor.cs" />
+    <Compile Include="../../MixedPremiumPair.cs" Link="MixedPremiumPair.cs" />
+    <Compile Include="../../MixedPremiumMesh.cs" Link="MixedPremiumMesh.cs" />
+    <Compile Include="../../MixedPremiumCard.cs" Link="MixedPremiumCard.cs" />
+    <Compile Include="../../CollapsedPremiumCount.cs" Link="CollapsedPremiumCount.cs" />
+    <Compile Include="../../CounterTextLayout.cs" Link="CounterTextLayout.cs" />
+    <Compile Include="../../CounterSeparators.cs" Link="CounterSeparators.cs" />
+    <Compile Include="../../CounterOutline.cs" Link="CounterOutline.cs" />
+    <Compile Include="../../PreferredPremiumHelper.cs" Link="PreferredPremiumHelper.cs" />
+    <Compile Include="../../PreferredQualityCollapse.cs" Link="PreferredQualityCollapse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="../../Packages.json"><LogicalName>BetterCollectionManager.Packages.json</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="../../Categories.json">
+      <LogicalName>BetterCollectionManager.Categories.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

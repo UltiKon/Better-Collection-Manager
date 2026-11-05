@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="GameInstall.props" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A7C3E91F-2B54-4D18-9E6A-1F8C0D4B5E72}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterCollectionManager</RootNamespace>
+    <AssemblyName>BetterCollectionManager</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=/_/</PathMap>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(GameEditionDefine)</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;$(GameEditionDefine)</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Theorycrafting|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(GameEditionDefine)</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Theorycrafting|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;$(GameEditionDefine)</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="BetterCollectionManager.Shared.props" />
+  <ItemGroup>
+    <Compile Include="BetterCollectionManagerMod.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>$(GameMelonLoaderPath)0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GameManagedPath)Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Blizzard.T5.Game">
+      <HintPath>$(GameManagedPath)Blizzard.T5.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="Blizzard.T5.Core">
+      <HintPath>$(GameManagedPath)Blizzard.T5.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Blizzard.T5.AssetManager">
+      <HintPath>$(GameManagedPath)Blizzard.T5.AssetManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Blizzard.T5.AssetLoader">
+      <HintPath>$(GameManagedPath)Blizzard.T5.AssetLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="Blizzard.T5.ServiceLocator">
+      <HintPath>$(GameManagedPath)Blizzard.T5.ServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Blizzard.T5.UberText.Runtime">
+      <HintPath>$(GameManagedPath)Blizzard.T5.UberText.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="blizzard.bgsclient">
+      <HintPath>$(GameManagedPath)blizzard.bgsclient.dll</HintPath>
+    </Reference>
+    <Reference Include="MelonLoader">
+      <HintPath>$(GameMelonLoaderPath)MelonLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="UnityEngine.UI"><HintPath>$(GameManagedPath)UnityEngine.UI.dll</HintPath></Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(GameManagedPath)UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(GameManagedPath)UnityEngine.IMGUIModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GameManagedPath)UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>$(GameManagedPath)UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(GameManagedPath)UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(GameManagedPath)UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(GameManagedPath)UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(GameManagedPath)UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Update="*">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="ValidateGameInstall" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(GameInstallRoot)' == ''" Text="Set GameInstallRoot to your Hearthstone installation." />
+    <Error Condition="!Exists('$(GameManagedPath)Assembly-CSharp.dll')" Text="GameInstallRoot must contain Hearthstone_Data/Managed/Assembly-CSharp.dll." />
+    <Error Condition="!Exists('$(GameMelonLoaderPath)MelonLoader.dll') Or !Exists('$(GameMelonLoaderPath)0Harmony.dll')" Text="Set GameMelonLoaderPath to the directory containing MelonLoader.dll and 0Harmony.dll." />
+  </Target>
+  <Target Name="CopyModToBothGameInstalls" AfterTargets="Build" Condition="'$(DeployMod)' == 'true'">
+    <MakeDir Directories="$(LiveGameModsPath)" Condition="'$(LiveGameInstallRoot)' != '' And Exists('$(LiveGameInstallRoot)')" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(LiveGameModsPath)" Condition="'$(LiveGameInstallRoot)' != '' And Exists('$(LiveGameInstallRoot)')" />
+    <MakeDir Directories="$(TheorycraftingGameModsPath)" Condition="'$(TheorycraftingGameInstallRoot)' != '' And Exists('$(TheorycraftingGameInstallRoot)')" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(TheorycraftingGameModsPath)" Condition="'$(TheorycraftingGameInstallRoot)' != '' And Exists('$(TheorycraftingGameInstallRoot)')" />
+  </Target>
+  <ItemGroup>
+    <EmbeddedResource Include="Packages.json"><LogicalName>BetterCollectionManager.Packages.json</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Categories.json">
+      <LogicalName>BetterCollectionManager.Categories.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

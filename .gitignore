@@ -1,0 +1,17 @@
+/obj/
+/bin/
+/linux-build/
+/artifacts/
+Tests/**/bin/
+Tests/**/obj/
+/.vs/
+*.user
+*.suo
+
+/dist/
+
+**/__pycache__/
+/Installer/payload/
+/BCM-Setup-Backups/
+
+/bepinex-build/

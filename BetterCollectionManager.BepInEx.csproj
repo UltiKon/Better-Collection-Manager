@@ -1,0 +1,67 @@
+<Project>
+  <!-- Set this before SDK props so assets and generated files cannot collide
+       with the existing MelonLoader project in the same directory. -->
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj/BepInEx/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <AssemblySearchPaths>{HintPathFromItem};{TargetFrameworkDirectory};{RawFileName}</AssemblySearchPaths>
+    <AssemblyName>BetterCollectionManager</AssemblyName>
+    <RootNamespace>BetterCollectionManager</RootNamespace>
+    <DefineConstants>$(DefineConstants);BEPINEX</DefineConstants>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=/_/</PathMap>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+    <DebugSymbols Condition="'$(Configuration)' == 'Release'">false</DebugSymbols>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bepinex-build/</OutputPath>
+    <GameInstallRoot Condition="'$(GameInstallRoot)' == ''">$(GAME_DIR)</GameInstallRoot>
+    <GameManagedDir>$(GameInstallRoot)/Hearthstone_Data/Managed</GameManagedDir>
+    <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$(GameInstallRoot)/BepInEx/core</BepInExCoreDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3" PrivateAssets="all" />
+    <Compile Include="BetterCollectionManagerPlugin.cs" />
+    <Reference Include="BepInEx"><HintPath>$(BepInExCoreDir)/BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(BepInExCoreDir)/0Harmony.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <Import Project="BetterCollectionManager.Shared.props" />
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp"><HintPath>$(GameManagedDir)/Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Blizzard.T5.Game"><HintPath>$(GameManagedDir)/Blizzard.T5.Game.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Blizzard.T5.Core"><HintPath>$(GameManagedDir)/Blizzard.T5.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Blizzard.T5.AssetManager"><HintPath>$(GameManagedDir)/Blizzard.T5.AssetManager.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Blizzard.T5.AssetLoader"><HintPath>$(GameManagedDir)/Blizzard.T5.AssetLoader.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Blizzard.T5.ServiceLocator"><HintPath>$(GameManagedDir)/Blizzard.T5.ServiceLocator.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Blizzard.T5.UberText.Runtime"><HintPath>$(GameManagedDir)/Blizzard.T5.UberText.Runtime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="blizzard.bgsclient"><HintPath>$(GameManagedDir)/blizzard.bgsclient.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(GameManagedDir)/UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(GameManagedDir)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(GameManagedDir)/UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameManagedDir)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AnimationModule"><HintPath>$(GameManagedDir)/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(GameManagedDir)/UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(GameManagedDir)/UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(GameManagedDir)/UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(GameManagedDir)/UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Packages.json"><LogicalName>BetterCollectionManager.Packages.json</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Categories.json">
+      <LogicalName>BetterCollectionManager.Categories.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Target Name="ValidateGameInstall" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(GameInstallRoot)' == ''" Text="Set GAME_DIR or GameInstallRoot to your Hearthstone installation." />
+    <Error Condition="!Exists('$(GameManagedDir)/Assembly-CSharp.dll')" Text="GameInstallRoot must contain Hearthstone_Data/Managed/Assembly-CSharp.dll." />
+    <Error Condition="!Exists('$(BepInExCoreDir)/BepInEx.dll') Or !Exists('$(BepInExCoreDir)/0Harmony.dll')" Text="Set BepInExCoreDir to a BepInEx 5 Unity Mono core directory containing BepInEx.dll and 0Harmony.dll." />
+  </Target>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

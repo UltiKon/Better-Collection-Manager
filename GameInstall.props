@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Supply GameInstallRoot (or LiveGameInstallRoot) via MSBuild or environment.
+       Optional TheorycraftingGameInstallRoot selects that client's references.
+       DeployMod=true explicitly enables copying to existing game installations. -->
+  <PropertyGroup>
+    <LiveGameInstallRoot Condition="'$(LiveGameInstallRoot)' == ''">$(GameInstallRoot)</LiveGameInstallRoot>
+    <LiveGameModsPath Condition="'$(LiveGameInstallRoot)' != ''">$(LiveGameInstallRoot)\Mods\</LiveGameModsPath>
+    <TheorycraftingGameModsPath Condition="'$(TheorycraftingGameInstallRoot)' != ''">$(TheorycraftingGameInstallRoot)\Mods\</TheorycraftingGameModsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug-Theorycrafting' Or '$(Configuration)' == 'Release-Theorycrafting'">
+    <GameEdition>Theorycrafting</GameEdition>
+    <GameInstallRoot Condition="'$(TheorycraftingGameInstallRoot)' != ''">$(TheorycraftingGameInstallRoot)</GameInstallRoot>
+    <GameEditionDefine>GAME_EDITION_THEORYCRAFTING</GameEditionDefine>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GameEdition)' == ''">
+    <GameEdition>Live</GameEdition>
+    <GameEditionDefine>GAME_EDITION_LIVE</GameEditionDefine>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GameInstallRoot Condition="'$(GameInstallRoot)' == ''">$(LiveGameInstallRoot)</GameInstallRoot>
+    <GameManagedPath>$(GameInstallRoot)\Hearthstone_Data\Managed\</GameManagedPath>
+    <GameMelonLoaderPath Condition="'$(GameMelonLoaderPath)' == '' And Exists('$(GameInstallRoot)\MelonLoader\net35\MelonLoader.dll')">$(GameInstallRoot)\MelonLoader\net35\</GameMelonLoaderPath>
+    <GameMelonLoaderPath Condition="'$(GameMelonLoaderPath)' == ''">$(GameInstallRoot)\MelonLoader\</GameMelonLoaderPath>
+  </PropertyGroup>
+</Project>

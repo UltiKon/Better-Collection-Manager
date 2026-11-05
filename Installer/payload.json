@@ -1,0 +1,10 @@
+{
+  "files": {
+    "payload/CustomCorlib-Unity6000/Mono.Btls.Interface.dll": "93ee11f2e0a9e2364b67b4e70a4974409494254c53e278f394e2c6dffa10e9c5",
+    "payload/CustomCorlib-Unity6000/Mono.Security.dll": "618009319dbf3ae374f9b5dc0d0522e1e1bdd172200c120a5471747b7991a584",
+    "payload/CustomCorlib-Unity6000/System.Core.dll": "a5e7d47313da0eca0b92a901a30498f5e970916faf63b70b74dd62b09760ed72",
+    "payload/CustomCorlib-Unity6000/System.dll": "7019d6b6dbfa07cf30f62e7d3ccb969f70cbf001fd72112938ffb535c7f75d81",
+    "payload/CustomCorlib-Unity6000/mscorlib.dll": "6c76e06e6d44cf0f39bf59e6a90770968b70093ad4c1572dfbc5e46e431c5fbf",
+    "payload/Mods/BetterCollectionManager.dll": "680da0e79d056b5d6c215437e2efa62b0249df5bc181e28e0494ada592c30d0f"
+  }
+}
