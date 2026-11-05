@@ -7,6 +7,10 @@ date. Superseded intermediate layouts and experiments are not separate features.
 
 ## 0.1.0 — 2026-11-05
 
+- Fixed release verification on machines with only a newer .NET runtime, such
+  as .NET 10. The net8.0 verification tool can now use the installed newer runtime;
+  the mod DLLs still target .NET Framework 4.7.2.
+
 - Added a shared release command that builds and verifies both loader variants
   before packaging either one, retaining version 0.1.0.
 

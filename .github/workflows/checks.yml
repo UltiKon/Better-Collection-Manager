@@ -49,3 +49,9 @@ jobs:
           unzip -q "$RUNNER_TEMP/bepinex.zip" 'BepInEx/core/*' -d "$RUNNER_TEMP/bepinex"
       - name: Check CFG persistence and Firestone metadata
         run: dotnet run --project tests/BepInEx/BepInEx.csproj -c Release -p:BepInExCoreDir="$RUNNER_TEMP/bepinex/BepInEx/core" -- --config-only
+      - name: Check verification with only a .NET 10 runtime
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/dotnet10-only"
+          curl -fsSL https://builds.dotnet.microsoft.com/dotnet/Runtime/10.0.13/dotnet-runtime-10.0.13-linux-x64.tar.gz | tar -xz -C "$RUNNER_TEMP/dotnet10-only"
+          DOTNET_ROLL_FORWARD=Major "$RUNNER_TEMP/dotnet10-only/dotnet" tests/BepInEx/bin/Release/net8.0/BetterCollectionManager.BepInExChecks.dll --config-only

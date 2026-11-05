@@ -113,7 +113,8 @@ To build, verify and package **both** loader variants at the current version:
 GAME_DIR="/path/to/Hearthstone" bash tools/build-release.sh
 ```
 
-This needs a .NET 8 SDK, Python 3.10+ and reference DLLs for both loaders.
+This needs a .NET SDK 8 or newer, Python 3.10+ and reference DLLs for both loaders.
+The verifier uses .NET 8 when available, or a newer installed runtime such as .NET 10.
 The two ZIPs are written to `dist/` only after both builds and metadata checks pass.
 
 These scripts compile the mod; copy the resulting DLL to the matching loader's

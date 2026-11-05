@@ -53,7 +53,12 @@ To rebuild both variants as **0.1.0** and create their separate ZIPs in one run:
 GAME_DIR="/path/to/Hearthstone" bash tools/build-release.sh
 ```
 
-This uses the .NET 8 SDK and Python 3.10+. Game references, BepInEx core DLLs and
+This uses a .NET SDK 8 or newer and Python 3.10+. The verification tool targets
+.NET 8; the wrapper allows it to run on a newer installed runtime when .NET 8 is
+absent, including a machine with only .NET 10 installed. This
+[Major runtime roll-forward](https://learn.microsoft.com/en-us/dotnet/core/versions/selection#control-roll-forward-behavior)
+applies only to verification. Both mod DLLs continue to target .NET Framework 4.7.2.
+Game references, BepInEx core DLLs and
 MelonLoader reference DLLs must be available to the existing build scripts.
 `BEPINEX_CORE_DIR` can point to a separate BepInEx core directory. The wrapper
 builds both DLLs, verifies their loader metadata and shared version, then packages

@@ -7,7 +7,8 @@ export GAME_DIR="${GAME_DIR:-$HOME/Games/battlenet/drive_c/Program Files (x86)/H
 bash tools/build-bepinex.sh
 bash tools/build-linux.sh
 
-dotnet run --project tests/BepInEx/BepInEx.csproj -c Release \
+# Allow the net8.0 verification tool to use a newer installed runtime.
+DOTNET_ROLL_FORWARD=Major dotnet run --project tests/BepInEx/BepInEx.csproj -c Release \
   -p:BepInExCoreDir="${BEPINEX_CORE_DIR:-$GAME_DIR/BepInEx/core}" -- \
   artifacts/bepinex/BetterCollectionManager.dll \
   artifacts/melonloader/BetterCollectionManager.dll
