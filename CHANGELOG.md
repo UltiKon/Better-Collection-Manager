@@ -7,6 +7,9 @@ date. Superseded intermediate layouts and experiments are not separate features.
 
 ## 0.1.0 — 2026-11-05
 
+- Added a shared release command that builds and verifies both loader variants
+  before packaging either one, retaining version 0.1.0.
+
 - Organized the repository into `src/`, `docs/`, `tests/`, `tools/`, `data/`,
   `config/`, `installer/` and `diagnostics/`. Build outputs now go under
   `artifacts/`; project references, CI, documentation and release packaging use

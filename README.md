@@ -107,6 +107,15 @@ Replace `/path/to/Hearthstone` with the folder containing `Hearthstone_Data`.
 | BepInEx 5 Unity Mono | `GAME_DIR="/path/to/Hearthstone" bash tools/build-bepinex.sh` | `artifacts/bepinex/BetterCollectionManager.dll` |
 | MelonLoader | `GAME_DIR="/path/to/Hearthstone" bash tools/build-linux.sh` | `artifacts/melonloader/BetterCollectionManager.dll` |
 
+To build, verify and package **both** loader variants at the current version:
+
+```sh
+GAME_DIR="/path/to/Hearthstone" bash tools/build-release.sh
+```
+
+This needs a .NET 8 SDK, Python 3.10+ and reference DLLs for both loaders.
+The two ZIPs are written to `dist/` only after both builds and metadata checks pass.
+
 These scripts compile the mod; copy the resulting DLL to the matching loader's
 folder yourself. For custom reference paths and direct build commands, see the
 [BepInEx build guide](docs/README-BEPINEX.md#build) or the

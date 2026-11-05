@@ -45,6 +45,22 @@ transaction tests create their own payload fixtures. Tests that need the officia
 Windows or macOS loader archive are skipped when it is absent; skipping them does
 not verify a real installer bundle.
 
+## Build and package both variants
+
+To rebuild both variants as **0.1.0** and create their separate ZIPs in one run:
+
+```sh
+GAME_DIR="/path/to/Hearthstone" bash tools/build-release.sh
+```
+
+This uses the .NET 8 SDK and Python 3.10+. Game references, BepInEx core DLLs and
+MelonLoader reference DLLs must be available to the existing build scripts.
+`BEPINEX_CORE_DIR` can point to a separate BepInEx core directory. The wrapper
+builds both DLLs, verifies their loader metadata and shared version, then packages
+them. A failed build or verification stops before either ZIP is packaged.
+Building both variants does not require enabling both loaders when launching
+the game; keep one loader active per launch.
+
 ## Build and package BepInEx
 
 With BepInEx 5 core DLLs in the game's `BepInEx/core/`, use Bash:
