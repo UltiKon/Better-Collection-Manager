@@ -136,17 +136,10 @@ For packaging and release validation, see the [release guide](docs/RELEASING.md)
 
 The hub/Darkmoon experiments remain disabled in both loader builds.
 
-## AI-assisted development
-
-AI tools, including OpenAI Codex, are used to help write and revise code,
-documentation and tests, and to assist with refactoring and release preparation.
-Contributions can therefore contain AI-generated code and text. Maintainers are
-responsible for reviewing changes and deciding what to release. Automated checks
-cover specific behavior; game integration and rendering still require testing
-in a running Hearthstone client.
-
 ## License and credits
 
 By UltiKon, Imik and contributors. The mod, installer and original project code
 use the [MIT License](LICENSE). Third-party components retain their own licenses;
 see [third-party notices](installer/ThirdParty/NOTICES.md).
+
+Developed with AI assistance, including OpenAI Codex.
