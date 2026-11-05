@@ -1,11 +1,16 @@
 # Changelog
 
-Changes are grouped by UTC commit date. The [user guide](USER-GUIDE.md) and
-[technical reference](TECHNICAL-REFERENCE.md) document the current behavior;
+Changes are grouped by UTC commit date. The [user guide](docs/USER-GUIDE.md) and
+[technical reference](docs/TECHNICAL-REFERENCE.md) document the current behavior;
 this file records the features and fixes delivered on each
 date. Superseded intermediate layouts and experiments are not separate features.
 
 ## 0.1.0 — 2026-11-05
+
+- Organized the repository into `src/`, `docs/`, `tests/`, `tools/`, `data/`,
+  `config/`, `installer/` and `diagnostics/`. Build outputs now go under
+  `artifacts/`; project references, CI, documentation and release packaging use
+  the same layout.
 
 - Added Firestone mod-list metadata in the BepInEx CFG's General section. The
   plugin GUID and CFG filename now match `BetterCollectionManager.dll`; the

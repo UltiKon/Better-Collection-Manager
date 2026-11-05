@@ -23,20 +23,32 @@ There are two loader versions of the mod. Choose the instructions for your packa
 
 | What you have or need | Read this |
 | --- | --- |
-| A ZIP containing `BepInEx/plugins/BetterCollectionManager/BetterCollectionManager.dll` | [BepInEx installation](README-BEPINEX.md#how-to-install) |
-| A ZIP containing `Mods/BetterCollectionManager.dll`, with MelonLoader already working | [Manual MelonLoader installation](DISTRIBUTION.md#installation) |
-| Setup scripts and a `payload/` folder, or you want automated MelonLoader setup | [Installer guide](Installer/README.md) |
-| The mod is installed and you want to learn its controls | [User guide](USER-GUIDE.md) |
+| A ZIP containing `BepInEx/plugins/BetterCollectionManager/BetterCollectionManager.dll` | [BepInEx installation](docs/README-BEPINEX.md#how-to-install) |
+| A ZIP containing `Mods/BetterCollectionManager.dll`, with MelonLoader already working | [Manual MelonLoader installation](docs/DISTRIBUTION.md#installation) |
+| Setup scripts and a `payload/` folder, or you want automated MelonLoader setup | [Installer guide](installer/README.md) |
+| The mod is installed and you want to learn its controls | [User guide](docs/USER-GUIDE.md) |
 | You want to change or compile the code | [Build from source](#build-from-source) |
 
 The BepInEx and MelonLoader DLLs have the same filename but are different builds.
 Use one loader and one copy of the mod per launch. The automated installer sets up
 **MelonLoader only**.
 
+## Operating systems and test status
+
+| Operating system | Installation route | Status |
+| --- | --- | --- |
+| **Windows** | Windows x64 Hearthstone with BepInEx 5 Unity Mono, or the MelonLoader installer | Build and setup targets; verify with your installed client |
+| **Linux** | Windows Hearthstone through **Wine**, using the Windows x64 loader | Wine setup is provided; there is no native Linux game build in this package |
+| **macOS with CrossOver** | Windows Hearthstone using the Windows x64 loader | **Untested**; a Windows/Wine setup route is provided |
+| **Native macOS** | Experimental MelonLoader x64 setup and its generated `Start-BCM.command` launcher | **Untested and experimental**; requires an x86_64 game executable. Apple Silicon also requires Rosetta. Native login is unverified |
+
+**macOS has not been tested**, including both CrossOver and the native launcher.
+
 The BepInEx port has been compiled against BepInEx 5.4.23.6 and the supplied game
-references, but has not yet been tested in a running Hearthstone client. Native
-macOS setup is experimental. Building successfully does not confirm compatibility
-with your installed game version.
+references, but has not yet been tested in a running Hearthstone client. BepInEx
+startup must be verified separately for your platform. These are installation
+targets, not a claim that every operating system, game update or loader version
+has been tested. Building successfully does not confirm runtime compatibility.
 
 ## Your first session
 
@@ -50,8 +62,23 @@ Normal/Golden tiles are enabled, and the collection can open with a search for
 new or refundable cards. If the collection looks unexpectedly small, clear the
 search and filters first. Existing saved settings take precedence over defaults.
 
-See the [user guide](USER-GUIDE.md) for split-card controls, display options,
+See the [user guide](docs/USER-GUIDE.md) for split-card controls, display options,
 ownership counters and common questions.
+
+## Repository layout
+
+```text
+src/BetterCollectionManager/   C# projects, mod code, patches and assembly metadata
+config/                       Default settings snapshot
+data/                         Embedded catalogs and catalog audit data
+docs/                         Installation, user and developer guides
+tests/                        Regression suites and fixtures
+tools/                        Build, packaging and maintenance scripts
+installer/                    Automated MelonLoader installer and license notices
+diagnostics/                  Optional startup investigation tools
+artifacts/                    Local build outputs (ignored by Git)
+dist/                         Generated release ZIPs (ignored by Git)
+```
 
 ## Build from source
 
@@ -59,58 +86,67 @@ This section is for developers. You need a .NET SDK, the reference DLLs from you
 Hearthstone installation, and the core DLLs for the loader you are targeting.
 Game and loader DLLs are not included here.
 
-Run the commands below **from this source directory**: the folder containing the
-`.csproj` files and build scripts. In a release ZIP, open a terminal in `Source/`.
+Run the commands below **from the repository root**: the folder containing
+`README.md` and `BetterCollectionManager.sln`. In a release ZIP, this is `Source/`.
 Replace `/path/to/Hearthstone` with the folder containing `Hearthstone_Data`.
 
 | Target | Bash command | Output |
 | --- | --- | --- |
-| BepInEx 5 Unity Mono | `GAME_DIR="/path/to/Hearthstone" bash build-bepinex.sh` | `bepinex-build/BetterCollectionManager.dll` |
-| MelonLoader | `GAME_DIR="/path/to/Hearthstone" bash build-linux.sh` | `linux-build/BetterCollectionManager.dll` |
+| BepInEx 5 Unity Mono | `GAME_DIR="/path/to/Hearthstone" bash tools/build-bepinex.sh` | `artifacts/bepinex/BetterCollectionManager.dll` |
+| MelonLoader | `GAME_DIR="/path/to/Hearthstone" bash tools/build-linux.sh` | `artifacts/melonloader/BetterCollectionManager.dll` |
 
 These scripts compile the mod; copy the resulting DLL to the matching loader's
 folder yourself. For custom reference paths and direct build commands, see the
-[BepInEx build guide](README-BEPINEX.md#build) or the
-[Linux/MelonLoader build guide](README-LINUX.md).
+[BepInEx build guide](docs/README-BEPINEX.md#build) or the
+[Linux/MelonLoader build guide](docs/README-LINUX.md).
 Windows MSBuild instructions and the project file map are in the
-[technical reference](TECHNICAL-REFERENCE.md#build).
+[technical reference](docs/TECHNICAL-REFERENCE.md#build).
 
 ### Run the managed checks
 
-With a .NET 8 SDK, run these from the same source directory. These suites use
+With a .NET 8 SDK, run these from the repository root. These suites use
 managed fixtures and do not need a running game:
 
 ```sh
-dotnet run --project Tests/Defaults/Defaults.csproj -c Release
-dotnet run --project Tests/MixedPremium/MixedPremium.csproj -c Release
-dotnet run --project Tests/KeywordFilters/KeywordFilters.csproj -c Release
-dotnet run --project Tests/HubMenu/HubMenu.csproj -c Release
-dotnet run --project Tests/CollapseMode/CollapseMode.csproj -c Release
-dotnet run --project Tests/Pagination/Pagination.csproj -c Release
-python3 -m unittest discover -s Tests/Installer -v
+dotnet run --project tests/Defaults/Defaults.csproj -c Release
+dotnet run --project tests/MixedPremium/MixedPremium.csproj -c Release
+dotnet run --project tests/KeywordFilters/KeywordFilters.csproj -c Release
+dotnet run --project tests/HubMenu/HubMenu.csproj -c Release
+dotnet run --project tests/CollapseMode/CollapseMode.csproj -c Release
+dotnet run --project tests/Pagination/Pagination.csproj -c Release
+python3 -m unittest discover -s tests/Installer -v
 ```
 
 Game API and BepInEx integration checks require additional references; see
-[Native API checks](Tests/NativeApi/README.md) and
-[BepInEx verification](README-BEPINEX.md#verification).
-For packaging and release validation, see the [release guide](RELEASING.md).
+[Native API checks](tests/NativeApi/README.md) and
+[BepInEx verification](docs/README-BEPINEX.md#verification).
+For packaging and release validation, see the [release guide](docs/RELEASING.md).
 
 ## More documentation
 
 | Document | What it covers |
 | --- | --- |
-| [User guide](USER-GUIDE.md) | Daily use, settings and troubleshooting |
-| [Technical reference](TECHNICAL-REFERENCE.md) | Detailed behavior, implementation and in-game checks |
-| [Default settings](BetterCollectionManager.cfg) | Compiled into both builds; no manual copy needed |
+| [User guide](docs/USER-GUIDE.md) | Daily use, settings and troubleshooting |
+| [Technical reference](docs/TECHNICAL-REFERENCE.md) | Detailed behavior, implementation and in-game checks |
+| [Default settings](config/BetterCollectionManager.cfg) | Compiled into both builds; no manual copy needed |
 | [Changelog](CHANGELOG.md) | Historical changes |
-| [Efficiency audit](EFFICIENCY-AUDIT.md) | Performance work and measurement limits |
-| [Category definitions](Data/Categories.md) | Catalog coverage and classification |
-| [Package manifest](Data/Packages.md) | Built-in packages |
+| [Efficiency audit](docs/EFFICIENCY-AUDIT.md) | Performance work and measurement limits |
+| [Category definitions](data/Categories.md) | Catalog coverage and classification |
+| [Package manifest](data/Packages.md) | Built-in packages |
 
 The hub/Darkmoon experiments remain disabled in both loader builds.
+
+## AI-assisted development
+
+AI tools, including OpenAI Codex, are used to help write and revise code,
+documentation and tests, and to assist with refactoring and release preparation.
+Contributions can therefore contain AI-generated code and text. Maintainers are
+responsible for reviewing changes and deciding what to release. Automated checks
+cover specific behavior; game integration and rendering still require testing
+in a running Hearthstone client.
 
 ## License and credits
 
 By UltiKon, Imik and contributors. The mod, installer and original project code
 use the [MIT License](LICENSE). Third-party components retain their own licenses;
-see [third-party notices](Installer/ThirdParty/NOTICES.md).
+see [third-party notices](installer/ThirdParty/NOTICES.md).

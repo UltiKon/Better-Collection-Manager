@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/BetterCollectionManager/LoaderPreferences.cs" />
+    <Compile Include="../../src/BetterCollectionManager/HubMenuSettings.cs" />
+    <Compile Include="../../src/BetterCollectionManager/HubMenuPatches.cs" />
+    <Compile Include="../../src/BetterCollectionManager/HubModesMenu.cs" />
+    <Compile Include="../../src/BetterCollectionManager/NativeHubButtons.cs" />
+    <Compile Include="../../src/BetterCollectionManager/StaticDarkmoonButton.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DarkmoonLogoCache.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DarkmoonLogoSource.cs" />
+  </ItemGroup>
+</Project>

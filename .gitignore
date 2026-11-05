@@ -2,8 +2,8 @@
 /bin/
 /linux-build/
 /artifacts/
-Tests/**/bin/
-Tests/**/obj/
+**/bin/
+**/obj/
 /.vs/
 *.user
 *.suo
@@ -11,7 +11,7 @@ Tests/**/obj/
 /dist/
 
 **/__pycache__/
-/Installer/payload/
+/installer/payload/
 /BCM-Setup-Backups/
 
 /bepinex-build/

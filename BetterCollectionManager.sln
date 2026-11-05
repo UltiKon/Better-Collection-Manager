@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCollectionManager", "BetterCollectionManager.csproj", "{A7C3E91F-2B54-4D18-9E6A-1F8C0D4B5E72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCollectionManager", "src\BetterCollectionManager\BetterCollectionManager.csproj", "{A7C3E91F-2B54-4D18-9E6A-1F8C0D4B5E72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

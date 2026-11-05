@@ -1,0 +1,113 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/BetterCollectionManager/LoaderPreferences.cs" />
+    <Compile Include="../../src/BetterCollectionManager/LoaderCoroutines.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCardTemplate.cs" Link="ComboCardTemplate.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCardText.cs" Link="ComboCardText.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboPortraitMapping.cs" Link="ComboPortraitMapping.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboEditorOptions.cs" Link="ComboEditorOptions.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboNativeArrow.cs" Link="ComboNativeArrow.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboFlavorPane.cs" Link="ComboFlavorPane.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboNativeInput.cs" Link="ComboNativeInput.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ExpansionFilterState.cs" Link="ExpansionFilterState.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CategoryCatalog.cs" Link="CategoryCatalog.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CategoryCombos.cs" Link="CategoryCombos.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CatalogTransfer.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CatalogTransferMenu.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackageCatalog.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackageViewState.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackageBrowser.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Browser.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboSceneGeometry.cs" Link="ComboSceneGeometry.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboInspectLayout.cs" Link="ComboInspectLayout.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackageNavigation.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackagePicker.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackageNativeTile.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PackageArtwork.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboPopup.Packages.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboPopup.Cards.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboQuantityControl.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboMemberScrollbar.cs" />
+    <Compile Include="../../src/BetterCollectionManager/NativeScrollbarArt.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DropdownScrollbar.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboPopup.cs" Link="ComboPopup.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboNativeSkin.cs" Link="ComboNativeSkin.cs" />
+    <Compile Include="../../src/BetterCollectionManager/NativePopupDiagnostics.cs" Link="NativePopupDiagnostics.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Packages.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.cs" Link="ComboCollectionCards.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Native.cs" Link="ComboCollectionCards.Native.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Loading.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Deck.cs" Link="ComboCollectionCards.Deck.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Input.cs" Link="ComboCollectionCards.Input.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CategoryDeckImport.cs" Link="CategoryDeckImport.cs" />
+    <Compile Include="../../src/BetterCollectionManager/EditedCategoryDeckImport.cs" Link="EditedCategoryDeckImport.cs" />
+    <Compile Include="../../src/BetterCollectionManager/FilterModes.cs" Link="FilterModes.cs" />
+    <Compile Include="../../src/BetterCollectionManager/FilterBitSet.cs" Link="FilterBitSet.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollectionClickInspect.cs" Link="CollectionClickInspect.cs" />
+    <Compile Include="../../src/BetterCollectionManager/InspectCollectionRefresh.cs" Link="InspectCollectionRefresh.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DisenchantPlan.cs" />
+    <Compile Include="../../src/BetterCollectionManager/StableNewSearch.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollectionOpenSearch.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DisenchantChoices.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DisenchantChoiceMenu.cs" />
+    <Compile Include="../../src/BetterCollectionManager/Patches/CollectibleCardClassFilterPatches.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollectionQualitySettings.cs" Link="CollectionQualitySettings.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CustomFrameRate.cs" Link="CustomFrameRate.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CustomFpsControl.cs" Link="CustomFpsControl.cs" />
+    <Compile Include="../../src/BetterCollectionManager/QualityOptions.cs" Link="QualityOptions.cs" />
+    <Compile Include="../../src/BetterCollectionManager/QualityDeckInput.cs" Link="QualityDeckInput.cs" />
+    <Compile Include="../../src/BetterCollectionManager/Patches/QualityDeckInputPatches.cs" Link="QualityDeckInputPatches.cs" />
+    <Compile Include="../../src/BetterCollectionManager/Patches/CollectionThemePatches.cs" />
+    <Compile Include="../../src/BetterCollectionManager/Patches/DropdownReadabilityPatches.cs" Link="DropdownReadabilityPatches.cs" />
+    <Compile Include="../../src/BetterCollectionManager/QualityChoiceMenu.cs" Link="QualityChoiceMenu.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ModsSettingsMenu.Scrollbar.cs" Link="ModsSettingsMenu.Scrollbar.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ModsSettingsMenu.Clip.cs" />
+    <Compile Include="../../src/BetterCollectionManager/SettingsTextClip.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ModsSettingsMenu.Scroll.cs" Link="ModsSettingsMenu.Scroll.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ModsSettingsMenu.cs" Link="ModsSettingsMenu.cs" />
+    <Compile Include="../../src/BetterCollectionManager/FilterGridLayout.cs" Link="FilterGridLayout.cs" />
+    <Compile Include="../../src/BetterCollectionManager/FilterPointerGesture.cs" Link="FilterPointerGesture.cs" />
+    <Compile Include="../../src/BetterCollectionManager/FilterButtonFeedback.cs" Link="FilterButtonFeedback.cs" />
+    <Compile Include="../../src/BetterCollectionManager/FilterTrayGeometry.cs" Link="FilterTrayGeometry.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Grid.cs" Link="KeywordSetTray.Grid.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordFilterUi.FilterChanges.cs" Link="KeywordFilterUi.FilterChanges.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordGroups.cs" Link="KeywordGroups.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Modes.cs" Link="KeywordSetTray.Modes.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Controls.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Keywords.cs" Link="KeywordSetTray.Keywords.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Rows.cs" Link="KeywordSetTray.Rows.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Extras.cs" Link="KeywordSetTray.Extras.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ExtraFilterCatalog.cs" Link="ExtraFilterCatalog.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordFilterState.cs" Link="KeywordFilterState.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Back.cs" Link="KeywordSetTray.Back.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Visibility.cs" Link="KeywordSetTray.Visibility.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Input.cs" Link="KeywordSetTray.Input.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Interaction.cs" Link="KeywordSetTray.Interaction.cs" />
+    <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Expansions.cs" Link="KeywordSetTray.Expansions.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollectionFilterMenu.cs" Link="CollectionFilterMenu.cs" />
+    <Compile Include="../../src/BetterCollectionManager/ExpansionIconMarker.cs" Link="ExpansionIconMarker.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollectionPageDiagnostics.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollectionPageAnchor.cs" Link="CollectionPageAnchor.cs" />
+    <Compile Include="../../src/BetterCollectionManager/MixedPremiumPair.cs" Link="MixedPremiumPair.cs" />
+    <Compile Include="../../src/BetterCollectionManager/MixedPremiumMesh.cs" Link="MixedPremiumMesh.cs" />
+    <Compile Include="../../src/BetterCollectionManager/MixedPremiumCard.cs" Link="MixedPremiumCard.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CollapsedPremiumCount.cs" Link="CollapsedPremiumCount.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CounterTextLayout.cs" Link="CounterTextLayout.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CounterSeparators.cs" Link="CounterSeparators.cs" />
+    <Compile Include="../../src/BetterCollectionManager/CounterOutline.cs" Link="CounterOutline.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PreferredPremiumHelper.cs" Link="PreferredPremiumHelper.cs" />
+    <Compile Include="../../src/BetterCollectionManager/PreferredQualityCollapse.cs" Link="PreferredQualityCollapse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="../../data/Packages.json"><LogicalName>BetterCollectionManager.Packages.json</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="../../data/Categories.json">
+      <LogicalName>BetterCollectionManager.Categories.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
