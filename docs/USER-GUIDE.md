@@ -112,7 +112,7 @@ If you edit settings files yourself, close Hearthstone first:
 | Loader | Main settings | JSON backups |
 | --- | --- | --- |
 | BepInEx | `BepInEx/config/BetterCollectionManager.cfg` | `BepInEx/config/BetterCollectionManager/` |
-| MelonLoader | Shared loader preferences under `Userdata/` | `Mods/BetterCollectionManager/` when the DLL is installed in `Mods/` |
+| MelonLoader | Shared loader preferences under `UserData/` | `Mods/BetterCollectionManager/` when the DLL is installed in `Mods/` |
 
 Paths are relative to the Hearthstone game folder. Keep these files when updating.
 Close the game, remove the old mod DLL, install the matching new one and restart.

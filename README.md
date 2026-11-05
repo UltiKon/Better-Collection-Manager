@@ -33,6 +33,18 @@ The BepInEx and MelonLoader DLLs have the same filename but are different builds
 Use one loader and one copy of the mod per launch. The automated installer sets up
 **MelonLoader only**.
 
+### Mono runtime DLLs
+
+**Full (unstripped) Unity/Mono libraries matching the game's Unity version are
+also required for loader setup.** The reviewed set is `mscorlib.dll`, `System.dll`,
+`System.Core.dll`, `Mono.Security.dll` and `Mono.Btls.Interface.dll`.
+
+The [MelonLoader installer](installer/README.md#mono-runtime-dlls) includes these
+files and configures their search path. The smaller mod ZIPs do not include them;
+for BepInEx, follow the [Mono runtime setup](docs/README-BEPINEX.md#mono-runtime-libraries).
+Keep them in the loader's override directory rather than replacing the game's
+original DLLs.
+
 ## Operating systems and test status
 
 | Operating system | Installation route | Status |

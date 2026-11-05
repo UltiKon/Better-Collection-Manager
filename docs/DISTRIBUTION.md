@@ -45,7 +45,7 @@ For Windows Hearthstone, the installed mod belongs here:
 ```text
 Hearthstone/
 ├── Hearthstone.exe
-├── Hearthstone_data/
+├── Hearthstone_Data/
 ├── MelonLoader/
 └── Mods/
     └── BetterCollectionManager.dll
@@ -72,7 +72,7 @@ See the [user guide](USER-GUIDE.md) for display controls and more troubleshootin
 ## Update or remove
 
 Close the game before replacing the DLL; hot reload is unsupported. Keep the
-loader's preferences under `Userdata/` and the mod's JSON backups under
+loader's preferences under `UserData/` and the mod's JSON backups under
 `Mods/BetterCollectionManager/`. Existing preferences take precedence over defaults.
 Disable the mod by moving its DLL out of `Mods/`.
 

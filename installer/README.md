@@ -12,6 +12,17 @@ No separate Unity Editor installation or .NET SDK is required. You need
 **Python 3.10 or newer**, Hearthstone, and an existing Battle.net installation.
 Setup downloads MelonLoader 0.7.3 from GitHub and verifies its pinned SHA-256 checksum.
 
+## Mono runtime DLLs
+
+Hearthstone's stripped Mono base libraries need full versions for this loader
+setup. The complete installer ZIP includes `mscorlib.dll`, `System.dll`,
+`System.Core.dll`, `Mono.Security.dll` and `Mono.Btls.Interface.dll` under
+`payload/CustomCorlib-Unity6000/`. Setup installs them into
+`MelonLoader/CustomCorlib-Unity6000/` and configures
+`--melonloader.monosearchpathoverride` in Battle.net. No separate DLL download is
+needed when using the complete installer ZIP. These instructions apply to
+MelonLoader; BepInEx uses its own runtime search-path override.
+
 ## How to install
 
 **macOS has not been tested**, including CrossOver and the experimental native

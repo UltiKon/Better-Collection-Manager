@@ -37,13 +37,40 @@ folder or the Battle.net launcher folder.
    Windows Hearthstone through Wine/CrossOver needs the **Windows x64** loader.
    Follow the [Wine/Proton loader guide](https://docs.bepinex.dev/articles/advanced/proton_wine.html)
    for that environment.
-3. Start the game once, then close it. Check that `BepInEx/LogOutput.log` was
+3. Set up the [full Mono runtime libraries](#mono-runtime-libraries) below.
+4. Start the game once, then close it. Check that `BepInEx/LogOutput.log` was
    created inside the game folder. This confirms that the loader started.
 
 If you currently use MelonLoader, back up its configuration and disable its
 bootstrap and launch arguments before switching. Run **one loader per launch**.
 The separate automated mod installer installs MelonLoader; it does not set up
 BepInEx.
+
+#### Mono runtime libraries
+
+Hearthstone's stripped Mono base libraries need matching full versions for
+mod-loader setup. **The BepInEx mod ZIP does not include these libraries.** Use
+full Unity/Mono libraries matching the game's Unity version, not copies of the
+stripped files from `Hearthstone_Data/Managed`.
+
+1. Create `BepInEx/unstripped_corlib/` inside the game folder.
+2. Place the reviewed full `mscorlib.dll`, `System.dll`, `System.Core.dll`,
+   `Mono.Security.dll` and `Mono.Btls.Interface.dll` there.
+3. Edit the existing `doorstop_config.ini` in the game folder. For the Windows
+   BepInEx **5.4.23.6** loader, including Wine/CrossOver, set this entry while
+   preserving the other settings:
+
+   ```ini
+   [UnityMono]
+   dll_search_path_override = BepInEx\unstripped_corlib
+   ```
+
+This uses the loader's
+[documented Mono search-path override](https://github.com/BepInEx/BepInEx/blob/v5.4.23.6/doorstop/doorstop_config.ini).
+Keep the original game DLLs in place. The MelonLoader installer contains the
+reviewed libraries under `payload/CustomCorlib-Unity6000/`, but installs only
+MelonLoader; its launch arguments do not configure BepInEx. Matching library
+versions and a successful loader start still need checking with your game client.
 
 ### 3. Copy the mod DLL
 
@@ -60,7 +87,7 @@ Your installed files should look like this for Windows Hearthstone:
 ```text
 Hearthstone/                         ← your installed game, not the extracted ZIP
 ├── Hearthstone.exe
-├── Hearthstone_data/
+├── Hearthstone_Data/
 └── BepInEx/
     ├── core/                        ← installed by BepInEx
     └── plugins/
@@ -112,7 +139,7 @@ The remaining sections cover building and migrating settings.
 
 ## Build
 
-Install a .NET SDK and supply the game's `Hearthstone_data/Managed` DLLs and the
+Install a .NET SDK and supply the game's `Hearthstone_Data/Managed` DLLs and the
 official BepInEx 5 core DLLs. From the repository root (the folder containing
 `README.md` and `BetterCollectionManager.sln`, or `Source/` in a release ZIP):
 

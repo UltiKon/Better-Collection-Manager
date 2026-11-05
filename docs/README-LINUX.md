@@ -21,7 +21,7 @@ references. Successful compilation does not establish loader/runtime compatibili
 
 The project targets .NET Framework 4.7.2. The SDK restores Microsoft's reference
 assemblies package `Microsoft.NETFramework.ReferenceAssemblies.net472` 1.0.3 from
-NuGet. Game references come only from the chosen client's `Hearthstone_data/Managed`
+NuGet. Game references come only from the chosen client's `Hearthstone_Data/Managed`
 directory. Loose DLLs and SDK copies in the source directory are excluded from
 reference discovery.
 
@@ -49,6 +49,10 @@ run them. Inspect that output before sharing it. Diagnostics and the optional
 [StartupProbe](../diagnostics/StartupProbe/README.md) are not required to install the
 mod. Loader startup failures require separate investigation; building the mod
 does not fix loader initialization errors.
+
+Building the mod does not install the full Mono runtime DLLs. Set up the
+[required Mono libraries](../installer/README.md#mono-runtime-dlls) before
+launching the MelonLoader version.
 
 See the [overview](../README.md) for current features and the
 [technical reference](TECHNICAL-REFERENCE.md) for in-game validation steps.

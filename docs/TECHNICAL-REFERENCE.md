@@ -1980,7 +1980,7 @@ records its offer, item type and source address for diagnosis. Failed loads retr
 with a delay, and an offer change retries immediately.
 
 Images are cached under
-`Userdata/BetterCollectionManager/DarkmoonLogos/<key>.rgba` with a PNG preview.
+`UserData/BetterCollectionManager/DarkmoonLogos/<key>.rgba` with a PNG preview.
 The key includes the live offer/featured-item identity, resolved asset address,
 client assembly build identity and snapshot format version. This client's Unity
 build strips PNG decoding; the RGBA file supplies its texture directly. The

@@ -27,7 +27,7 @@ libraries.
 | `Mono.Btls.Interface.dll` | mscorlib, System, Mono.Security |
 
 Four additional assembly names appear outside this five-file set. All four
-already exist in the inspected `Hearthstone_data/Managed/`:
+already exist in the inspected `Hearthstone_Data/Managed/`:
 
 | Additional library | Existing game copy, bytes | Referenced by |
 | --- | ---: | --- |
