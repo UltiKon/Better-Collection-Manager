@@ -1,5 +1,10 @@
 # Better Collection Manager
 
+> [!WARNING]
+> This is an unofficial community project and is not affiliated with, endorsed by,
+> or supported by Blizzard Entertainment. Modifying Hearthstone is a grey area
+> and may violate Blizzard's Terms of Service (ToS). Use at your own risk.
+
 ## Abstract
 
 Better Collection Manager is a Hearthstone mod that makes your collection easier
