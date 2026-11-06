@@ -1,0 +1,59 @@
+name: Publish standalone BepInEx DLL
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/release-dll.yml]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag
+        required: true
+        default: 0.1.0
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-standalone-bepinex-dll
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ inputs.tag || '0.1.0' }}
+    steps:
+      - name: Download existing BepInEx release package
+        run: |
+          gh release download "$RELEASE_TAG" --pattern "BetterCollectionManager-${RELEASE_TAG}-bepinex.zip" --dir package
+
+      - name: Extract and verify standalone DLL
+        shell: python
+        run: |
+          import hashlib
+          import os
+          from pathlib import Path
+          import zipfile
+
+          tag = os.environ["RELEASE_TAG"]
+          member = "BepInEx/plugins/BetterCollectionManager/BetterCollectionManager.dll"
+          with zipfile.ZipFile(f"package/BetterCollectionManager-{tag}-bepinex.zip") as archive:
+              dll = archive.read(member)
+              checksums = dict(
+                  line.split("  ", 1)[::-1]
+                  for line in archive.read("SHA256SUMS.txt").decode("utf-8").splitlines()
+              )
+          actual = hashlib.sha256(dll).hexdigest()
+          if actual != checksums[member]:
+              raise SystemExit("Release DLL checksum mismatch")
+          if not dll.startswith(b"MZ") or b"BSJB" not in dll or b"BepInEx" not in dll or b"MelonLoader" in dll:
+              raise SystemExit("Expected a managed BepInEx DLL")
+          Path("BetterCollectionManager.dll").write_bytes(dll)
+          print(f"SHA256: {actual}")
+
+      - name: Attach DLL to existing release
+        run: gh release upload "$RELEASE_TAG" BetterCollectionManager.dll
