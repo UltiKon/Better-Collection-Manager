@@ -54,6 +54,34 @@ class Packaging(unittest.TestCase):
             self.assertEqual(names, {'README.md', 'src/BetterCollectionManager/ModMetadata.cs', 'config/BetterCollectionManager.cfg',
                                      'tests/Release/test_fixture.py'})
 
+    def test_deckview_notice_is_shipped_in_source_and_distribution(self):
+        source = ROOT / 'data/DeckViewLabels/LICENSE'
+        self.assertIn(source, set(release.source_files()))
+        self.assertEqual(release.third_party_files()['ThirdParty/HearthstoneDeckView-LICENSE.txt'], source.read_bytes())
+        self.assertIn(b'Copyright', source.read_bytes())
+
+    def test_deck_image_resources_are_included_for_rebuilding_the_source(self):
+        sources = set(release.source_files())
+        for directory in ('DeckViewBackgrounds', 'DeckViewLabels'):
+            resources = list((ROOT / 'data' / directory).iterdir())
+            self.assertTrue(resources)
+            for resource in resources:
+                with self.subTest(resource=resource.name):
+                    self.assertIn(resource, sources)
+        self.assertNotIn(ROOT / 'data/DeckImageWildVines.rgba', sources)
+
+    def test_pixel_resources_do_not_mask_private_assembly_strings(self):
+        resource = 'data/DeckViewLabels/x2.rgba.gz'
+        pixels = (ROOT / resource).read_bytes()
+        release.check_privacy('Source/' + resource, pixels)
+        release.check_privacy('fixture.dll', b'MZ' + pixels + b'\0public metadata\0')
+        with self.assertRaises(ValueError):
+            private_path = b'\0/' + b'workspace' + b'/private/settings\0'
+            release.check_privacy('fixture.dll', b'MZ' + pixels + private_path)
+        with self.assertRaises(ValueError):
+            release.check_privacy('Source/' + resource, pixels[:3] + b'\x08' + pixels[4:])
+        release.check_privacy('fixture.dll', b'MZ\0V\xff:' + bytes([92]) + b'binary bytes\0')
+
     def test_zip_entries_are_reproducible_and_reject_parent_paths(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'fixture.zip'

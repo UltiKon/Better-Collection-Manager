@@ -71,6 +71,133 @@ Fresh installs use split display, preferred-quality order for clicks and a quali
 choice after dropping. If a setting is missing, turn off **Hide redundant settings**
 in **Other** to reveal the available overrides.
 
+## Copy a deck as an image
+
+While editing a deck, open its deck options and choose **Copy as PNG** directly
+below **Copy**. Wait for **Deck image copied to clipboard**, then paste into an
+application that accepts images, such as a chat or image editor.
+
+The image contains full cards in compact rows, with the last row centered.
+Single copies have no quantity label. Counts **x2** through **x9** use the
+HearthstoneDeckView quantity artwork, layered behind the card's lower edge.
+Larger quantities use the same reference shield, with their exact **xN** value
+drawn on its numeral panel. This includes Beatrix's **x10**.
+Commander Beatrix's selected sideboard minion displays **x10**, representing the
+generated copies; the selected card count and crafting cost remain unchanged.
+The selected format and number of distinct cards determine the entire raster
+before card rendering starts. Cards are captured, fitted and painted one at a
+time, with no later deck-wide silhouette layout pass. Full-image pixel processing
+and PNG/bitmap encoding run in background tasks. Native rendering remains on the
+game thread. Native loading/capture of the next card overlaps the previous card's
+pixel processing. Header/statistics draws share a small time budget instead of
+adding a fixed frame delay for every row. Sideboard cards follow
+their owner directly and use the native red treatment for incompatible runes.
+
+Card faces use the installed client's native models, artwork and localized text.
+Card bodies target 544 pixels in width. Tiles reserve room for protruding frames;
+unusually large ornaments fit within their tile without clipping or changing the
+layout. Soft shadows follow each card's silhouette.
+**Card quality** under **Settings → Mods → Deck image** offers **As in deck**,
+**Normal**, **Golden** and **Highest**. Normal is the default. Highest selects the best artwork available
+for each card in the order **Diamond → Signature → Golden → Normal**, including
+material-only Golden artwork. Normal/Golden choices fall back to Normal when
+unavailable. Old Diamond or Signature preferences migrate to Highest. Forcing a
+quality combines copies of the same card in the image, including sideboards,
+without changing the deck. Material-only Golden portraits
+retain their native quality, layered materials and animation.
+
+**Image quality / resolution** offers **Low**, **Medium**, **High**, and **Max**.
+Low targets 720 pixels on the shorter edge, Medium (the default) 1080, and High
+1440. Max preserves the original full resolution. Smaller originals are never
+upscaled. The whole layout, including card captures and backgrounds, renders at
+the chosen resolution; the exporter does not build a full-size image and shrink
+it afterward. Lower presets reduce rendering work, memory use, and PNG encoding
+time. Card loading still takes time. This preference is separate from Card
+quality and the native graphics quality setting. All qualities use one reference
+layout and title measurement, then scale its coordinates together. PNG remains
+lossless.
+
+**Image format** selects **Portrait**, **Square**, or **Landscape** (the default). The format
+and number of distinct cards automatically determine the number of cards per row.
+Portrait and Square favor fewer columns and add rows to keep individual cards
+readable, even when the resulting image is taller than the nominal shape. The
+shield, text and cards retain the same relative scale across formats. Image
+dimensions follow the card grid, quantity labels and header; they are not fixed.
+If an image exceeds the texture limit, select a lower image resolution, a
+different format or a smaller deck. The upper info frame fits the
+measured deck name, class symbol and enabled statistics, with space for its border. These sit side by side, or move to a second header row when necessary,
+above the cards in a larger dark panel styled with the native Hearthstone pack
+quantity frame. Contents align to the left within each column. The Dust icon and
+amount are enlarged for readability beside the full-size cards. The Dust number
+shares the deck name's left edge, font size and line height. The Dust and class
+icons use the same visible height and are centered in a common icon column;
+transparent texture/mesh padding is excluded before fitting them. Rarity gems, rarity counts and card type text
+are enlarged as well. Wild decks add the native Finding Opponent window's vines
+around the upper panel's actual corners, preserving their proportions. They
+retain their attachment offsets from the original matchmaking panel and share
+one scale, rather than being repositioned and resized individually. The inner
+content plate is kept clear.
+Decoration uses the existing margins and the shield's free border, without
+changing image dimensions, shield size, card sizes or card positions. The title,
+statistics and cards remain clear.
+Standard decks keep the plain frame and compact spacing.
+
+**Background style** defaults to **Native parchment**. **Class artwork (DeckView)** uses the deck's
+class background from [HearthstoneDeckView](https://github.com/hextract/HearthstoneDeckView).
+These bundled backgrounds include their MIT license in the mod. They fill the
+image with a centered crop and omit the original application's footer.
+**Blurred card art** is also available. With Blurred
+card art enabled, clicking **Copy as PNG** opens **Choose background artwork**
+before rendering. Choose a card from the deck, including sideboards. Premium duplicates appear
+only once. The popup uses up to five columns with up to 30 choices per page and
+Previous/Next navigation. The choice starts this export;
+each later export asks again. Cancel or Escape closes the popup without changing
+the clipboard. Other background styles and removed backgrounds export
+directly without this popup. Disable **Ask for artwork on export** under
+**Settings → Mods → Deck image** to export blurred card art immediately using
+the automatic artwork. This setting is enabled by default and appears only with Blurred card art while Remove background is unchecked. Native parchment and Class artwork always export without asking for a card.
+
+Automatic prefers the highest rarity and then highest mana cost in the main
+deck. Decks sharing that card therefore use the same automatic artwork.
+
+The background uses the chosen card's normal native portrait. Flat texture
+margins are trimmed before a moderate blur and centered crop. Reduced darkening
+preserves colors and broad forms, with a vignette around the edges. The deck's
+selected card quality does not change this background. The selected card name is
+shown while exporting and written to the log with its card ID.
+No external image service is used by the mod.
+
+The **Deck image** checkboxes immediately above **Other** control these extras:
+
+| Checkbox | Image content |
+| --- | --- |
+| **Deck name + class** | Deck name and class symbol |
+| **Crafting cost (normal)** | Native dust icon and total for normal copies, including sideboards |
+| **Mana curve** | Recessed wells with gold fill bars, card counts and native crystals. The plus sits beside the 7 crystal |
+| **Card type counts** | A vertical list of main-deck type counts, grouped with rarities |
+| **Rarity counts** | A vertical list with native rarity gems and counts, or labels when a gem is unavailable |
+| **Remove background** | Use plain dark blue; hide background style and artwork controls while preserving their saved values |
+
+When all header items are disabled, the shield and its reserved space disappear.
+
+Uncraftable cards contribute no crafting dust. Unavailable prices add a **+** to
+the known subtotal. Cost always refers to normal copies, regardless of rendered
+quality. Type counts, rarities and the mana curve exclude sideboards. The full
+card art keeps its native colors apart from the requested sideboard treatment.
+
+Options, format, background style and card contents are captured when you click
+**Copy as PNG**; changes while rendering affect the next export. Stay in the deck
+editor until copying finishes; closing the deck cancels the export and releases
+pending assets. Incomplete decks can also be exported. The game reports loading,
+rendering and clipboard failures without replacing the clipboard with a partial
+image. The parchment uses only the interior paper, excluding the source dialog's
+metal rails. Native shader output is composited over the opaque image while
+preserving card, glyph and icon edges.
+
+Image copying is implemented for Windows (including Windows Hearthstone through
+Wine/CrossOver) and native macOS. Rendering and clipboard integration still need
+verification in a running client on each platform.
+
 ## Search and filters
 
 Open the collection's **expansion selector** to browse the extended filter menu.

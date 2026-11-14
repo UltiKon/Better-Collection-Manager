@@ -57,6 +57,7 @@ namespace Hearthstone.UI
 public sealed class StoreQuantityPrompt : Component
 {
     public GameObject m_root;
+    public Component m_clickCatcherClickable;
     public UberText m_inputTextFieldBounds, m_instructionText;
     internal const string Asset = "StoreQuantityPrompt.prefab:quantity-fixture";
     internal static GameObject MakePrefab(Transform parent = null)
@@ -73,6 +74,8 @@ public sealed class StoreQuantityPrompt : Component
             return go;
         }
         Art("Outer frame", Vector3.zero, new Vector3(7, .02f, 2));
+        Art("Separate metal rim", Vector3.zero, new Vector3(7, .02f, 2));
+        Art("Quantity drop shadow", Vector3.zero, new Vector3(8, .02f, 3));
         Art("Native dark input", new Vector3(0, 0, -.5f), new Vector3(6, .02f, .6f));
         Art("Pack icon", new Vector3(-2.5f, 0, -.5f), new Vector3(.25f, .02f, .25f));
         var slot = new GameObject("Native input bounds"); slot.transform.SetParent(prompt.m_root.transform, false);

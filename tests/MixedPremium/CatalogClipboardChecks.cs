@@ -118,7 +118,65 @@ internal static partial class Program
             }
             finally { CollectionPageAnchor.CardKey = key; }
 
-
+            int selectedArtwork = -1, artworkCanceled = 0;
+            Action<int> selectArtwork = index => selectedArtwork = index;
+            var artworkLabels = Enumerable.Range(0, 35).Select(index => index == 0 ? "Automatic" : "Artwork " + index).ToList();
+            Action closeArtwork = CatalogTransferMenu.OpenChoices("Choose background artwork", artworkLabels, selectArtwork, () => artworkCanceled++);
+            popup = ButtonListMenu.Visible;
+            Check(popup is CatalogTransferMenu && popup.Buttons.Count == 32
+                && popup.Buttons[0].m_ButtonText.Text == "Automatic" && selectedArtwork == -1,
+                "Export artwork opens a modal with Automatic, 30 choices per page in five columns, navigation and Cancel.");
+            var firstChoice = popup.Buttons.Single(button => button.gameObject.name == "BCM_ArtworkChoice0");
+            var secondChoice = popup.Buttons.Single(button => button.gameObject.name == "BCM_ArtworkChoice1");
+            var sixthChoice = popup.Buttons.Single(button => button.gameObject.name == "BCM_ArtworkChoice5");
+            Check(ComboSceneGeometry.ScreenBounds(firstChoice.m_RootObject, CameraUtils.Camera, out Rect firstRect)
+                && ComboSceneGeometry.ScreenBounds(secondChoice.m_RootObject, CameraUtils.Camera, out Rect secondRect)
+                && ComboSceneGeometry.ScreenBounds(sixthChoice.m_RootObject, CameraUtils.Camera, out Rect sixthRect)
+                && firstRect.xMax < secondRect.xMin && sixthRect.yMax < firstRect.yMin,
+                "Artwork choices have separate hit faces in five columns and six rows.");
+            Check(firstChoice.GetComponent<BoxCollider>().enabled
+                && CounterTextLayout.TryScreenInkRect(firstChoice.m_ButtonText, CameraUtils.Camera, out Rect choiceInk)
+                && choiceInk.height >= Screen.height * .02f,
+                "Artwork captions remain legible at the screen height, with an active matching click target.");
+            var artworkLate = typeof(CatalogTransferMenu).GetMethod("LateUpdate",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Vector3 restingScale = firstChoice.transform.localScale;
+            Quaternion restingRotation = firstChoice.m_RootObject.transform.localRotation;
+            firstChoice.Hover();
+            for (int frame = 0; frame < 60; frame++) artworkLate.Invoke(popup, null);
+            Check(firstChoice.m_RootObject.transform.localRotation.Equals(restingRotation)
+                && Vector3.Distance(firstChoice.transform.localScale, restingScale) < .001f
+                && CounterTextLayout.TryScreenInkRect(firstChoice.m_ButtonText, CameraUtils.Camera, out choiceInk)
+                && choiceInk.height >= Screen.height * .02f,
+                "Hover leaves artwork faces upright and captions legible across repeated layout frames.");
+            int captionUpdates = firstChoice.m_ButtonText.UpdateCalls;
+            foreach (UIBButton button in popup.Buttons) button.Hover();
+            for (int frame = 0; frame < 60; frame++) artworkLate.Invoke(popup, null);
+            Check(firstChoice.m_ButtonText.UpdateCalls == captionUpdates,
+                "Hovering artwork, navigation and Cancel does not regenerate or rescale captions every frame.");
+            var cancelArtwork = popup.Buttons.Single(button => button.gameObject.name == "BCM_TransferCancel");
+            ComboSceneGeometry.ScreenBounds(cancelArtwork.m_RootObject, CameraUtils.Camera, out Rect cancelBefore);
+            artworkLabels[31] = "changed after opening";
+            popup.Buttons.Single(button => button.gameObject.name == "BCM_ArtworkNext").Click();
+            Check(popup.Buttons.Single(button => button.gameObject.name == "BCM_ArtworkChoice1").m_ButtonText.Text == "Artwork 31",
+                "Artwork pagination retains the captured labels while the popup is open.");
+            Check(ComboSceneGeometry.ScreenBounds(cancelArtwork.m_RootObject, CameraUtils.Camera, out Rect cancelAfter)
+                && Vector3.Distance(new Vector3(cancelBefore.center.x, cancelBefore.center.y, 0),
+                    new Vector3(cancelAfter.center.x, cancelAfter.center.y, 0)) < .1f,
+                "A shorter last page keeps the Cancel button in the same place.");
+            popup.Buttons.Single(button => button.gameObject.name == "BCM_ArtworkChoice1").Click();
+            Check(selectedArtwork == 31 && artworkCanceled == 0 && !popup.IsShown(),
+                "A paginated choice invokes the captured artwork index exactly once after closing the modal.");
+            Action closeNewArtwork = CatalogTransferMenu.OpenChoices("Choose background artwork", artworkLabels, selectArtwork, () => artworkCanceled++);
+            closeArtwork();
+            Check(ButtonListMenu.Visible != null && artworkCanceled == 0,
+                "An old cancellation handle cannot dismiss a later popup, even with the same selection callback.");
+            closeNewArtwork(); closeNewArtwork();
+            Check(artworkCanceled == 1 && ButtonListMenu.Visible == null, "Canceling a pending artwork popup reports cancellation exactly once.");
+            CatalogTransferMenu.OpenChoices("Choose background artwork", artworkLabels, selectArtwork, () => artworkCanceled++);
+            CatalogTransferMenu.DestroyMenu();
+            Check(artworkCanceled == 2 && ButtonListMenu.Visible == null, "Teardown also cancels a pending artwork choice.");
+            CheckArtworkPickerResize();
         }
         finally
         {

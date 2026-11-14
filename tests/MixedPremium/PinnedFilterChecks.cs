@@ -577,19 +577,39 @@ internal static partial class Program
         Input.mouseScrollDelta = new Vector2(0f, -100f);
         update.Invoke(menu, null);
         Check(Read("m_settingsScroll") > 0f && empty.gameObject.activeInHierarchy
-            && Near(menu.BodyHeight, height) && Near(menu.BodyWidth, width),
+            && Math.Abs(menu.BodyHeight - height) < .002f && Near(menu.BodyWidth, width),
             "Wheel scrolling reveals overflow settings while retaining the original menu dimensions");
+        empty.Click();
+        Check(CollectionQualitySettings.HideEmptyFilters, "The overflow checkbox remains interactive");
+        empty.Click();
+        var scrollField = typeof(ModsSettingsMenu).GetField("m_settingsScroll", flags);
+        var applyScroll = typeof(ModsSettingsMenu).GetMethod("ApplySettingsScroll", flags);
+        bool ScrollTo(Func<bool> visible)
+        {
+            for (int step = 0; step <= 40; step++)
+            {
+                scrollField.SetValue(menu, Read("m_settingsScrollRange") * step / 40f);
+                applyScroll.Invoke(menu, null);
+                if (visible()) return true;
+            }
+            return false;
+        }
         var craftingSearch = menu.GetComponentsInChildren<DropdownControl>(true).Single(control => control.gameObject.name == "BCM_ModsCollectionopensearch");
         var protection = all.Single(box => box.gameObject.name == "BCM_ModsNeverDustSignaturesDiamonds");
         var nativeBar = (GameObject)typeof(ModsSettingsMenu).GetField("m_settingsScrollbar", flags).GetValue(menu);
-        Check(nativeBar != null && nativeBar.activeInHierarchy && craftingSearch.gameObject.activeInHierarchy && protection.gameObject.activeInHierarchy,
+        Check(nativeBar != null && nativeBar.activeInHierarchy && ScrollTo(() => craftingSearch.gameObject.activeInHierarchy && protection.gameObject.activeInHierarchy),
             "The actual settings scrollbar reveals both Crafting controls without shrinking the viewport");
         craftingSearch.SelectOption(CollectionOpenSearchMode.New);
         Check(CollectionQualitySettings.OpenSearch == CollectionOpenSearchMode.New, "Scrolling makes the native New opening-search setting selectable");
         craftingSearch.SelectOption(CollectionOpenSearchMode.Off);
-        empty.Click();
-        Check(CollectionQualitySettings.HideEmptyFilters, "The overflow checkbox remains interactive");
-        empty.Click();
+        foreach (DeckImageOption option in DeckImageSettings.Options)
+        {
+            var imageBox = all.Single(box => box.gameObject.name == "BCM_ModsDeckImage" + option);
+            Check(ScrollTo(() => imageBox.gameObject.activeInHierarchy && imageBox.IsEnabled()), "Each deck image option can be reached using the settings scrollbar.");
+            bool value = DeckImageSettings.Enabled(option); imageBox.Click();
+            Check(DeckImageSettings.Enabled(option) != value && Math.Abs(menu.BodyHeight - height) < .002f, $"Scrolled image options are interactive without shrinking the viewport: {option}, height={menu.BodyHeight}/{height}, value={DeckImageSettings.Enabled(option)}/{value}.");
+            imageBox.Click();
+        }
         Input.mouseScrollDelta = new Vector2(0f, 100f);
         update.Invoke(menu, null);
         Input.mouseScrollDelta = Vector2.zero;
@@ -862,7 +882,7 @@ internal static partial class Program
             "Dragging the Settings grip keeps its centre at the pointer, including outside the track");
         Frame(Input.mousePosition, up: true);
         blocker.Invoke(menu, new object[] { new UIEvent() });
-        Check(menu.IsShown() && Near(menu.BodyHeight, height) && Near(menu.BodyWidth, width),
+        Check(menu.IsShown() && Math.Abs(menu.BodyHeight - height) < .002f && Near(menu.BodyWidth, width),
             "Thumb release preserves the modal menu and its original frame dimensions");
         Frame(viewport.center);
         Input.mouseScrollDelta = new Vector2(0f, 100f); update.Invoke(menu, null); Input.mouseScrollDelta = Vector2.zero;

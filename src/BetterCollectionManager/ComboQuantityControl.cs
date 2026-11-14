@@ -13,25 +13,38 @@ namespace BetterCollectionManager
         internal sealed class Template : IDisposable
         {
             private readonly List<AssetHandle<GameObject>> m_assets = new List<AssetHandle<GameObject>>();
-            internal AdjustBuyingAmount Source;
+            internal readonly AdjustBuyingAmount Source;
             internal Template()
             {
-                foreach (AdjustBuyingAmount source in Resources.FindObjectsOfTypeAll<AdjustBuyingAmount>())
-                    if (Get(source, "m_incrementClickable") != null && Get(source, "m_decrementClickable") != null)
-                    { Source = source; return; }
+                try
+                {
+                    Source = Find<AdjustBuyingAmount>(m_assets,
+                        source => Get(source, "m_incrementClickable") != null && Get(source, "m_decrementClickable") != null);
+                    if (Source == null) throw new InvalidOperationException("Native shop quantity template is unavailable.");
+                }
+                catch { Dispose(); throw; }
+            }
+
+            internal static T Find<T>(List<AssetHandle<GameObject>> assets, Func<T, bool> usable) where T : Component
+            {
+                foreach (T source in Resources.FindObjectsOfTypeAll<T>())
+                    if (usable(source)) return source;
+
+                T found = null;
                 var visited = new HashSet<string>(StringComparer.Ordinal);
+                string preferred = typeof(T) == typeof(AdjustBuyingAmount) ? "adjustbuying" : typeof(T).Name.ToLowerInvariant();
                 void Load(string path, int depth)
                 {
-                    if (Source != null || string.IsNullOrEmpty(path) || depth > 6 || visited.Count >= 64 || !visited.Add(path)) return;
+                    if (found != null || string.IsNullOrEmpty(path) || depth > 6 || visited.Count >= 64 || !visited.Add(path)) return;
                     AssetHandle<GameObject> asset;
                     try { asset = AssetLoader.Get().LoadAsset<GameObject>(path); }
                     catch { return; }
                     if (asset == null) return;
-                    m_assets.Add(asset);
+                    assets.Add(asset);
                     GameObject root = asset.Asset;
                     if (root == null) return;
-                    Source = root.GetComponentInChildren<AdjustBuyingAmount>(true);
-                    if (Source != null) return;
+                    foreach (T source in root.GetComponentsInChildren<T>(true))
+                        if (usable(source)) { found = source; return; }
                     var references = new List<string>();
                     foreach (Component component in root.GetComponentsInChildren<Component>(true))
                     {
@@ -51,15 +64,14 @@ namespace BetterCollectionManager
                     int Priority(string reference)
                     {
                         string name = (reference ?? "").ToLowerInvariant();
-                        return name.Contains("adjustbuying") ? 0 : name.Contains("quantity") ? 1
+                        return name.Contains(preferred) ? 0 : name.Contains("quantity") ? 1
                             : name.Contains("product") ? 2 : name.Contains("shop") ? 3 : 4;
                     }
                     references.Sort((a, b) => Priority(a).CompareTo(Priority(b)));
                     foreach (string reference in references) Load(reference, depth + 1);
                 }
-                try { Load("MainShopWidget.prefab:debaa5f123c09694eaca007ce8375d8d", 0); }
-                catch { Dispose(); throw; }
-                if (Source == null) { Dispose(); throw new InvalidOperationException("Native shop quantity template is unavailable."); }
+                Load("MainShopWidget.prefab:debaa5f123c09694eaca007ce8375d8d", 0);
+                return found;
             }
             public void Dispose() { foreach (var asset in m_assets) asset.Dispose(); m_assets.Clear(); }
         }

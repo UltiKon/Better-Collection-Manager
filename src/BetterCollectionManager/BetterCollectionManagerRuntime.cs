@@ -87,6 +87,7 @@ namespace BetterCollectionManager
                 CraftingPageAnchor.Install(HarmonyInstance);
                 ComboCollectionCards.Install(HarmonyInstance);
                 ComboPopup.Install(HarmonyInstance);
+                DeckImageMenu.Install(HarmonyInstance);
                 // DFT and Battlegrounds/Tavern Brawl experiments disabled at user request.
                 // HubMenuPatches.Install(HarmonyInstance);
                 HarmonyInstance.PatchAll(typeof(CollectibleCardClassFilter_UpdateResults_Patch));
@@ -120,6 +121,7 @@ namespace BetterCollectionManager
             CollectionQualitySettings.FlushPreferences(true);
             CollectionQualitySettings.ChangedKind -= SettingsChanged;
             DisenchantChoiceMenu.DestroyMenu();
+            DeckImageMenu.Shutdown();
             NativeScrollbarArt.ReleasePrefabSources();
         }
 
@@ -134,6 +136,7 @@ namespace BetterCollectionManager
         public void Update()
         {
             CollectionQualitySettings.FlushPreferences();
+            DeckImageMenu.OnUpdate();
             CollectionOpenSearch.OnUpdate();
             // Cover a splash that was already shown before the event subscription.
             if (!m_collectionInitialized && !m_startupWaitScheduled)

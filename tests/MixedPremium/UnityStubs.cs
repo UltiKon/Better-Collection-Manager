@@ -113,6 +113,36 @@ namespace UnityEngine
             if (source.GetComponent<global::DropdownControl>() is global::DropdownControl dropdown)
             {
                 var clone = global::DropdownControl.MakeTemplate(go);
+                void MatchTextOwner(global::DropdownMenuItem original, global::DropdownMenuItem target)
+                {
+                    if (original.m_text.gameObject != original.gameObject) return;
+                    Destroy(target.m_text.gameObject);
+                    target.m_text = target.gameObject.AddComponent<global::UberText>();
+                }
+                MatchTextOwner(dropdown.m_selectedItem, clone.m_selectedItem);
+                MatchTextOwner(dropdown.m_menuItemTemplate, clone.m_menuItemTemplate);
+                clone.m_selectedItem.m_text.RenderToTexture = dropdown.m_selectedItem.m_text.RenderToTexture;
+                clone.m_menuItemTemplate.m_text.RenderToTexture = dropdown.m_menuItemTemplate.m_text.RenderToTexture;
+                void CopyGeneratedText(global::DropdownMenuItem original, global::DropdownMenuItem target)
+                {
+                    foreach (var glyph in original.GetComponentsInChildren<TextMesh>(true))
+                    {
+                        var inherited = new GameObject(glyph.gameObject.name);
+                        inherited.transform.SetParent(target.m_text.transform, false);
+                        inherited.AddComponent<TextMesh>();
+                        inherited.AddComponent<MeshRenderer>().enabled = glyph.GetComponent<Renderer>().enabled;
+                    }
+                    foreach (Transform node in original.GetComponentsInChildren<Transform>(true))
+                        if (node.gameObject.name.StartsWith("UberText_RenderPlane_", StringComparison.Ordinal)
+                            || node.gameObject.name.StartsWith("UberText_ShadowPlane_", StringComparison.Ordinal))
+                        {
+                            var inherited = new GameObject(node.gameObject.name);
+                            inherited.transform.SetParent(target.transform, false);
+                            inherited.AddComponent<MeshRenderer>(); inherited.SetActive(node.gameObject.activeSelf);
+                        }
+                }
+                CopyGeneratedText(dropdown.m_selectedItem, clone.m_selectedItem);
+                CopyGeneratedText(dropdown.m_menuItemTemplate, clone.m_menuItemTemplate);
                 foreach (object item in dropdown.Items) clone.addItem(item);
                 clone.setSelection(dropdown.getSelection());
                 // Native Settings sections can include unrelated captions next
@@ -649,7 +679,12 @@ namespace UnityEngine
         public Texture mainTexture;
         public bool HasProperty(string name) => true;
         public void SetInt(string name, int value) { }
-        public void SetColor(string name, Color value) { }
+        private readonly Dictionary<string, float> m_floats = new Dictionary<string, float>();
+        public void SetFloat(string name, float value) { m_floats[name] = value; }
+        public float GetFloat(string name) => m_floats.TryGetValue(name, out float value) ? value : 0;
+        private readonly Dictionary<string, Color> m_colors = new Dictionary<string, Color>();
+        public void SetColor(string name, Color value) { if (name == "_Color") color = value; else m_colors[name] = value; }
+        public Color GetColor(string name) => name == "_Color" ? color : m_colors.TryGetValue(name, out Color value) ? value : Color.white;
         public Shader shader;
         public Vector2 mainTextureScale = new Vector2(1f, 1f), mainTextureOffset;
         public int renderQueue;
@@ -659,7 +694,7 @@ namespace UnityEngine
         public Material(Material source)
         { mainTexture = source.mainTexture; shader = source.shader; name = source.name; mainTextureScale = source.mainTextureScale; mainTextureOffset = source.mainTextureOffset; renderQueue = source.renderQueue; color = source.color; }
     }
-    public sealed class MaterialPropertyBlock { public bool isEmpty { get; set; } = true; public Color Color; public void SetColor(string name, Color color) { Color = color; } }
+    public sealed class MaterialPropertyBlock { public bool isEmpty { get; set; } = true; public Color Color; public void SetColor(string name, Color color) { Color = color; } public void SetFloat(string name, float value) { } }
     public class Renderer : Component
     {
         public bool enabled = true, forceRenderingOff;
@@ -758,6 +793,7 @@ namespace UnityEngine
             Vector3 screen = WorldToScreenPoint(world);
             return new Vector3(screen.x / Screen.width, screen.y / Screen.height, screen.z);
         }
+        public Vector3 ViewportToWorldPoint(Vector3 point) => ScreenToWorldPoint(new Vector3(point.x * Screen.width, point.y * Screen.height, point.z));
         public Vector3 ScreenToWorldPoint(Vector3 screen)
         {
             float y = DepthScale == 0f ? 0f : (1f - screen.z) / DepthScale;

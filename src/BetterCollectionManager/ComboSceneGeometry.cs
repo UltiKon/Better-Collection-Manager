@@ -79,32 +79,58 @@ namespace BetterCollectionManager
             }
             return result;
         }
-        internal static bool CardFaceBounds(Actor actor, Camera camera, out Rect area)
+        internal static bool CardFaceBounds(Actor actor, Camera camera, out Rect area, bool includeFrame = false)
         {
             area = default;
             Renderer face = actor != null ? actor.GetMeshRenderer() : null;
             if (face == null || !face.enabled || !face.gameObject.activeInHierarchy) return false;
             area = ProjectBounds(face.bounds, camera);
+            if (includeFrame)
+                foreach (GameObject part in new[] { actor.m_eliteObject, actor.m_rarityFrameMesh })
+                    if (part != null && part.activeInHierarchy)
+                        foreach (Renderer renderer in part.GetComponentsInChildren<Renderer>(false))
+                        {
+                            if (!renderer.enabled || !(renderer is MeshRenderer || renderer is SkinnedMeshRenderer)) continue;
+                            Rect trim = ProjectBounds(renderer.bounds, camera);
+                            area = Rect.MinMaxRect(Math.Min(area.xMin, trim.xMin), Math.Min(area.yMin, trim.yMin),
+                                Math.Max(area.xMax, trim.xMax), Math.Max(area.yMax, trim.yMax));
+                        }
             foreach (UberText text in actor.GetComponentsInChildren<UberText>(false))
                 if (!text.isHidden() && CounterTextLayout.TryScreenInkRect(text, camera, out Rect ink))
                     area = Rect.MinMaxRect(Math.Min(area.xMin, ink.xMin), Math.Min(area.yMin, ink.yMin),
                         Math.Max(area.xMax, ink.xMax), Math.Max(area.yMax, ink.yMax));
             return area.width > .001f && area.height > .001f;
         }
-        internal static void FitCardFace(Actor actor, Camera camera, Rect target)
+        internal static void FitCardFace(Actor actor, Camera camera, Rect target, bool includeFrame = false)
         {
             // Particle effects, cached font planes and glows can have bounds
             // far outside a hand card. They must not shrink its actual face.
             for (int pass = 0; pass < 3; pass++)
             {
-                if (!CardFaceBounds(actor, camera, out Rect area)) return;
+                if (!CardFaceBounds(actor, camera, out Rect area, includeFrame)) return;
                 float scale = Math.Min(target.width / area.width, target.height / area.height) * .985f;
                 actor.transform.localScale *= scale;
-                if (!CardFaceBounds(actor, camera, out area)) return;
+                if (!CardFaceBounds(actor, camera, out area, includeFrame)) return;
                 Vector3 point = camera.WorldToScreenPoint(actor.transform.position);
                 actor.transform.position += camera.ScreenToWorldPoint(new Vector3(target.center.x, target.center.y, point.z))
                     - camera.ScreenToWorldPoint(new Vector3(area.center.x, area.center.y, point.z));
             }
+        }
+        internal static double FitCardBody(Actor actor, Camera camera, int width, int centerX, int bottom)
+        {
+            Renderer face = actor.GetMeshRenderer();
+            if (face == null) throw new InvalidOperationException("The native card has no body mesh.");
+            for (int pass = 0; pass < 3; pass++)
+            {
+                Rect bounds = ProjectBounds(face.bounds, camera);
+                if (bounds.width <= .001f) throw new InvalidOperationException("The native card body has no visible width.");
+                actor.transform.localScale *= width / bounds.width;
+                bounds = ProjectBounds(face.bounds, camera);
+                float depth = camera.WorldToScreenPoint(actor.transform.position).z;
+                actor.transform.position += camera.ScreenToWorldPoint(new Vector3(centerX, bottom, depth))
+                    - camera.ScreenToWorldPoint(new Vector3(bounds.center.x, bounds.yMin, depth));
+            }
+            return ProjectBounds(face.bounds, camera).height;
         }
         internal static void FaceCaption(Transform root, UberText caption, Camera camera)
         {

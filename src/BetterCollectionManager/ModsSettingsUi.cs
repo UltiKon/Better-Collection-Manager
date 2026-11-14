@@ -14,6 +14,13 @@ namespace BetterCollectionManager
         private const float SignatureWidthScale = (350f / 390f) * (354f / 351f);
         private const float SignatureCenterOffset = 1.5f / 354f;
 
+        internal static int GraphicsRevision { get; private set; }
+        internal static void GraphicsChanged()
+        {
+            GraphicsRevision++;
+            ModsSettingsMenu.TraceNativeGraphicsChange();
+        }
+        private int m_menuGraphicsRevision;
         private OptionsMenu m_owner;
         private UIBButton m_button;
         private ModsSettingsMenu m_menu;
@@ -164,10 +171,17 @@ namespace BetterCollectionManager
             if (m_owner == null || !m_owner.IsShown()) return;
             try
             {
+                if (m_menu != null && m_menuGraphicsRevision != GraphicsRevision)
+                {
+                    m_menu.gameObject.SetActive(false);
+                    UnityEngine.Object.Destroy(m_menu.gameObject);
+                    m_menu = null;
+                }
                 if (m_menu == null)
                 {
                     GameObject root = new GameObject("BCM_ModsMenu");
                     m_menu = root.AddComponent<ModsSettingsMenu>();
+                    m_menuGraphicsRevision = GraphicsRevision;
                     if (!m_menu.Ready) throw new InvalidOperationException("Mods menu could not be initialized");
                 }
                 m_menu.Owner = m_owner;
@@ -336,6 +350,7 @@ namespace BetterCollectionManager
                 harmony.PatchAll(typeof(OptionsShowPatch));
                 harmony.PatchAll(typeof(GameMenuShowPatch));
                 harmony.PatchAll(typeof(FpsItemsClearedPatch));
+                harmony.PatchAll(typeof(GraphicsQualityPatch));
             }
             catch (Exception ex) { DebugLog.Exception("Mods settings menu patches unavailable", ex); }
         }
@@ -348,6 +363,12 @@ namespace BetterCollectionManager
                 CustomFpsControl.Attach(__instance);
                 ModsSettingsUi.Attach(__instance);
             }
+        }
+
+        [HarmonyPatch(typeof(OptionsMenu), "OnNewGraphicsQuality")]
+        private static class GraphicsQualityPatch
+        {
+            [HarmonyPostfix] public static void Postfix() => ModsSettingsUi.GraphicsChanged();
         }
 
         [HarmonyPatch(typeof(DropdownControl), "clearItems")]

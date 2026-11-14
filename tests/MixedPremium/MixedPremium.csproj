@@ -58,6 +58,8 @@
     <Compile Include="../../src/BetterCollectionManager/DisenchantChoiceMenu.cs" />
     <Compile Include="../../src/BetterCollectionManager/Patches/CollectibleCardClassFilterPatches.cs" />
     <Compile Include="../../src/BetterCollectionManager/CollectionQualitySettings.cs" Link="CollectionQualitySettings.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageSettings.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageNativeArt.cs" />
     <Compile Include="../../src/BetterCollectionManager/CustomFrameRate.cs" Link="CustomFrameRate.cs" />
     <Compile Include="../../src/BetterCollectionManager/CustomFpsControl.cs" Link="CustomFpsControl.cs" />
     <Compile Include="../../src/BetterCollectionManager/QualityOptions.cs" Link="QualityOptions.cs" />

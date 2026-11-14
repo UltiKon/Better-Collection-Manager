@@ -20,3 +20,8 @@ This setup is a separate project and is not endorsed by Blizzard, Unity or LavaG
 Two original Mono libraries retain CodeView/PDB references to the Unity build
 worker. These are upstream compiler records, not the sender's local paths. The
 original DLLs are preserved to avoid changing their signatures and identities.
+
+HearthstoneDeckView quantity-label artwork (x2 through x9) is bundled under its
+MIT License. The original notice is in `data/DeckViewLabels/LICENSE` in the source
+tree and `ThirdParty/HearthstoneDeckView-LICENSE.txt` in the mod update packages.
+Source: https://github.com/hextract/HearthstoneDeckView/tree/82d1f0b2b28d7fccd6d2cf1f74015c2d52dfa060/labels

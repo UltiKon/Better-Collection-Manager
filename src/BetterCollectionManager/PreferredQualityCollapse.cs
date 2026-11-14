@@ -27,6 +27,7 @@ namespace BetterCollectionManager
             s_singleTiles.Clear();
             s_variants.Clear();
             s_counterparts.Clear();
+            s_reprintFamilies.Clear();
         }
 
         public static bool TryGetVariants(string cardId, out IReadOnlyList<CollectibleCard> variants)
@@ -81,9 +82,8 @@ namespace BetterCollectionManager
                 group.Add(card);
             }
 
-            // Select whole editions: premium actors, counters and deck input all
-            // refer to a real CardId. Mixing inventories from counterpart IDs
-            // would report copies/qualities that this edition does not own.
+            // Keep actors and deck input tied to a real edition. Only the
+            // display counter aggregates inventory across equivalent reprints.
             Dictionary<string, string> editions = SelectReprintEditions(groups, order);
             cards.Clear();
             for (int i = 0; i < order.Count; i++)
@@ -148,35 +148,65 @@ namespace BetterCollectionManager
         private static Dictionary<string, string> SelectReprintEditions(
             Dictionary<string, List<CollectibleCard>> groups, List<string> order)
         {
+            CacheReprintFamilies(order);
+            var selected = new Dictionary<string, string>(System.StringComparer.Ordinal);
+            foreach (string id in order)
+            {
+                string family = s_reprintFamilies[id][0];
+                if (!selected.TryGetValue(family, out string previous)
+                    || PreferEdition(groups[id], groups[previous])) selected[family] = id;
+            }
+            var result = new Dictionary<string, string>(System.StringComparer.Ordinal);
+            foreach (string id in order) result[id] = selected[s_reprintFamilies[id][0]];
+            return result;
+        }
+
+        private static readonly Dictionary<string, IReadOnlyList<string>> s_reprintFamilies =
+            new Dictionary<string, IReadOnlyList<string>>(System.StringComparer.Ordinal);
+
+        internal static IReadOnlyList<string> CounterpartEditions(string cardId)
+        {
+            if (!s_reprintFamilies.ContainsKey(cardId)) CacheReprintFamilies(new[] { cardId });
+            return s_reprintFamilies[cardId];
+        }
+
+        private static void CacheReprintFamilies(IEnumerable<string> ids)
+        {
             var parents = new Dictionary<string, string>(System.StringComparer.Ordinal);
-            var pending = new Queue<string>(order);
+            var pending = new Queue<string>(ids);
             var visited = new HashSet<string>(System.StringComparer.Ordinal);
             while (pending.Count > 0)
             {
                 string id = pending.Dequeue();
                 if (!visited.Add(id)) continue;
                 string root = Root(id);
+                // Keep reverse links discovered in an earlier result bucket
+                // when an inventory refresh only supplies the selected edition.
+                if (s_reprintFamilies.TryGetValue(id, out IReadOnlyList<string> known))
+                    foreach (string edition in known) Link(edition);
                 // Follow metadata through editions excluded by the current
                 // query, but only choose cards actually in the filtered list.
                 foreach (string counterpart in Counterparts(id))
+                    Link(counterpart);
+
+                void Link(string counterpart)
                 {
-                    if (string.IsNullOrEmpty(counterpart)) continue;
+                    if (string.IsNullOrEmpty(counterpart)) return;
                     string other = Root(counterpart);
                     if (root != other) parents[other] = root;
                     pending.Enqueue(counterpart);
                 }
             }
 
-            var selected = new Dictionary<string, string>(System.StringComparer.Ordinal);
-            foreach (string id in order)
+            var families = new Dictionary<string, List<string>>(System.StringComparer.Ordinal);
+            foreach (string id in visited)
             {
                 string root = Root(id);
-                if (!selected.TryGetValue(root, out string previous)
-                    || PreferEdition(groups[id], groups[previous])) selected[root] = id;
+                if (!families.TryGetValue(root, out List<string> family)) families[root] = family = new List<string>();
+                family.Add(id);
             }
-            var result = new Dictionary<string, string>(System.StringComparer.Ordinal);
-            foreach (string id in order) result[id] = selected[Root(id)];
-            return result;
+            foreach (List<string> family in families.Values)
+                foreach (string id in family) s_reprintFamilies[id] = family;
 
             string Root(string id)
             {

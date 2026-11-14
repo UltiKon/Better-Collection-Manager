@@ -69,6 +69,7 @@ namespace BetterCollectionManager
         private static int s_preferencesSaveFrame = -1;
         private static bool s_preferencesDirty;
         private static float s_preferencesRetryAt;
+        internal static void QueuePreferencesSave() { s_preferencesDirty = true; FlushPreferences(); }
         internal static void FlushPreferences(bool force = false)
         {
             if (!s_preferencesDirty || (!force && (s_preferencesSaveFrame == UnityEngine.Time.frameCount || UnityEngine.Time.unscaledTime < s_preferencesRetryAt))) return;

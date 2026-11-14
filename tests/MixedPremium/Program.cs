@@ -39,6 +39,7 @@ internal static partial class Program
         CheckDropdownReadability();
         CheckDropdownScroll();
         CheckNativeScrollbarArt();
+        CheckDeckImageNativeArt();
         CheckCustomFps();
         CheckCategoryStartup();
         CheckPageDiagnostics();
@@ -629,6 +630,7 @@ internal static partial class Program
     private static void CheckCounts()
     {
         MixedPremiumCard.ResetSession();
+        CollectionQualitySettings.ColorCodeCounter = false;
         var manager = CollectionManager.Instance = new CollectionManager();
         PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.DIAMOND, TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.NORMAL };
         var variants = new List<CollectibleCard>();
@@ -697,7 +699,8 @@ internal static partial class Program
         count.m_normalCountText.WordWrap = true;
         Vector3 nativeScale = count.m_normalWideBorder.transform.localScale;
         CollapsedPremiumCount.Attach(visual);
-        Check(CountText(count) == "2+0+1+2", "A full preferred tile must display all existing qualities");
+        Check(CountText(count) == "2+0+1+2", "A full preferred tile must display all existing qualities: " + CountText(count)
+            + ", colors=" + CollectionQualitySettings.ColorCodeCounter);
         Check(count.GetCount() == 2 && count.GetTrialCount() == 0, "Display formatting must not overwrite native inventory data");
         Check(count.m_normalCountText.Width > nativeWidth && !count.m_normalCountText.ResizeToFit
             && !count.m_normalCountText.ResizeToFitAndGrow && !count.m_normalCountText.WordWrap

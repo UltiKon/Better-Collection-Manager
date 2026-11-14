@@ -1,0 +1,24 @@
+{
+  "tag": "0.2.0",
+  "title": "Added PNG export",
+  "assets": [
+    {
+      "name": "BetterCollectionManager.dll",
+      "size": 6112256,
+      "sha256": "c38582054eb9bc707a58329ff63a579219069252a9054b02a492d7b29cd6cea9",
+      "blob": "4ec92eb485bd8dc190fce244a471c92bd90972fa"
+    },
+    {
+      "name": "BetterCollectionManager-0.2.0-bepinex.zip",
+      "size": 10884167,
+      "sha256": "d39bd926022fe9347f41a334752d91d83e2320056f28f4d48076bc135d7765ee",
+      "blob": "e64e97282de83f76683c6024c9b4d97c4d11fa40"
+    },
+    {
+      "name": "BetterCollectionManager-0.2.0-shareable.zip",
+      "size": 10878221,
+      "sha256": "35509249a4e9ae91e5b78f6499934fdd71b7aedc033f9aabafac508a39780851",
+      "blob": "9f31655ca8c0849f93587475737d9a08ed3fe534"
+    }
+  ]
+}

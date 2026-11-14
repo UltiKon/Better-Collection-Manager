@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """Create a shareable mod ZIP from a Release DLL and reviewed source files."""
 import argparse
+import gzip
 import hashlib
 from pathlib import Path, PurePosixPath
 import posixpath
 import re
 import stat
+import struct
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE_DIRS = ('.github', 'src', 'config', 'data', 'docs', 'tests', 'tools', 'diagnostics', 'installer')
 SOURCE_SUFFIXES = {'.cs', '.csproj', '.props', '.sln', '.md', '.json', '.tsv', '.py', '.sh', '.cmd', '.command', '.yml', '.yaml'}
+IMAGE_RESOURCE_DIRS = {'data/DeckViewBackgrounds', 'data/DeckViewLabels'}
 EXCLUDED_PARTS = {'bin', 'obj', '__pycache__', '.git', '.vs'}
 TOP_LEVEL_FILES = {'.gitignore', 'LICENSE'}
 # Match actual paths, including UTF-16 assembly strings, without embedding any
@@ -26,13 +29,41 @@ PRIVATE_PATTERNS = (
 
 
 def check_privacy(name, data):
+    resource = PurePosixPath(name.removeprefix('Source/'))
+    if resource.parent.as_posix() in IMAGE_RESOURCE_DIRS and resource.suffix == '.gz':
+        validate_image_resource(resource, data)
+        return
+    if resource.suffix == '.dll' and data.startswith(b'MZ'):
+        # Reviewed pixel payloads are also embedded in the DLL. Scanning their
+        # compressed bytes as text produces arbitrary path/email false matches;
+        # keep scanning every other byte, including assembly strings/resources.
+        for directory in IMAGE_RESOURCE_DIRS:
+            for path in (ROOT / directory).glob('*.gz'):
+                pixels = path.read_bytes()
+                validate_image_resource(path, pixels)
+                data = data.replace(pixels, b'')
     # Published upstream license attribution is public, not sender metadata.
     if name.removeprefix('Source/') == 'installer/ThirdParty/Mono-LICENSE.txt' and hashlib.sha256(data).hexdigest() == '844242559dbdb96cb9cbe103b06c2bc8a349f19ad0b89d5c3cf830a8914333f6':
         return
-    for text in (data.decode('utf-8', errors='ignore'), data.decode('utf-16-le', errors='ignore'),
-                 data[1:].decode('utf-16-le', errors='ignore')):
+    # Invalid binary bytes must separate text rather than join unrelated bytes
+    # into a synthetic drive path or credential.
+    for text in (data.decode('utf-8', errors='replace'), data.decode('utf-16-le', errors='replace'),
+                 data[1:].decode('utf-16-le', errors='replace')):
         if any(pattern.search(text) for pattern in PRIVATE_PATTERNS):
             raise ValueError(f'Potential private path or credential in {name}; review before packaging')
+
+
+def validate_image_resource(path, data):
+    # Our generated gzip assets have no filenames, comments or extra fields.
+    if data[:4] != b'\x1f\x8b\x08\x00':
+        raise ValueError(f'Unexpected compressed image header: {path.name}')
+    pixels = gzip.decompress(data)
+    if len(pixels) < 8:
+        raise ValueError(f'Missing image dimensions: {path.name}')
+    width, height = struct.unpack('<II', pixels[:8])
+    channels = 4 if path.name.endswith('.rgba.gz') else 3
+    if not (0 < width <= 4096 and 0 < height <= 4096) or len(pixels) != 8 + width * height * channels:
+        raise ValueError(f'Invalid image payload: {path.name}')
 
 
 def source_files():
@@ -40,13 +71,22 @@ def source_files():
              and (p.name in TOP_LEVEL_FILES or p.suffix in SOURCE_SUFFIXES)}
     for directory in SOURCE_DIRS:
         files.update(p for p in (ROOT / directory).rglob('*') if p.is_file()
-                     and (p.suffix in SOURCE_SUFFIXES or p.suffix == '.cfg'
+                     and (p.suffix in SOURCE_SUFFIXES or p.suffix == '.cfg' or p.name == 'LICENSE'
+                          or p.parent.relative_to(ROOT).as_posix() in IMAGE_RESOURCE_DIRS
+                          and (p.suffix == '.gz' or p.name in {'LICENSE.txt', 'SOURCE.txt'})
                           or p.relative_to(ROOT).as_posix() == 'installer/ThirdParty/Mono-LICENSE.txt')
                      and not EXCLUDED_PARTS.intersection(p.relative_to(ROOT).parts))
     for path in sorted(files):
         if path.is_symlink():
             raise ValueError(f'Symlinks are not allowed: {path.name}')
         yield path
+
+
+def third_party_files():
+    return {
+        'ThirdParty/HearthstoneDeckView-LICENSE.txt': (ROOT / 'data/DeckViewLabels/LICENSE').read_bytes(),
+        'ThirdParty/HearthstoneDeckView-SOURCE.txt': (ROOT / 'data/DeckViewLabels/SOURCE.txt').read_bytes(),
+    }
 
 
 def add_entry(archive, name, data, executable=False):
@@ -112,6 +152,7 @@ def main():
     contents = {'README.md': distribution_readme(readme),
                 'LICENSE': (ROOT / 'LICENSE').read_bytes(),
                 dll_path: dll}
+    contents.update(third_party_files())
     for path in source_files():
         contents['Source/' + path.relative_to(ROOT).as_posix()] = path.read_bytes()
     for name, data in contents.items():

@@ -1,0 +1,4 @@
+Source: https://github.com/hextract/HearthstoneDeckView/tree/82d1f0b2b28d7fccd6d2cf1f74015c2d52dfa060/labels
+Quantity labels x2 through x9, losslessly converted from PNG to gzip-compressed RGBA with width/height header.
+Licensed under MIT; see LICENSE.
+Multi-digit counts reuse the original border; its baked numeral area is replaced with adjacent panel pixels in code and drawn with live text.

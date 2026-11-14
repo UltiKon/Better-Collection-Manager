@@ -1049,6 +1049,19 @@ internal static partial class Program
         graphics.transform.SetParent(owner.transform, false);
         owner.m_graphicsQuality = DropdownControl.MakeTemplate();
         owner.m_graphicsQuality.transform.SetParent(graphics.transform, false);
+        // The actual menu template may put UberText directly on its root,
+        // rather than on a child of DropdownMenuItem.
+        UnityEngine.Object.Destroy(owner.m_graphicsQuality.m_menuItemTemplate.m_text.gameObject);
+        owner.m_graphicsQuality.m_menuItemTemplate.m_text = owner.m_graphicsQuality.m_menuItemTemplate.gameObject.AddComponent<UberText>();
+        owner.m_graphicsQuality.m_selectedItem.m_text.RenderToTexture = true;
+        owner.m_graphicsQuality.m_menuItemTemplate.m_text.RenderToTexture = true;
+        foreach (var nativeItem in new[] { owner.m_graphicsQuality.m_selectedItem, owner.m_graphicsQuality.m_menuItemTemplate })
+        {
+            var inheritedGlyph = Child(nativeItem.m_text.transform, "InheritedDropdownGlyph");
+            inheritedGlyph.AddComponent<TextMesh>(); inheritedGlyph.AddComponent<MeshRenderer>();
+            Child(nativeItem.transform, "UberText_RenderPlane_DropdownFixture").AddComponent<MeshRenderer>();
+            Child(nativeItem.transform, "UberText_ShadowPlane_DropdownFixture").AddComponent<MeshRenderer>();
+        }
         var graphicsCaption = new GameObject("GraphicsCaption");
         graphicsCaption.transform.SetParent(graphics.transform, false);
         UberText nativeHeading = graphicsCaption.AddComponent<UberText>();
@@ -1156,7 +1169,7 @@ internal static partial class Program
             "The main title must retain the original raised baseline within its banner");
         var sectionBanners = menu.GetComponentsInChildren<Transform>(true)
             .Where(t => t.gameObject.name == "BCM_SectionBanner").ToArray();
-        Check(sectionBanners.Length == 5,
+        Check(sectionBanners.Length == 6,
             "All settings group headings must retain their native Options banners while offscreen rows scroll");
         foreach (Transform banner in sectionBanners)
         {
@@ -1187,7 +1200,7 @@ internal static partial class Program
         Check(!nativeBanner.activeSelf && bannerArtwork.GetComponent<MeshRenderer>().enabled && bannerText.Text == "Graphics",
             "Copying native banners must preserve the original Options header and visibility");
         var fields = menu.GetComponentsInChildren<DropdownControl>(true);
-        Check(fields.Length == 11 && menu.GetComponentsInChildren<DropdownControl>(false).Length >= 8 && menu.Buttons.Count == 0 && menu.Header == "Collection Mod Settings",
+        Check(fields.Length == 15 && menu.GetComponentsInChildren<DropdownControl>(false).Length >= 8 && menu.Buttons.Count == 0 && menu.Header == "Collection Mod Settings",
             $"Settings must show collection, priorities and filter controls together without a section picker (all={fields.Length}, visible={menu.GetComponentsInChildren<DropdownControl>(false).Length}, buttons={menu.Buttons.Count}, header={menu.Header})");
         Check(menu.GetComponentsInChildren<UberText>(true).All(t => !t.Text.Contains("Signature Appearance")
             && !t.Text.Contains("favorite")), "Cloning a dropdown must not import its section heading or favorite help text");
@@ -1198,9 +1211,9 @@ internal static partial class Program
         var click = fields.Single(d => d.Items[0] is ClickQualityMode);
         var drag = fields.Single(d => d.Items[0] is DragQualityMode);
         var checkboxes = menu.GetComponentsInChildren<CheckBox>(true);
-        Check(checkboxes.Length == 11 && menu.GetComponentsInChildren<CheckBox>(false).Any(box => box.m_uberText.Text == "Collapse quality variants")
+        Check(checkboxes.Length == 18 && menu.GetComponentsInChildren<CheckBox>(false).Any(box => box.m_uberText.Text == "Collapse quality variants")
             && menu.GetComponentsInChildren<CheckBox>(false).Any(box => box.m_uberText.Text == "Color code counter"),
-            "All eleven settings checkboxes must exist and the handling controls stay visible while overflow scrolls");
+            "All eighteen settings checkboxes must exist and the handling controls stay visible while overflow scrolls");
         var checkbox = checkboxes.Single(c => c.m_uberText.Text == "Hide redundant settings");
         var counterCheckbox = checkboxes.Single(c => c.m_uberText.Text == "Color code counter");
         var rememberCheckbox = checkboxes.Single(c => c.m_uberText.Text == "Remember filter modes");
@@ -1227,6 +1240,31 @@ internal static partial class Program
             "Display choices must include Stacking beside Split");
         Check(checkbox.IsChecked() && checkbox.m_uberText.Text == "Hide redundant settings",
             "The bottom checkbox must default to hiding redundant settings with an English caption");
+        Check(fields.All(control => !control.m_selectedItem.m_text.RenderToTexture && !control.m_menuItemTemplate.m_text.RenderToTexture),
+            "Custom dropdowns own fresh direct text instead of inherited graphics-quality-dependent RTT surfaces.");
+        foreach (var control in fields)
+        {
+            UberText templateCaption = control.m_menuItemTemplate.m_text;
+            templateCaption.UpdateNow(true);
+            Check(CounterTextLayout.TryScreenInkRect(templateCaption, CameraUtils.Camera, out Rect templateInk)
+                && templateInk.width > 0f && templateInk.height > 0f && templateCaption.UseEditorText,
+                "Native dropdown layout requires visible-sized template geometry even while the popup is inactive.");
+        }
+        foreach (var control in fields)
+        foreach (var item in new[] { control.m_selectedItem, control.m_menuItemTemplate })
+        {
+            Check(item.m_text.transform.IsChildOf(item.transform) && !item.m_text.gameObject.Destroyed,
+                "Every selected field and popup template owns its replacement caption, even when the old UberText lived on the item root.");
+            Check(item.GetComponentsInChildren<TextMesh>(true).Where(mesh => mesh.gameObject.name == "InheritedDropdownGlyph")
+                .All(mesh => !mesh.GetComponent<Renderer>().enabled),
+                "Replacing a dropdown caption retires inherited glyph renderers that native Hide cannot reach.");
+            Check(item.GetComponentsInChildren<Transform>(true).Where(node => node.gameObject.name.Contains("DropdownFixture"))
+                .All(node => !node.gameObject.activeSelf),
+                "Inherited dropdown RTT and shadow planes stay inactive behind the fresh text.");
+        }
+        Check(owner.m_graphicsQuality.m_selectedItem.GetComponentsInChildren<TextMesh>(true)
+            .Single(mesh => mesh.gameObject.name == "InheritedDropdownGlyph").GetComponent<Renderer>().enabled,
+            "Retiring cloned captions leaves the native Options text untouched.");
         CheckSettingsScrolling(menu);
         CheckSettingsLayout(menu);
         CheckSettingsSections(menu);
@@ -1351,7 +1389,7 @@ internal static partial class Program
         checkLock();
         Check(menu.GetComponentsInChildren<DropdownControl>(true).Length == fields.Length,
             "Reopening Mods must reuse its existing section controls rather than cloning new rows");
-        Check(menu.GetComponentsInChildren<Transform>(true).Count(t => t.gameObject.name == "BCM_SectionBanner") == 5,
+        Check(menu.GetComponentsInChildren<Transform>(true).Count(t => t.gameObject.name == "BCM_SectionBanner") == 6,
             "Reopening Mods must reuse its existing banner copies");
         var offClick = typeof(ModsSettingsMenu).GetMethod("OnBlockerRelease", BindingFlags.Instance | BindingFlags.NonPublic);
         var settingsLateUpdate = typeof(ModsSettingsMenu).GetMethod("LateUpdate", BindingFlags.Instance | BindingFlags.NonPublic);

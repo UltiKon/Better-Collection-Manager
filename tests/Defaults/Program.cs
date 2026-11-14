@@ -31,6 +31,7 @@ internal static class Program
             foreach (string path in paths) File.Delete(path);
             PreferredPremiumPrefs.EnsureLoaded();
             CollectionQualitySettings.EnsureLoaded();
+            DeckImageSettings.EnsureLoaded();
             var expected = ReadRequestedDefaults();
             int entries = 0;
             foreach (var category in MelonPreferences.Categories)

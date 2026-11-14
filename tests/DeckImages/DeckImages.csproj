@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/BetterCollectionManager/DeckImageLayout.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageSnapshot.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageExport.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImagePng.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageSettings.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageStatistics.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageCanvas.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageCompositor.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageCapture.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageCardFrame.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageBackgroundArt.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImagePresentation.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageQuantityLabel.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageCardArt.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="../../data/DeckViewLabels/*.rgba.gz">
+      <LogicalName>BetterCollectionManager.DeckViewLabels.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="../../data/DeckViewBackgrounds/*.rgb.gz">
+      <LogicalName>BetterCollectionManager.DeckViewBackgrounds.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

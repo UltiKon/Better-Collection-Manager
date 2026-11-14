@@ -10,6 +10,7 @@ internal static partial class Program
         var savedManager = CollectionManager.Instance;
         var savedOrder = PreferredPremiumPrefs.Order;
         var savedMode = CollectionQualitySettings.Display;
+        bool savedColors = CollectionQualitySettings.ColorCodeCounter;
         try
         {
             var manager = new CollectionManager();
@@ -72,6 +73,11 @@ internal static partial class Program
             PreferredQualityCollapse.CollapseInPlace(transitive, "transitive", null);
             Check(transitive.SequenceEqual(new[] { unrelated, reprintGolden }),
                 "Directed/transitive native links deduplicate even with an intermediate edition filtered out");
+            Check(CollapsedPremiumCount.Format("reprint", TAG_PREMIUM.GOLDEN) == "1+3",
+                "The counter follows a discovered family even when the selected edition has no outgoing links");
+            PreferredQualityCollapse.RefreshCard("reprint", new List<CollectibleCard> { reprintGolden, reprintNormal });
+            Check(CollapsedPremiumCount.Format("reprint", TAG_PREMIUM.GOLDEN) == "1+3",
+                "Inventory refresh preserves reverse reprint links and does not lose hidden editions");
 
             PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.NORMAL, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND };
             PreferredQualityCollapse.BeginUpdate();
@@ -100,6 +106,59 @@ internal static partial class Program
             Check(PreferredQualityCollapse.CollapseInPlace(independent, "independent", null) == 0,
                 "Names and Core/Classic-looking prefixes alone never merge cards without native equivalence");
 
+            // Aviana: one golden TGT copy, one normal TGT and one normal CoT.
+            PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.NORMAL };
+            CollectionQualitySettings.Display = QualityDisplayMode.HighestOnly;
+            CollectionQualitySettings.ColorCodeCounter = false;
+            var avianaNormal = Owned("Aviana_TGT", TAG_PREMIUM.NORMAL, 1);
+            var avianaGolden = Owned("Aviana_TGT", TAG_PREMIUM.GOLDEN, 1);
+            var avianaReprint = Owned("Aviana_CoT", TAG_PREMIUM.NORMAL, 1);
+            avianaNormal.Rarity = avianaGolden.Rarity = avianaReprint.Rarity = TAG_RARITY.LEGENDARY;
+            GameUtils.CounterpartCardIds["Aviana_TGT"] = new List<string> { "Aviana_TGT", "Aviana_CoT", "Aviana_CoT", null };
+            GameUtils.CounterpartCardIds["Aviana_CoT"] = new List<string> { "Aviana_TGT" };
+            PreferredQualityCollapse.BeginUpdate();
+            var aviana = new List<CollectibleCard> { avianaNormal, avianaGolden }; // CoT filtered out.
+            PreferredQualityCollapse.CollapseInPlace(aviana, "Aviana TGT filter", null);
+            Check(aviana.SequenceEqual(new[] { avianaGolden })
+                && CollapsedPremiumCount.Format("Aviana_TGT", TAG_PREMIUM.GOLDEN) == "1+2",
+                "Aviana counts golden and normal copies across TGT and filtered-out CoT exactly once");
+            var root = new UnityEngine.GameObject("AvianaCounter");
+            var visual = root.AddComponent<CollectionCardVisual>();
+            var actor = Child(root.transform, "Actor").AddComponent<Actor>();
+            actor.Def = avianaGolden.GetEntityDef(); actor.Premium = TAG_PREMIUM.GOLDEN;
+            visual.Actors = new CollectionCardActors(actor);
+            var count = visual.m_count = Child(root.transform, "Count").AddComponent<CollectionCardCount>();
+            count.m_normalTab = Child(count.transform, "OwnedTab");
+            count.m_normalCountText = Child(count.m_normalTab.transform, "CountLabel").AddComponent<UberText>();
+            count.m_normalBorder = Child(count.transform, "NarrowBorder");
+            count.m_normalWideBorder = Child(count.transform, "WideBorder");
+            count.Init(Child(count.transform, "Center").transform);
+            count.SetNative(1, 0);
+            CollapsedPremiumCount.Attach(visual);
+            Check(CountText(count) == "1+2" && count.gameObject.activeSelf && count.GetCount() == 1,
+                "Aviana displays the family total without changing the native selected-edition inventory");
+            CollectionQualitySettings.ColorCodeCounter = true;
+            count.Show();
+            Check(CountText(count) == "1+2"
+                && count.m_normalCountText.Text.Contains("<color=#FFB300>1</color>")
+                && count.m_normalCountText.Text.EndsWith("<color=#FFFFFF>2</color>")
+                && count.m_normalCountText.Text.Contains("<size=17>+</size>"),
+                "Reprint totals keep their gold/normal colors and separator formatting");
+            manager.Counts[("Aviana_CoT", TAG_PREMIUM.NORMAL)] = 0;
+            count.Show();
+            Check(CountText(count) == "1+1", "Inventory changes update the reprint total without rebuilding metadata");
+            CollapsedPremiumCount.Release(visual);
+            CollectionQualitySettings.ColorCodeCounter = false;
+            manager.Cards.Remove(("Aviana_TGT", TAG_PREMIUM.GOLDEN));
+            manager.Counts[("Aviana_CoT", TAG_PREMIUM.NORMAL)] = 2;
+            PreferredQualityCollapse.RefreshCard("Aviana_TGT", new List<CollectibleCard> { avianaNormal });
+            actor.Premium = TAG_PREMIUM.NORMAL;
+            count.SetNative(1, 0);
+            CollapsedPremiumCount.Attach(visual);
+            Check(CountText(count) == "x3" && count.m_normalTab.activeSelf && count.GetCount() == 1,
+                "Copies across editions also aggregate when only one premium exists and native would hide the tab");
+            CollapsedPremiumCount.Release(visual);
+
             CollectibleCard Owned(string id, TAG_PREMIUM premium, int count)
             {
                 var card = Card(id, premium, count);
@@ -110,10 +169,12 @@ internal static partial class Program
         }
         finally
         {
+            CollapsedPremiumCount.ResetSession();
             GameUtils.CounterpartCardIds.Clear();
             CollectionManager.Instance = savedManager;
             PreferredPremiumPrefs.Order = savedOrder;
             CollectionQualitySettings.Display = savedMode;
+            CollectionQualitySettings.ColorCodeCounter = savedColors;
             PreferredQualityCollapse.BeginUpdate();
         }
     }

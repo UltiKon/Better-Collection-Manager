@@ -7,7 +7,7 @@ groups card qualities, offers split Normal/Golden cards and adds filters,
 categories, combos and packages. Choose your preferred quality in
 **Settings → Mods**; each quality keeps its own ownership count and deck rules.
 
-This is the **BepInEx 5 Unity Mono** version, mod **0.1.0**. It was compiled against
+This is the **BepInEx 5 Unity Mono** version, mod **0.2.0**. It was compiled against
 BepInEx **5.4.23.6** and the supplied Hearthstone references, but has **not yet been
 tested in a running Hearthstone client**. BepInEx 6 and IL2CPP are not supported
 by this build. Hub/Darkmoon experiments are disabled.
@@ -166,7 +166,7 @@ copy files into the game. Categories and packages are embedded in the DLL.
 The plugin advertises its name, GUID, version, repository URL and description in
 the CFG's **General** section so Firestone can identify it in its mod list.
 The plugin GUID and CFG filename now match the DLL: **BetterCollectionManager**.
-The repository's release tag must match the version string exactly: **0.1.0**.
+The repository's release tag must match the version string exactly: **0.2.0**.
 
 On the first launch with this filename, an existing lowercase
 `bettercollectionmanager.cfg` is imported if `BetterCollectionManager.cfg` does

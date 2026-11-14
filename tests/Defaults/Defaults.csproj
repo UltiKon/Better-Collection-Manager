@@ -8,6 +8,7 @@
     <Compile Include="../../src/BetterCollectionManager/LoaderPreferences.cs" />
     <Compile Include="../../src/BetterCollectionManager/LegacySettings.cs" />
     <Compile Include="../../src/BetterCollectionManager/CollectionQualitySettings.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckImageSettings.cs" />
     <Compile Include="../../src/BetterCollectionManager/QualityOptions.cs" />
     <Compile Include="../../src/BetterCollectionManager/PreferredPremiumPrefs.cs" />
     <Compile Include="../../src/BetterCollectionManager/PreferredPremiumHelper.cs" />

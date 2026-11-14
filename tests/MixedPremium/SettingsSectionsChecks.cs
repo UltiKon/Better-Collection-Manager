@@ -12,9 +12,181 @@ internal static partial class Program
         bool collapse = PreferredPremiumPrefs.CollapseEnabled;
         Check(!controls.Any(c => c.gameObject.name == "BCM_ModsSettingssection"),
             "The common settings panel must not require a section picker");
-        Check(menu.GetComponentsInChildren<DropdownControl>(true).Length == 11
-            && menu.GetComponentsInChildren<CheckBox>(true).Length == 11,
+        Check(menu.GetComponentsInChildren<DropdownControl>(true).Length == 15
+            && menu.GetComponentsInChildren<CheckBox>(true).Length == 18,
             "Collection, priorities and filters must be available together on one page");
+        Check(!controls.Any(control => control.gameObject.name == "BCM_ModsExportartwork"),
+            "Artwork selection belongs to the export popup, not the settings panel.");
+        var imageQuality = controls.Single(control => control.gameObject.name == "BCM_ModsExportquality");
+        DeckImageQuality savedQuality = DeckImageSettings.Quality;
+        Check(imageQuality.Items.Cast<DeckImageQuality>().SequenceEqual(new[] { DeckImageQuality.Deck, DeckImageQuality.Normal, DeckImageQuality.Golden, DeckImageQuality.Highest }),
+            "Deck image quality offers As in deck, Normal, Golden and Highest.");
+        imageQuality.SelectOption(DeckImageQuality.Normal);
+        Check(DeckImageSettings.Quality == DeckImageQuality.Normal, "The image quality dropdown saves its preference.");
+        imageQuality.SelectOption(savedQuality);
+        var resolutionControl = controls.Single(control => control.gameObject.name == "BCM_ModsExportresolution");
+        Check(resolutionControl.Items.Cast<DeckImageResolution>().Select(DeckImageSettings.ResolutionLabel)
+            .SequenceEqual(new[] { "Low", "Medium", "High", "Max" }),
+            "Image resolution exposes four plain preset labels without suffixes.");
+        DeckImageResolution savedResolution = DeckImageSettings.Resolution;
+        resolutionControl.SelectOption(DeckImageResolution.High);
+        Check(DeckImageSettings.Resolution == DeckImageResolution.High && DeckImageSettings.Quality == savedQuality,
+            "Image resolution saves separately from card premium quality.");
+        resolutionControl.SelectOption(savedResolution);
+        var imageFormat = controls.Single(control => control.gameObject.name == "BCM_ModsExportformat");
+        DeckImageAspect savedFormat = DeckImageSettings.Aspect;
+        Check(imageFormat.Items.Cast<DeckImageAspect>().Select(DeckImageSettings.AspectLabel).SequenceEqual(new[] { "Portrait", "Square", "Landscape" }),
+            "Image format offers Portrait, Square and Landscape instead of numeric column settings.");
+        imageFormat.SelectOption(DeckImageAspect.Square);
+        Check(DeckImageSettings.Aspect == DeckImageAspect.Square, "Image format saves its preference.");
+        imageFormat.SelectOption(savedFormat);
+        // Model the observed client failure after native graphics quality changes:
+        // valid native choices and a working closed field, but blank popup labels.
+        var popupRows = imageFormat.Items.Select(value => {
+            var row = new GameObject("GraphicsRebuiltChoice").AddComponent<DropdownMenuItem>();
+            row.transform.SetParent(imageFormat.m_menuItemContainer.transform, false);
+            row.m_text = new GameObject("LostNativeCaption").AddComponent<UberText>();
+            row.m_text.transform.SetParent(row.transform, false);
+            row.SetValue(value, string.Empty); row.m_text.TrueTypeFont = null;
+            row.m_text.Hide(); row.m_text.enabled = false;
+            return row;
+        }).ToArray();
+        imageFormat.onUserPressedButton();
+        Check(popupRows.All(row => row.m_text.Text == DeckImageSettings.AspectLabel((DeckImageAspect)row.GetValue())
+            && row.m_text.enabled && !row.m_text.isHidden() && row.m_text.TrueTypeFont != null
+            && row.m_text.transform.IsChildOf(row.transform)),
+            "Opening Mods repairs blank popup captions from native graphics changes using their actual values and a fresh text owner.");
+        // Replay the actual log: popup artwork moves from order 51 to 102
+        // after changing native quality, while direct glyphs remain at 52.
+        typeof(ModsSettingsMenu).GetMethod("RestoreSettingsScrollRows", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(menu, null);
+        var popupArt = new GameObject("NativeQualityDropdownBackground");
+        popupArt.transform.SetParent(imageFormat.m_menu.transform, false);
+        popupArt.AddComponent<MeshFilter>().sharedMesh = new Mesh { bounds = new Bounds(Vector3.zero, new Vector3(4, .1f, 1)) };
+        var popupRenderer = popupArt.AddComponent<MeshRenderer>();
+        var sharedPopupMaterial = new Material { renderQueue = 3000 };
+        popupRenderer.sharedMaterial = sharedPopupMaterial; popupRenderer.sortingLayerID = 7;
+        int savedTemplateQueue = imageFormat.m_menuItemTemplate.m_text.RenderQueue;
+        imageFormat.m_menuItemTemplate.m_text.RenderQueue = 52;
+        foreach (var row in popupRows)
+        { row.m_text.SimulateNativeQueue = true; row.m_text.RenderQueue = 52; row.m_text.UpdateNow(true); }
+        popupRenderer.sortingOrder = 102;
+        imageFormat.onUserCancelled(); imageFormat.onUserPressedButton();
+        Check(popupRows.All(row => row.m_text.RenderQueue == 103
+            && CounterTextLayout.GlyphRenderer(row.m_text).sortingOrder == 103
+            && CounterTextLayout.GlyphRenderer(row.m_text).sortingLayerID == 7),
+            "Native quality change: text must follow the background from order 52 to 103 when artwork moves from 51 to 102.");
+        for (int repeat = 0; repeat < 3; repeat++) { imageFormat.onUserCancelled(); imageFormat.onUserPressedButton(); }
+        Check(popupRows.All(row => row.m_text.RenderQueue == 103) && sharedPopupMaterial.renderQueue == 3000,
+            "Repeated popup openings keep a stable text order and never change shared native background materials.");
+        popupRenderer.sortingOrder = 153; // Native artwork can move after the opening callback.
+        typeof(ModsSettingsMenu).GetMethod("LateUpdate", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(menu, null);
+        Check(popupRows.All(row => row.m_text.RenderQueue == 154 && CounterTextLayout.GlyphRenderer(row.m_text).sortingOrder == 154),
+            "An already open popup follows a late native draw-order change without requiring either settings menu to close.");
+        foreach (var row in popupRows) { row.UpdateTextColor(); row.m_text.UpdateNow(true); }
+        Check(popupRows.All(row => CounterTextLayout.GlyphRenderer(row.m_text).sortingOrder == 154),
+            "Native hover/color text rebuilds retain the corrected order.");
+        var selectionMaterial = new Material { renderQueue = 3000 };
+        foreach (var row in popupRows)
+        {
+            row.m_selected = new GameObject("NativeSelectedBackground");
+            row.m_selected.transform.SetParent(row.transform, false);
+            var selectionRenderer = row.m_selected.AddComponent<MeshRenderer>();
+            selectionRenderer.sharedMaterial = selectionMaterial;
+            selectionRenderer.sortingOrder = 52;
+            row.m_selected.SetActive(Equals(row.GetValue(), imageFormat.getSelection()));
+        }
+        var chosenRow = popupRows.Single(row => row.m_selected.activeSelf);
+        popupRenderer.sortingOrder = 102;
+        imageFormat.onUserCancelled(); imageFormat.onUserPressedButton();
+        Check(chosenRow.m_selected.GetComponent<Renderer>().sortingOrder == 103
+            && popupRows.All(row => CounterTextLayout.GlyphRenderer(row.m_text).sortingOrder == 104),
+            "After native quality changes the selected background must sit between popup artwork (102) and text (104).");
+        for (int repeat = 0; repeat < 3; repeat++)
+            typeof(ModsSettingsMenu).GetMethod("LateUpdate", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(menu, null);
+        Check(chosenRow.m_selected.GetComponent<Renderer>().sortingOrder == 103
+            && popupRows.All(row => row.m_text.RenderQueue == 104)
+            && popupRows.Count(row => row.m_selected.activeSelf) == 1 && selectionMaterial.renderQueue == 3000,
+            "Selected artwork never feeds back into the base order; repeated updates preserve selection flags and shared materials.");
+        popupRenderer.sortingOrder = 51;
+        imageFormat.onUserCancelled(); imageFormat.onUserPressedButton();
+        Check(chosenRow.m_selected.GetComponent<Renderer>().sortingOrder == 52
+            && popupRows.All(row => row.m_text.RenderQueue == 53),
+            "The complete background-selection-text stack resets together after fully reopening native Options.");
+        foreach (var row in popupRows) { UnityEngine.Object.Destroy(row.m_selected); row.m_selected = null; }
+        popupRenderer.sortingOrder = 51;
+        imageFormat.onUserCancelled(); imageFormat.onUserPressedButton();
+        Check(popupRows.All(row => row.m_text.RenderQueue == 52),
+            "A full native menu reopen returns text to its reference order when the artwork returns to 51.");
+        imageFormat.m_menuItemTemplate.m_text.RenderQueue = savedTemplateQueue;
+        UnityEngine.Object.Destroy(popupArt);
+        var tracedCaption = popupRows[0].m_text;
+        var tracedGlyph = CounterTextLayout.GlyphRenderer(tracedCaption);
+        bool previousOff = tracedGlyph.forceRenderingOff;
+        uint previousMask = tracedGlyph.renderingLayerMask;
+        tracedGlyph.forceRenderingOff = true; tracedGlyph.renderingLayerMask = 0;
+        int traceBefore = DebugLog.DropdownRenderMessages.Count;
+        NativePopupDiagnostics.CaptureDropdown(imageFormat, CameraUtils.Camera, 991, "fixture");
+        Check(DebugLog.DropdownRenderMessages.Skip(traceBefore).Any(line => line.Contains("forceOff=True") && line.Contains("renderingMask=0")),
+            "The comparison trace records invisible renderers even when their popup text and values are present.");
+        Check(tracedGlyph.forceRenderingOff && tracedGlyph.renderingLayerMask == 0 && popupRows[0].m_text == tracedCaption,
+            "Render diagnostics preserve the failing renderer state instead of changing the evidence.");
+        tracedGlyph.forceRenderingOff = previousOff; tracedGlyph.renderingLayerMask = previousMask;
+        imageFormat.onUserCancelled();
+        foreach (var row in popupRows) { row.m_text.Text = string.Empty; row.m_text.Hide(); }
+        imageFormat.onUserPressedButton();
+        Check(popupRows.All(row => !string.IsNullOrEmpty(row.m_text.Text) && !row.m_text.isHidden()),
+            "Every popup opening restores labels after another native render-state invalidation.");
+        imageFormat.onUserCancelled();
+        foreach (var row in popupRows) UnityEngine.Object.Destroy(row.gameObject);
+
+        var imageBackground = controls.Single(control => control.gameObject.name == "BCM_ModsExportbackground");
+        DeckImageBackground savedBackground = DeckImageSettings.Background;
+        Check(imageBackground.Items.Cast<DeckImageBackground>().SequenceEqual(Enum.GetValues(typeof(DeckImageBackground)).Cast<DeckImageBackground>()),
+            "Background style offers native parchment, class artwork and blurred card artwork.");
+        imageBackground.SelectOption(DeckImageBackground.Artwork);
+        Check(DeckImageSettings.Background == DeckImageBackground.Artwork, "Background style saves independently.");
+        imageBackground.SelectOption(savedBackground);
+        var askArtwork = menu.GetComponentsInChildren<CheckBox>(true).Single(check => check.gameObject.name == "BCM_ModsDeckImageAskArtwork");
+        bool savedAskArtwork = DeckImageSettings.AskArtwork;
+        foreach (DeckImageBackground background in Enum.GetValues(typeof(DeckImageBackground)))
+        {
+            imageBackground.SelectOption(background);
+            typeof(ModsSettingsMenu).GetMethod("RestoreSettingsScrollRows", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(menu, null);
+            Check(askArtwork.transform.parent.gameObject.activeSelf == (background == DeckImageBackground.CardArtwork
+                && DeckImageSettings.Enabled(DeckImageOption.Background)) && DeckImageSettings.AskArtwork == savedAskArtwork,
+                "Only blurred card art exposes the artwork prompt, preserving its preference across background changes.");
+        }
+        imageBackground.SelectOption(DeckImageBackground.CardArtwork);
+        askArtwork.Click();
+        Check(DeckImageSettings.AskArtwork != savedAskArtwork, "The artwork prompt can be disabled in Deck image settings.");
+        askArtwork.Click();
+        imageBackground.SelectOption(savedBackground);
+        foreach (DeckImageOption option in DeckImageSettings.Options)
+        {
+            var box = menu.GetComponentsInChildren<CheckBox>(true).Single(value => value.gameObject.name == "BCM_ModsDeckImage" + option);
+            bool savedValue = DeckImageSettings.Enabled(option);
+            Check(box.IsChecked() == (option == DeckImageOption.Background ? !savedValue : savedValue), "Remove background inverts only the UI check while preserving the saved background preference.");
+            box.Click();
+            Check(DeckImageSettings.Enabled(option) != savedValue, "Image checkboxes update their own saved preference.");
+            box.Click();
+        }
+        var removeBackground = menu.GetComponentsInChildren<CheckBox>(true).Single(value => value.gameObject.name == "BCM_ModsDeckImageBackground");
+        bool backgroundEnabled = DeckImageSettings.Enabled(DeckImageOption.Background);
+        if (!backgroundEnabled) removeBackground.Click();
+        DeckImageBackground keptBackground = DeckImageSettings.Background;
+        bool keptAsk = DeckImageSettings.AskArtwork;
+        removeBackground.Click();
+        typeof(ModsSettingsMenu).GetMethod("RestoreSettingsScrollRows", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(menu, null);
+        Check(removeBackground.IsChecked() && removeBackground.m_uberText.Text == "Remove background"
+            && !DeckImageSettings.Capture().HasFlag(DeckImageOption.Background)
+            && !imageBackground.transform.parent.gameObject.activeSelf && !askArtwork.transform.parent.gameObject.activeSelf,
+            "Remove background hides redundant background style/artwork controls and removes decoration from exports.");
+        removeBackground.Click();
+        typeof(ModsSettingsMenu).GetMethod("RestoreSettingsScrollRows", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(menu, null);
+        Check(!removeBackground.IsChecked() && imageBackground.transform.parent.gameObject.activeSelf
+            && DeckImageSettings.Background == keptBackground && DeckImageSettings.AskArtwork == keptAsk,
+            "Restoring backgrounds brings back their saved style and artwork preference.");
+        if (!backgroundEnabled) removeBackground.Click();
         var openSearch = controls.Single(control => control.gameObject.name == "BCM_ModsCollectionopensearch");
         Check(openSearch.Items.Cast<CollectionOpenSearchMode>().SequenceEqual(Enum.GetValues(typeof(CollectionOpenSearchMode)).Cast<CollectionOpenSearchMode>()),
             "Crafting exposes Off, New, Refund and combined opening searches");

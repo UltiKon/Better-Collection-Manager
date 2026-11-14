@@ -12,9 +12,9 @@ namespace BetterCollectionManager
         private readonly List<UIBButton> m_buttons = new List<UIBButton>();
         private readonly List<GameObject> m_rows = new List<GameObject>();
         private readonly List<UberText> m_labels = new List<UberText>();
-        internal enum Section { Collection, PreferredQuality, Filters, Crafting, Other }
+        internal enum Section { Collection, PreferredQuality, Filters, Crafting, DeckImage, Other }
         private static readonly int SectionCount = Enum.GetValues(typeof(Section)).Length;
-        private DropdownControl m_openSearch, m_display, m_click, m_drag, m_filterRows, m_filterColumns, m_filterModeBehavior;
+        private DropdownControl m_openSearch, m_display, m_click, m_drag, m_filterRows, m_filterColumns, m_filterModeBehavior, m_deckImageQuality, m_deckImageAspect, m_deckImageBackground, m_deckImageResolution;
         private readonly UberText[] m_sectionTitles = new UberText[SectionCount];
         private readonly GameObject[] m_sectionRows = new GameObject[SectionCount];
         private readonly List<MeshRenderer>[] m_sectionArtwork = new List<MeshRenderer>[SectionCount];
@@ -33,8 +33,9 @@ namespace BetterCollectionManager
         private readonly List<DropdownControl> m_controls = new List<DropdownControl>();
         private readonly Dictionary<DropdownControl, Section> m_controlSections = new Dictionary<DropdownControl, Section>();
         private readonly List<Section> m_checkboxSections = new List<Section>();
-        private CheckBox m_disenchantPopup, m_neverDustSignaturesDiamonds, m_collapseInCrafting, m_hideRedundant, m_colorCodeCounter, m_collapse, m_rememberFilterModes, m_showClearAll, m_hideEmptyFilters, m_showLogicControls, m_showEditControls;
+        private CheckBox m_askArtwork, m_disenchantPopup, m_neverDustSignaturesDiamonds, m_collapseInCrafting, m_hideRedundant, m_colorCodeCounter, m_collapse, m_rememberFilterModes, m_showClearAll, m_hideEmptyFilters, m_showLogicControls, m_showEditControls;
         private readonly List<CheckBox> m_checkboxes = new List<CheckBox>();
+        private readonly Dictionary<DeckImageOption, CheckBox> m_deckImageChecks = new Dictionary<DeckImageOption, CheckBox>();
         private readonly List<GameObject> m_checkboxRows = new List<GameObject>();
         private bool m_syncing, m_layoutPending;
         private int m_layoutWidth, m_layoutHeight;
@@ -174,6 +175,38 @@ namespace BetterCollectionManager
                     RefreshControls();
                 });
             }
+            m_deckImageQuality = CreateDropdown(template, "Export quality", "Card quality");
+            m_controlSections[m_deckImageQuality] = Section.DeckImage;
+            m_deckImageQuality.setItemTextCallback(value => DeckImageSettings.QualityLabel((DeckImageQuality)value));
+            m_deckImageQuality.setItemChosenCallback((value, previous) => {
+                if (!m_syncing) DeckImageSettings.Quality = (DeckImageQuality)value;
+            });
+            m_deckImageResolution = CreateDropdown(template, "Export resolution", "Image quality / resolution");
+            m_controlSections[m_deckImageResolution] = Section.DeckImage;
+            m_deckImageResolution.setItemTextCallback(value => DeckImageSettings.ResolutionLabel((DeckImageResolution)value));
+            m_deckImageResolution.setItemChosenCallback((value, previous) => {
+                if (!m_syncing) DeckImageSettings.Resolution = (DeckImageResolution)value;
+            });
+            m_deckImageAspect = CreateDropdown(template, "Export format", "Image format");
+            m_controlSections[m_deckImageAspect] = Section.DeckImage;
+            m_deckImageAspect.setItemTextCallback(value => DeckImageSettings.AspectLabel((DeckImageAspect)value));
+            m_deckImageAspect.setItemChosenCallback((value, previous) => {
+                if (!m_syncing) DeckImageSettings.Aspect = (DeckImageAspect)value;
+            });
+            m_deckImageBackground = CreateDropdown(template, "Export background", "Background style");
+            m_controlSections[m_deckImageBackground] = Section.DeckImage;
+            m_deckImageBackground.setItemTextCallback(value => DeckImageSettings.BackgroundLabel((DeckImageBackground)value));
+            m_deckImageBackground.setItemChosenCallback((value, previous) => {
+                if (!m_syncing) { DeckImageSettings.Background = (DeckImageBackground)value; RefreshControls(); }
+            });
+            foreach (DeckImageOption option in DeckImageSettings.Options)
+            {
+                DeckImageOption setting = option;
+                m_deckImageChecks[setting] = CreateCheckbox("DeckImage" + setting, DeckImageSettings.Label(setting), Section.DeckImage,
+                    value => { DeckImageSettings.Set(setting, setting == DeckImageOption.Background ? !value : value); if (setting == DeckImageOption.Background) RefreshControls(); });
+            }
+            m_askArtwork = CreateCheckbox("DeckImageAskArtwork", "Ask for artwork on export", Section.DeckImage,
+                value => DeckImageSettings.AskArtwork = value);
             m_hideRedundant = CreateCheckbox("HideRedundant", "Hide redundant settings", Section.Other, value => {
                 CollectionQualitySettings.HideRedundant = value;
                 RefreshControls();
@@ -212,7 +245,7 @@ namespace BetterCollectionManager
         }
 
         private static string SectionLabel(Section section)
-            => section == Section.PreferredQuality ? "Preferred Quality" : section == Section.Filters ? "Filter menu" : section == Section.Other ? "Other" : section == Section.Crafting ? "Crafting" : "Card Display / Handling";
+            => section == Section.PreferredQuality ? "Preferred Quality" : section == Section.Filters ? "Filter menu" : section == Section.Other ? "Other" : section == Section.DeckImage ? "Deck image" : section == Section.Crafting ? "Crafting" : "Card Display / Handling";
 
         private void CaptureCheckboxAlignment()
         {
@@ -266,8 +299,18 @@ namespace BetterCollectionManager
             go.transform.SetParent(m_menu.m_buttonContainer.transform, true);
             DropdownControl control = go.GetComponent<DropdownControl>();
             KeepDropdownParts(control);
+            control.m_selectedItem.m_text = FreshDropdownText(control.m_selectedItem);
+            control.m_menuItemTemplate.m_text = FreshDropdownText(control.m_menuItemTemplate);
+            // Native layoutMenu measures this hidden template before placing its
+            // rows. An empty caption can leave the popup with no usable bounds
+            // once a graphics change has rebuilt the source glyphs.
+            control.m_menuItemTemplate.m_text.Text = "Ag";
+            control.m_menuItemTemplate.m_text.Show();
             control.setItemChosenCallback(null);
-            control.setMenuShownCallback(shown => { if (!shown) m_dropdownClosedFrame = Time.frameCount; });
+            control.setMenuShownCallback(shown => {
+                if (shown) { PrepareDropdownRows(control); TraceDropdownOpened(control); }
+                else m_dropdownClosedFrame = Time.frameCount;
+            });
             control.clearItems();
             // Source items are cloned as children, but are not in the clone's
             // freshly initialized, nonserialized runtime item list.
@@ -304,6 +347,156 @@ namespace BetterCollectionManager
             m_rows.Add(WrapRow(go));
             m_labels.Add(label);
             return control;
+        }
+
+        private static int s_dropdownTraceBudget = 0, s_dropdownTraceSequence;
+        private DropdownControl m_dropdownTraceControl;
+        private int m_dropdownTraceFrame, m_dropdownTraceStage, m_dropdownTraceSequence;
+        internal static void TraceNativeGraphicsChange()
+        {
+            s_dropdownTraceBudget = 2;
+            DebugLog.Msg("[Mods dropdown render] Native graphics-quality change; comparison trace enabled.");
+        }
+        private void TraceDropdownOpened(DropdownControl control)
+        {
+            if (s_dropdownTraceBudget <= 0) return;
+            s_dropdownTraceBudget--;
+            m_dropdownTraceControl = control;
+            m_dropdownTraceFrame = Time.frameCount;
+            m_dropdownTraceStage = 0;
+            m_dropdownTraceSequence = ++s_dropdownTraceSequence;
+            NativePopupDiagnostics.CaptureDropdown(control, m_settingsCamera, m_dropdownTraceSequence, "open");
+        }
+        private void TickDropdownTrace()
+        {
+            if (m_dropdownTraceControl == null || !m_dropdownTraceControl.isMenuShown()) return;
+            int elapsed = Time.frameCount - m_dropdownTraceFrame;
+            int threshold = m_dropdownTraceStage == 0 ? 1 : m_dropdownTraceStage == 1 ? 5 : 20;
+            if (elapsed < threshold) return;
+            NativePopupDiagnostics.CaptureDropdown(m_dropdownTraceControl, m_settingsCamera, m_dropdownTraceSequence, "frame+" + elapsed);
+            if (++m_dropdownTraceStage == 3) m_dropdownTraceControl = null;
+        }
+
+        private readonly List<Renderer> m_dropdownArtwork = new List<Renderer>();
+        private readonly List<DropdownMenuItem> m_dropdownRows = new List<DropdownMenuItem>();
+        private readonly List<Renderer> m_dropdownSelectionParts = new List<Renderer>();
+        private readonly HashSet<Renderer> m_dropdownSelectionArtwork = new HashSet<Renderer>();
+        private void OrderDropdownText(DropdownControl control)
+        {
+            int order = int.MinValue, layer = 0;
+            control.m_menuItemContainer.GetComponentsInChildren(true, m_dropdownRows);
+            m_dropdownSelectionArtwork.Clear();
+            foreach (DropdownMenuItem row in m_dropdownRows)
+            {
+                if (row.m_selected == null) continue;
+                row.m_selected.GetComponentsInChildren(true, m_dropdownSelectionParts);
+                foreach (Renderer renderer in m_dropdownSelectionParts) m_dropdownSelectionArtwork.Add(renderer);
+            }
+            control.m_menu.GetComponentsInChildren(true, m_dropdownArtwork);
+            foreach (Renderer renderer in m_dropdownArtwork)
+            {
+                if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy || renderer.forceRenderingOff
+                    || m_dropdownSelectionArtwork.Contains(renderer)) continue;
+                UberText owner = renderer.GetComponentInParent<UberText>();
+                // Retired text components can live on a native row's frame.
+                // Exclude the active captions, including their generated glyphs.
+                if (owner != null && owner.enabled) continue;
+                if (renderer.sortingOrder > order) { order = renderer.sortingOrder; layer = renderer.sortingLayerID; }
+            }
+            if (order == int.MinValue) return;
+            // Keep all three layers together. Selection artwork must not take
+            // part in finding the base order, or it would raise itself each frame.
+            foreach (Renderer selection in m_dropdownSelectionArtwork)
+            {
+                if (selection == null) continue;
+                selection.sortingLayerID = layer;
+                selection.sortingOrder = order + 1;
+            }
+            int textOffset = m_dropdownSelectionArtwork.Count > 0 ? 2 : 1;
+            int desired = Math.Max(control.m_menuItemTemplate.m_text.RenderQueue, order + textOffset);
+            foreach (DropdownMenuItem row in m_dropdownRows)
+            {
+                if (row == control.m_menuItemTemplate || row == control.m_selectedItem || !row.gameObject.activeInHierarchy) continue;
+                UberText caption = row.m_text;
+                if (caption == null) continue;
+                if (caption.RenderQueue != desired)
+                {
+                    // Set the native queue increment as well as the glyph order:
+                    // hover/color updates rebuild the font material from this value.
+                    caption.RenderQueue = desired;
+                    caption.UpdateNow(true);
+                }
+                Renderer glyph = CounterTextLayout.GlyphRenderer(caption);
+                if (glyph == null) continue;
+                glyph.sortingLayerID = layer;
+                glyph.sortingOrder = desired;
+            }
+        }
+
+        private void PrepareDropdownRows(DropdownControl control)
+        {
+            // The closed field survives a native graphics-quality change while
+            // captions cloned into the popup can lose their text/render state.
+            // Restore from each native row's value, not the cloned caption cache.
+            int rows = 0, restored = 0;
+            foreach (DropdownMenuItem row in control.m_menuItemContainer.GetComponentsInChildren<DropdownMenuItem>(true))
+            {
+                if (row == control.m_menuItemTemplate || row == control.m_selectedItem) continue;
+                object value = row.GetValue();
+                if (value == null) continue;
+                rows++;
+                if (string.IsNullOrEmpty(row.m_text.Text) || row.m_text.isHidden() || !row.m_text.enabled || row.m_text.TrueTypeFont == null)
+                    restored++;
+                if (row.m_text.gameObject.name != "BCM_DropdownRowText")
+                {
+                    row.m_text = FreshDropdownText(row);
+                    row.m_text.gameObject.name = "BCM_DropdownRowText";
+                }
+                UberText caption = row.m_text;
+                caption.TrueTypeFont = control.m_selectedItem.m_text.TrueTypeFont
+                    ?? control.m_selectedItem.m_text.GetLocalizedFont();
+                caption.GameStringLookup = false;
+                caption.UseEditorText = true;
+                caption.enabled = true;
+                caption.Text = control.getItemTextCallback()(value);
+                row.gameObject.SetActive(true);
+                caption.gameObject.SetActive(true);
+                LayerUtils.SetLayer(row, m_targetLayer);
+                row.UpdateTextColor();
+                caption.Show(); caption.UpdateNow(true);
+                CounterTextLayout.RemoveClonedGlyphs(caption);
+                LayerUtils.SetLayer(row, m_targetLayer);
+            }
+            OrderDropdownText(control);
+            if (restored > 0) DebugLog.Msg("Mods dropdown popup captions restored: " + control.gameObject.name + ", rows=" + restored);
+            if (rows == 0) DebugLog.Warning("Mods dropdown has no popup rows: " + control.gameObject.name);
+        }
+
+        private static UberText FreshDropdownText(DropdownMenuItem item)
+        {
+            UberText source = item.m_text;
+            // Graphics quality changes can invalidate the source RTT surfaces.
+            // Give each cloned field/template its own direct text renderer.
+            source.Hide(); source.enabled = false;
+            Renderer surface = CounterTextLayout.TextureSurface(source);
+            if (surface != null) surface.enabled = false;
+            // Unity also clones generated glyphs and RTT planes. Those are not
+            // registered with the new UberText's runtime renderer, so Hide alone
+            // leaves the inherited caption visible behind our replacement.
+            foreach (TextMesh glyph in item.GetComponentsInChildren<TextMesh>(true))
+            {
+                Renderer renderer = glyph.GetComponent<Renderer>();
+                if (renderer != null) renderer.enabled = false;
+            }
+            foreach (Transform node in item.GetComponentsInChildren<Transform>(true))
+                if (node.gameObject.name.StartsWith("UberText_RenderPlane_", StringComparison.Ordinal)
+                    || node.gameObject.name.StartsWith("UberText_ShadowPlane_", StringComparison.Ordinal))
+                    node.gameObject.SetActive(false);
+            UberText text = CounterTextLayout.CreateDirectCopy(source, item.transform, "BCM_DropdownText");
+            text.UseEditorText = true;
+            text.Text = string.Empty;
+            source.Text = string.Empty;
+            return text;
         }
 
         private UberText CreateLabel(UberText heading, string id, string caption)
@@ -684,12 +877,20 @@ namespace BetterCollectionManager
                     bool visible = true;
                     if (control == m_click) visible &= QualityOptions.ShowClickSettings;
                     if (control == m_drag) visible &= QualityOptions.ShowDragSettings;
+                    if (control == m_deckImageBackground)
+                    {
+                        bool background = DeckImageSettings.Enabled(DeckImageOption.Background);
+                        visible &= background;
+                        control.SetEnabled(background, true);
+                    }
                     m_rows[i * 2].SetActive(visible);
                     m_rows[i * 2 + 1].SetActive(visible);
                 }
                 for (int i = 0; i < m_checkboxes.Count; i++)
-                    m_checkboxRows[i].SetActive(m_checkboxes[i] != m_neverDustSignaturesDiamonds
-                        || CollectionQualitySettings.DisenchantPopup || !CollectionQualitySettings.HideRedundant);
+                    m_checkboxRows[i].SetActive((m_checkboxes[i] != m_neverDustSignaturesDiamonds
+                        || CollectionQualitySettings.DisenchantPopup || !CollectionQualitySettings.HideRedundant)
+                        && (m_checkboxes[i] != m_askArtwork || (DeckImageSettings.Background == DeckImageBackground.CardArtwork
+                            && DeckImageSettings.Enabled(DeckImageOption.Background))));
                 m_disenchantPopup.SetChecked(CollectionQualitySettings.DisenchantPopup);
                 m_neverDustSignaturesDiamonds.SetEnabled(CollectionQualitySettings.DisenchantPopup, true);
                 m_hideRedundant.SetChecked(CollectionQualitySettings.HideRedundant);
@@ -708,6 +909,23 @@ namespace BetterCollectionManager
                 m_showLogicControls.SetChecked(CollectionQualitySettings.ShowLogicControls);
                 m_showEditControls.SetChecked(CollectionQualitySettings.ShowEditControls);
                 m_hideEmptyFilters.SetChecked(CollectionQualitySettings.HideEmptyFilters);
+                m_askArtwork.SetChecked(DeckImageSettings.AskArtwork);
+                m_askArtwork.SetEnabled(DeckImageSettings.Enabled(DeckImageOption.Background)
+                    && DeckImageSettings.Background == DeckImageBackground.CardArtwork, true);
+                foreach (var pair in m_deckImageChecks) pair.Value.SetChecked(pair.Key == DeckImageOption.Background
+                    ? !DeckImageSettings.Enabled(pair.Key) : DeckImageSettings.Enabled(pair.Key));
+                m_deckImageQuality.clearItems();
+                foreach (DeckImageQuality value in Enum.GetValues(typeof(DeckImageQuality))) m_deckImageQuality.addItem(value);
+                m_deckImageQuality.setSelection(DeckImageSettings.Quality);
+                m_deckImageResolution.clearItems();
+                foreach (DeckImageResolution value in Enum.GetValues(typeof(DeckImageResolution))) m_deckImageResolution.addItem(value);
+                m_deckImageResolution.setSelection(DeckImageSettings.Resolution);
+                m_deckImageAspect.clearItems();
+                foreach (DeckImageAspect value in new[] { DeckImageAspect.Portrait, DeckImageAspect.Square, DeckImageAspect.Landscape }) m_deckImageAspect.addItem(value);
+                m_deckImageAspect.setSelection(DeckImageSettings.Aspect);
+                m_deckImageBackground.clearItems();
+                foreach (DeckImageBackground value in Enum.GetValues(typeof(DeckImageBackground))) m_deckImageBackground.addItem(value);
+                m_deckImageBackground.setSelection(DeckImageSettings.Background);
                 m_layoutPending = true;
             }
             finally { m_syncing = false; }
@@ -749,9 +967,11 @@ namespace BetterCollectionManager
             float unit = fields[visible[0]].height;
             float columnWidth = ColumnWidth(camera, all, headings, fields, checkboxes, titles, unit);
             float width = columnWidth * 2f + unit * 0.6f;
-            var originalFields = all.FindAll(i => m_controls[i] != m_filterModeBehavior && m_controls[i] != m_openSearch);
+            var originalFields = all.FindAll(i => m_controls[i] != m_filterModeBehavior && m_controls[i] != m_openSearch
+                && m_controlSections[m_controls[i]] != Section.DeckImage);
             var originalChecks = visibleChecks.FindAll(i => m_checkboxes[i] != m_showClearAll && m_checkboxes[i] != m_hideEmptyFilters
-                && m_checkboxes[i] != m_showLogicControls && m_checkboxes[i] != m_showEditControls && m_checkboxes[i] != m_neverDustSignaturesDiamonds && m_checkboxes[i] != m_disenchantPopup);
+                && m_checkboxes[i] != m_showLogicControls && m_checkboxes[i] != m_showEditControls && m_checkboxes[i] != m_neverDustSignaturesDiamonds && m_checkboxes[i] != m_disenchantPopup
+                && m_checkboxSections[i] != Section.DeckImage);
             // Keep the established viewport; Crafting and additional filter controls scroll inside it.
             float height = MenuHeight(originalFields, originalChecks, headings, fields, OriginalCheckboxBounds(originalChecks, visibleChecks, checkboxes), titles, unit);
             bool hasHeader = TryMenuHeaderRect(camera, out Rect header);
@@ -780,7 +1000,9 @@ namespace BetterCollectionManager
                 visible, visibleChecks, headings, fields, checkboxes, titles, unit);
             float craftingBottom = PlaceSection(camera, Section.Crafting, right, qualityBottom - unit * 0.75f,
                 visible, visibleChecks, headings, fields, checkboxes, titles, unit);
-            PlaceSection(camera, Section.Other, right, craftingBottom - unit * 0.75f,
+            float imageBottom = PlaceSection(camera, Section.DeckImage, right, craftingBottom - unit * 0.75f,
+                visible, visibleChecks, headings, fields, checkboxes, titles, unit);
+            PlaceSection(camera, Section.Other, right, imageBottom - unit * 0.75f,
                 visible, visibleChecks, headings, fields, checkboxes, titles, unit);
             float bottom = origin.y - height;
             Vector3 topLeft = camera.ScreenToWorldPoint(new Vector3(origin.x - width * 0.5f, origin.y, origin.z));
@@ -1125,8 +1347,13 @@ namespace BetterCollectionManager
             {
                 if (m_layoutPending || m_layoutWidth != Screen.width || m_layoutHeight != Screen.height) LayoutMenu();
                 UpdateSettingsScroll();
-                foreach (DropdownControl control in m_controls) control.GetComponent<DropdownScrollbar>()?.Tick();
+                foreach (DropdownControl control in m_controls)
+                {
+                    control.GetComponent<DropdownScrollbar>()?.Tick();
+                    if (control.isMenuShown()) OrderDropdownText(control);
+                }
                 UpdateSettingsClipping();
+                TickDropdownTrace();
                 // Native frame colliders can extend beyond the resized art.
                 // Use the visible panel even when that collider swallows release.
                 if (Input.GetMouseButtonUp(0) && !m_settingsPanel.Contains(Input.mousePosition))

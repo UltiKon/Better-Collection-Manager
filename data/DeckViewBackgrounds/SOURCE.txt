@@ -1,0 +1,8 @@
+Source https://github.com/hextract/HearthstoneDeckView/tree/82d1f0b2b28d7fccd6d2cf1f74015c2d52dfa060/backs
+Copyright (c) [2023] [H4X4D]
+Distributed under the included MIT license.
+
+The bundled samples retain the upper 89 percent of each original background,
+resampled to 640 by 448 pixels. Each gzip contains little-endian int32 width
+and height followed by bottom-up RGB24 pixels. The omitted footer contains
+the original application's branding and dust icon.

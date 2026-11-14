@@ -187,6 +187,7 @@ public sealed class UberText : UnityEngine.MonoBehaviour
     public void Hide() { m_hidden = true; UpdateNow(true); }
     public bool isHidden() => m_hidden;
     public int FontSize = 35;
+    public bool UseEditorText;
     public bool RenderToTexture, TextGeometryReady = true, SimulateNativeQueue, TextureRefreshDeferred;
     public float GlyphOffset, SurfaceOffset;
     public UnityEngine.GameObject RenderOnObject;
@@ -342,6 +343,7 @@ public sealed class CardRuneBanner : UnityEngine.Component
 }
 public sealed class Actor : UnityEngine.Component
 {
+    public UnityEngine.GameObject m_ghostCardGameObject;
     public TAG_PREMIUM Premium;
     public EntityDef Def;
     public ActorStateType State;
@@ -605,6 +607,7 @@ public sealed class AssetLoader
         {
             prefab = new UnityEngine.GameObject("MainShopWidget");
             prefab.AddComponent<Hearthstone.UI.WidgetInstance>().Reference(AdjustBuyingAmount.Asset);
+            prefab.AddComponent<Hearthstone.UI.WidgetInstance>().Reference(StoreQuantityPrompt.Asset);
         }
         else throw new System.Exception("Unexpected native skin asset: " + asset);
         return new Blizzard.T5.AssetManager.AssetHandle<T> { Asset = (T)(UnityEngine.Object)prefab };
@@ -986,12 +989,14 @@ namespace BetterCollectionManager
     }
     internal static class DebugLog
     {
+        public static readonly System.Collections.Generic.List<string> DropdownRenderMessages = new System.Collections.Generic.List<string>();
         public static readonly System.Collections.Generic.List<string> ExpansionStarMessages = new System.Collections.Generic.List<string>();
         public static readonly System.Collections.Generic.List<string> PageTraceMessages = new System.Collections.Generic.List<string>();
         public static bool VerboseDebug = false;
         public static void Verbose(string text) { }
         public static void Msg(string text)
         {
+            if (text.StartsWith("[Mods dropdown render]", System.StringComparison.Ordinal)) DropdownRenderMessages.Add(text);
             if (text.StartsWith("[Expansion star]", System.StringComparison.Ordinal)) ExpansionStarMessages.Add(text);
             if (text.StartsWith("[Page trace]", System.StringComparison.Ordinal)) PageTraceMessages.Add(text);
         }

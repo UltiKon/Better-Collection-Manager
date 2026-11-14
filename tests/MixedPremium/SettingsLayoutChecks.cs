@@ -126,7 +126,7 @@ internal static partial class Program
     {
         UberText[] labels = menu.GetComponentsInChildren<UberText>(true);
         var sections = labels.Where(t => t.gameObject.name.StartsWith("BCM_ModsLabelSection", StringComparison.Ordinal)).ToArray();
-        Check(sections.Length == 5, "All five section headings remain available on the scrollable settings page");
+        Check(sections.Length == 6, "All six section headings remain available on the scrollable settings page");
         Rect viewport = (Rect)typeof(ModsSettingsMenu).GetField("m_settingsViewport", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(menu);
         foreach (UberText title in sections.Where(t => t.gameObject.activeInHierarchy
             && SettingsSectionBounds(t).yMin >= viewport.yMin && SettingsSectionBounds(t).yMax <= viewport.yMax))
@@ -173,11 +173,13 @@ internal static partial class Program
             "Filter settings must follow Card Display / Handling in the left column");
         Rect general = SettingsSectionBounds(sections.Single(t => t.Text == "Other"));
         Rect disenchant = SettingsSectionBounds(sections.Single(t => t.Text == "Crafting"));
+        Rect image = SettingsSectionBounds(sections.Single(t => t.Text == "Deck image"));
         Check(disenchant.yMax < quality.yMin && Math.Abs(disenchant.center.x - quality.center.x) < SettingsPixelTolerance,
             "Crafting has a separate category below Preferred Quality in the right column");
-        Check(general.yMax < disenchant.yMin && Math.Abs(general.center.x - quality.center.x) < SettingsPixelTolerance,
-            "Other follows Crafting at the bottom of the right column");
-        var content = new List<Rect> { collection, quality, filters, general, disenchant };
+        Check(image.yMax < disenchant.yMin && general.yMax < image.yMin && Math.Abs(image.center.x - quality.center.x) < SettingsPixelTolerance
+            && Math.Abs(general.center.x - quality.center.x) < SettingsPixelTolerance,
+            "Deck image follows Crafting and precedes Other in the right column");
+        var content = new List<Rect> { collection, quality, filters, general, disenchant, image };
         float centerX = (collection.center.x + quality.center.x) * 0.5f;
         float top = collection.yMax;
         float width = menu.BodyWidth * CameraUtils.Camera.PixelScale;
@@ -225,7 +227,7 @@ internal static partial class Program
         var checkboxes = menu.GetComponentsInChildren<CheckBox>(false);
         Check(checkboxes.Any(box => box.m_uberText.Text == "Collapse quality variants")
             && checkboxes.Any(box => box.m_uberText.Text == "Color code counter")
-            && menu.GetComponentsInChildren<CheckBox>(true).Length == 11, "All checkboxes must remain available on the common page");
+            && menu.GetComponentsInChildren<CheckBox>(true).Length == 18, "All checkboxes must remain available on the common page");
         foreach (CheckBox checkbox in checkboxes)
         {
             Rect rect = SettingsCheckboxBounds(checkbox);
@@ -233,11 +235,12 @@ internal static partial class Program
             bool filterOption = checkbox.m_uberText.Text == "Remember filter modes" || checkbox.m_uberText.Text == "Hide filters without results"
                 || checkbox.m_uberText.Text == "Show Logic Controls" || checkbox.m_uberText.Text == "Show Edit Controls" || checkbox.m_uberText.Text == "Show Clear All";
             bool disenchantOption = checkbox.gameObject.name == "BCM_ModsDisenchantPopup" || checkbox.gameObject.name == "BCM_ModsNeverDustSignaturesDiamonds" || checkbox.gameObject.name == "BCM_ModsCollapseInCrafting";
-            Rect section = disenchantOption ? disenchant : generalOption ? general : filterOption ? filters : collection;
-            Check(rect.yMax < section.yMin && (generalOption || filterOption || disenchantOption || rect.yMin > filters.yMax),
+            bool imageOption = checkbox.gameObject.name.StartsWith("BCM_ModsDeckImage", StringComparison.Ordinal);
+            Rect section = imageOption ? image : disenchantOption ? disenchant : generalOption ? general : filterOption ? filters : collection;
+            Check(rect.yMax < section.yMin && (imageOption || generalOption || filterOption || disenchantOption || rect.yMin > filters.yMax),
                 "Each checkbox must remain below its own section heading");
             Rect nativeHit = ClosedFieldScreenBounds(checkbox.gameObject);
-            float column = generalOption || disenchantOption ? quality.center.x : collection.center.x;
+            float column = imageOption || generalOption || disenchantOption ? quality.center.x : collection.center.x;
             Check(Math.Abs(nativeHit.xMin - (column - rowsField.width * 0.5f + rowsField.width * (0.075f / 4f))) < SettingsPixelTolerance,
                 "Checkbox squares must retain the native inset from the dropdown's left edge");
             content.Add(rect);

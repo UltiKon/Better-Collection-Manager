@@ -262,6 +262,7 @@ public sealed class ButtonListMenuDef : MonoBehaviour
 public sealed class SettingsFrame : Component
 {
     public float Width, Height;
+    public MultiSliceElement.Slice m_middle;
     public SettingsFrame()
     {
         gameObject = new GameObject("NativeFrame");
@@ -288,6 +289,7 @@ public sealed class SettingsFrame : Component
 }
 public sealed class MultiSliceElement : Component
 {
+    public sealed class Slice { public GameObject m_slice; }
     public int Updates;
     public Action OnUpdateSlices;
     public readonly List<GameObject> Slices = new List<GameObject>();
@@ -304,6 +306,9 @@ public sealed class DropdownMenuItem : PegUIElement
 {
     public DropdownMenuItem() { Enabled = true; }
     public UberText m_text;
+    private object m_value;
+    public object GetValue() => m_value;
+    public void SetValue(object value, string text) { m_value = value; m_text.Text = text; }
     public GameObject m_selected;
     public void UpdateTextColor()
     {
@@ -331,6 +336,7 @@ public sealed class DropdownControl : Component
     private menuShownCallback m_shown;
     public void setItemChosenCallback(itemChosenCallback callback) => m_chosen = callback;
     public void setItemTextCallback(itemTextCallback callback) => m_text = callback;
+    public itemTextCallback getItemTextCallback() => m_text;
     public void setMenuShownCallback(menuShownCallback callback) => m_shown = callback;
     public menuShownCallback getMenuShownCallback() => m_shown;
     public void clearItems() { Items.Clear(); BetterCollectionManager.CustomFpsControl.ItemsCleared(this); }
@@ -492,7 +498,7 @@ public abstract class ButtonListMenu : MonoBehaviour
             mesh.SetTriangles(new List<int> { 0, 1, 2, 0, 2, 3 }, 0, false); mesh.RecalculateBounds();
             artwork.AddComponent<MeshFilter>().sharedMesh = mesh; artwork.AddComponent<MeshRenderer>();
         }
-        if (name.StartsWith("BCM_Choose") || name == "BCM_QualityCancel" || name.StartsWith("BCM_Transfer") || name.StartsWith("BCM_Disenchant"))
+        if (name.StartsWith("BCM_Choose") || name == "BCM_QualityCancel" || name.StartsWith("BCM_Transfer") || name.StartsWith("BCM_Artwork") || name.StartsWith("BCM_Disenchant"))
         {
             go.AddComponent<BoxCollider>().size = new Vector3(3f, .05f, .8f);
             artwork.AddComponent<MeshFilter>().sharedMesh = new Mesh { bounds = new Bounds(Vector3.zero, new Vector3(3f, .05f, .8f)) };

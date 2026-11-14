@@ -1,0 +1,37 @@
+name: Publish prepared release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-release.yml
+      - .github/release-assets/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-prepared-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and verify prepared assets
+        run: python3 tools/publish_prepared_release.py
+      - name: Create draft and upload assets
+        run: |
+          if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > release-draft-status; then
+            test "$(cat release-draft-status)" = true || { echo 'Release is already published'; exit 1; }
+          else
+            gh release create "$RELEASE_TAG" --draft --target "$GITHUB_SHA" --title "$RELEASE_TITLE" --notes-file ".github/release-notes/${RELEASE_TAG}.md"
+          fi
+          gh release upload "$RELEASE_TAG" release-assets/* --clobber
+      - name: Publish complete release
+        run: gh release edit "$RELEASE_TAG" --draft=false --latest

@@ -41,6 +41,24 @@
     <Compile Include="ComboCollectionCards.Input.cs" />
     <Compile Include="CategoryDeckImport.cs" />
     <Compile Include="EditedCategoryDeckImport.cs" />
+    <Compile Include="DeckImageLayout.cs" />
+    <Compile Include="DeckImageSettings.cs" />
+    <Compile Include="DeckImageSnapshot.cs" />
+    <Compile Include="DeckImageStatistics.cs" />
+    <Compile Include="DeckImageCanvas.cs" />
+    <Compile Include="DeckImageCompositor.cs" />
+    <Compile Include="DeckImageCapture.cs" />
+    <Compile Include="DeckImageCardFrame.cs" />
+    <Compile Include="DeckImageBackgroundArt.cs" />
+    <Compile Include="DeckImagePresentation.cs" />
+    <Compile Include="DeckImageQuantityLabel.cs" />
+    <Compile Include="DeckImageClipboard.cs" />
+    <Compile Include="DeckImageExport.cs" />
+    <Compile Include="DeckImagePng.cs" />
+    <Compile Include="DeckImageRenderer.cs" />
+    <Compile Include="DeckImageNativeArt.cs" />
+    <Compile Include="DeckImageCardArt.cs" />
+    <Compile Include="DeckImageMenu.cs" />
     <Compile Include="FilterModes.cs" />
     <Compile Include="FilterBitSet.cs" />
     <Compile Include="HubMenuSettings.cs" />
@@ -126,5 +144,16 @@
     <Compile Include="LegacySettings.cs" />
     <Compile Include="LoaderCoroutines.cs" />
     <Compile Include="Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)../../data/DeckViewBackgrounds/*">
+      <LogicalName>BetterCollectionManager.DeckViewBackgrounds.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)../../data/DeckViewLabels/LICENSE">
+      <LogicalName>BetterCollectionManager.DeckViewLabels.LICENSE</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)../../data/DeckViewLabels/*.rgba.gz">
+      <LogicalName>BetterCollectionManager.DeckViewLabels.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

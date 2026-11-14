@@ -24,14 +24,22 @@ namespace BetterCollectionManager
             CollectionManager manager = CollectionManager.Get();
             if (manager == null || string.IsNullOrEmpty(cardId)) return null;
             var text = new StringBuilder();
+            IReadOnlyList<string> editions = PreferredQualityCollapse.CounterpartEditions(cardId);
             bool reachedDisplayed = false;
             foreach (TAG_PREMIUM premium in PreferredPremiumPrefs.Order)
             {
                 if (premium == displayedPremium) reachedDisplayed = true;
-                // GetCard is the game's exact (CardId, premium) index. In
-                // particular it omits nonexistent Diamond/Signature variants.
-                if (manager.GetCard(cardId, premium) == null) continue;
-                int owned = Math.Max(0, manager.GetOwnedCount(cardId, premium));
+                // Count each real edition once, including reprints hidden by
+                // the current filter. The actors and deck input keep their IDs.
+                bool exists = false;
+                int owned = 0;
+                foreach (string edition in editions)
+                {
+                    if (manager.GetCard(edition, premium) == null) continue;
+                    exists = true;
+                    owned += Math.Max(0, manager.GetOwnedCount(edition, premium));
+                }
+                if (!exists) continue;
                 // Colors identify each quality without positional zero slots.
                 if (owned == 0 && (omitZeros || !reachedDisplayed)) continue;
                 if (text.Length > 0) text.Append('+');
@@ -179,9 +187,9 @@ namespace BetterCollectionManager
                 string breakdown = Format(m_cardId, m_displayedPremium);
                 bool colorCode = CollectionQualitySettings.ColorCodeCounter;
                 string text = colorCode ? Format(m_cardId, m_displayedPremium, false, true) : breakdown;
+                long total = 0;
                 if (text != null)
                 {
-                    long total = 0;
                     foreach (string part in text.Split('+'))
                         if (int.TryParse(part, NumberStyles.Integer, CultureInfo.InvariantCulture, out int quantity)) total += quantity;
                     if (total == 1)
@@ -194,7 +202,8 @@ namespace BetterCollectionManager
                         return;
                     }
                 }
-                if (breakdown == null || text == null || (!colorCode && breakdown.IndexOf('+') < 0))
+                if (breakdown == null || text == null || (!colorCode && breakdown.IndexOf('+') < 0
+                    && total == CollectionManager.Get().GetOwnedCount(m_cardId, m_displayedPremium)))
                 {
                     // Native UpdateVisibility has already set the text, frame,
                     // trial tabs and visibility for an individual quantity.

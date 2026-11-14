@@ -4,7 +4,7 @@ namespace BetterCollectionManager
     {
         internal const string Guid = "BetterCollectionManager";
         internal const string Name = "Better Collection Manager";
-        internal const string Version = "0.1.0";
+        internal const string Version = "0.2.0";
         internal const string AssemblyVersion = Version + ".0";
         internal const string RepositoryUrl = "https://github.com/UltiKon/Better-Collection-Manager";
         internal const string Description = "Collection filters, quality tiles, categories, combos and packages.";

@@ -5,6 +5,28 @@ Changes are grouped by UTC commit date. The [user guide](docs/USER-GUIDE.md) and
 this file records the features and fixes delivered on each
 date. Superseded intermediate layouts and experiments are not separate features.
 
+## 0.2.0 — 2026-11-14
+
+- Added **Copy as PNG** to the deck menu for clipboard exports, including
+  sideboards, native card artwork and quantity labels.
+- Added card quality, image resolution, format, background and optional header
+  statistics. Rendering and encoding use the selected resolution and keep the
+  game responsive during composition.
+- Added native parchment, class artwork and blurred card-art backgrounds, with
+  an optional artwork picker. Included artwork attribution in both distributions
+  and the resources needed to rebuild their source packages.
+- Fixed dropdown text and selected-row backgrounds after native graphics-quality
+  changes, including repeated opening of the settings menus.
+- Counters now total every equivalent reprint edition by premium quality while
+  preserving the real edition used for deck input.
+- Uncraftable cards contribute no crafting dust, including reward-only entries
+  without a normal catalog tile.
+- Refined title/icon alignment and omit empty shields and their reserved space.
+  Exports copy to the clipboard without automatic local diagnostic captures.
+- Adopted the supplied export defaults: Normal cards, Medium resolution,
+  Landscape format and Native parchment. Existing preferences take precedence.
+- Both BepInEx and MelonLoader builds use the same feature set and version 0.2.0.
+
 ## 0.1.0 — 2026-11-05
 
 - Fixed release verification on machines with only a newer .NET runtime, such

@@ -37,6 +37,25 @@ internal static partial class Program
             sounds = SoundManager.Get().Played.Count; Time.frameCount++; button.Send(UIEventType.PRESS);
             Check(SoundManager.Get().Played.Count == sounds, "Muted native text-field controls retain input without a press sound");
 
+            var imageRoot = new GameObject("ImageButtonFeedback"); imageRoot.transform.SetParent(root.transform, false);
+            var imageButton = imageRoot.AddComponent<PegUIElement>();
+            imageButton.SetEnabled(true, true);
+            var imageHighlight = imageRoot.AddComponent<UIBHighlight>();
+            imageHighlight.m_MouseOverHighlight = new GameObject("ImageHover");
+            imageHighlight.m_MouseOverHighlight.transform.SetParent(imageRoot.transform, false);
+            imageHighlight.m_MouseDownHighlight = new GameObject("ImageDown");
+            imageHighlight.m_MouseDownHighlight.transform.SetParent(imageRoot.transform, false);
+            imageHighlight.m_MouseOverHighlight.SetActive(false); imageHighlight.m_MouseDownHighlight.SetActive(false);
+            imageButton.ClearEventListeners();
+            FilterButtonFeedback.RestoreNativeListeners(imageButton);
+            int copies = 0; imageButton.AddEventListener(UIEventType.RELEASE, _ => copies++);
+            imageButton.Send(UIEventType.ROLLOVER); imageButton.Send(UIEventType.PRESS);
+            Check(imageHighlight.HoverCalls == 1 && imageHighlight.PressCalls == 1 && imageHighlight.m_MouseOverHighlight.activeSelf && imageHighlight.m_MouseDownHighlight.activeSelf,
+                "Rebinding a cloned image button after clearing actions restores native hover glow and press artwork.");
+            imageButton.Release(); imageButton.Send(UIEventType.ROLLOUT);
+            Check(copies == 1 && imageHighlight.ReleaseCalls == 1 && !imageHighlight.m_MouseOverHighlight.activeSelf && !imageHighlight.m_MouseDownHighlight.activeSelf,
+                "The restored image button releases its native effects and runs its own action once.");
+
             var checkbox = CheckBox.MakeTemplate(new GameObject("PressCheckbox"));
             checkbox.transform.SetParent(root.transform, false);
             checkbox.m_checkOnSound = "Small_Click.prefab:on"; checkbox.m_checkOffSound = "Small_Click.prefab:off";

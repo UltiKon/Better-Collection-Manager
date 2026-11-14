@@ -9,6 +9,7 @@
 *.suo
 
 /dist/
+/release-assets/
 
 **/__pycache__/
 /installer/payload/
@@ -17,6 +18,9 @@
 /bepinex-build/
 
 # Local references, logs and personal settings are not source.
+*.dll
+*.pdb
+/hearthstone-build-refs/
 /hearthstone-build-refs.zip
 /Hearthstone_Data/
 /MelonLoader/
@@ -28,3 +32,10 @@
 *.bak
 .DS_Store
 Thumbs.db
+
+# Temporary local deck-image capture settings and generated PNGs.
+BetterCollectionManager.deck-image-debug.local.txt
+deck-image-debug/
+/deck-*.png
+# Retired local capture; Wild vines now come from native game assets.
+/data/DeckImageWildVines.rgba

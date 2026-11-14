@@ -9,13 +9,14 @@
 
 Better Collection Manager is a Hearthstone mod that makes your collection easier
 to browse. It groups different qualities of a card, lets you choose which quality
-to use in decks, and adds filters, categories, combos and packages.
+to use in decks, and adds filters, categories, combos and packages. Export decks
+as PNG images with native card artwork and optional statistics.
 
 For example, a card you own in both Normal and Golden can appear as one split
 tile instead of two separate tiles. Your actual cards and ownership counts stay
 separate.
 
-Version: **0.1.0** · Documentation updated: **2026-11-05**
+Version: **0.2.0** · Documentation updated: **2026-11-14**
 
 ## How to install
 
@@ -37,6 +38,11 @@ There are two loader versions of the mod. Choose the instructions for your packa
 The BepInEx and MelonLoader DLLs have the same filename but are different builds.
 Use one loader and one copy of the mod per launch. The automated installer sets up
 **MelonLoader only**.
+
+If BepInEx is already installed, download the standalone
+[0.2.0 BepInEx DLL](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.2.0/BetterCollectionManager.dll)
+and place it in `BepInEx/plugins/BetterCollectionManager/` inside the game folder.
+The standalone DLL is the BepInEx build; MelonLoader users need its separate ZIP.
 
 ### Mono runtime DLLs
 
@@ -81,6 +87,21 @@ search and filters first. Existing saved settings take precedence over defaults.
 
 See the [user guide](docs/USER-GUIDE.md) for split-card controls, display options,
 ownership counters and common questions.
+
+## PNG deck export
+
+Open a deck, open its options menu, then choose **Copy as PNG**. When copying
+finishes, paste the image into a chat or image editor.
+
+Under **Settings → Mods → Deck image**, choose card quality, image resolution,
+Portrait/Square/Landscape format and the background. Toggle the deck name and
+class icon, crafting cost, mana curve, card types and rarities independently.
+Sideboards are included. Fresh installs use **Normal**, **Medium** (1080 pixels
+on the shorter edge), **Landscape** and **Native parchment**.
+
+An empty information shield disappears. Exports go to the clipboard without
+automatic file saving. See the [deck image guide](docs/USER-GUIDE.md#copy-a-deck-as-an-image)
+for details.
 
 ## Repository layout
 
@@ -141,6 +162,7 @@ dotnet run --project tests/KeywordFilters/KeywordFilters.csproj -c Release
 dotnet run --project tests/HubMenu/HubMenu.csproj -c Release
 dotnet run --project tests/CollapseMode/CollapseMode.csproj -c Release
 dotnet run --project tests/Pagination/Pagination.csproj -c Release
+dotnet run --project tests/DeckImages/DeckImages.csproj -c Release
 python3 -m unittest discover -s tests/Installer -v
 ```
 
@@ -168,5 +190,10 @@ The hub/Darkmoon experiments remain disabled in both loader builds.
 By UltiKon, Imik and contributors. The mod, installer and original project code
 use the [MIT License](LICENSE). Third-party components retain their own licenses;
 see [third-party notices](installer/ThirdParty/NOTICES.md).
+
+Deck image quantity-label artwork comes from HearthstoneDeckView by H4X4D under
+the [MIT License](data/DeckViewLabels/LICENSE). Update and release packages include
+its notice under `ThirdParty/HearthstoneDeckView-LICENSE.txt`; the notice is also
+embedded in the mod DLL.
 
 Developed with AI assistance, including OpenAI Codex.

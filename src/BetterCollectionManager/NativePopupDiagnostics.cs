@@ -128,8 +128,104 @@ namespace BetterCollectionManager
             }
             catch (Exception ex) { DebugLog.Exception("Native popup snapshot unavailable", ex); }
         }
+        internal static void CaptureDropdown(DropdownControl control, Camera cachedCamera, int sequence, string phase)
+        {
+            const string prefix = "[Mods dropdown render] ";
+            try
+            {
+                Camera camera = CameraUtils.FindProjectionCameraForObject(control.gameObject);
+                string tag = prefix + sequence + "/" + phase + " ";
+                Type quality = typeof(Camera).Assembly.GetType("UnityEngine.QualitySettings");
+                object qualityLevel = quality?.GetMethod("GetQualityLevel", BindingFlags.Static | BindingFlags.Public)?.Invoke(null, null);
+                object shaderLod = typeof(Shader).GetProperty("globalMaximumLOD", BindingFlags.Static | BindingFlags.Public)?.GetValue(null, null);
+                object pipeline = quality?.GetProperty("renderPipeline", BindingFlags.Static | BindingFlags.Public)?.GetValue(null, null);
+                DebugLog.Msg(tag + "control=" + control.gameObject.name + " frame=" + Time.frameCount
+                    + " nativeQuality=" + qualityLevel + " shaderLOD=" + shaderLod + " pipeline=" + ObjectId(pipeline) + " open=" + control.isMenuShown()
+                    + " selection=" + control.getSelection() + " camera=" + ObjectId(camera) + " cachedCamera=" + ObjectId(cachedCamera));
+                int cameras = 0;
+                foreach (Camera candidate in Camera.allCameras)
+                {
+                    if (++cameras > 8) break;
+                    DebugLog.Msg(tag + "camera=" + ObjectId(candidate) + " enabled=" + candidate.enabled
+                        + " mask=" + candidate.cullingMask + Properties(candidate, "depth", "nearClipPlane", "farClipPlane", "targetTexture", "clearFlags", "pixelRect"));
+                }
+                void RendererState(string label, Renderer renderer)
+                {
+                    if (renderer == null) { DebugLog.Msg(tag + label + " renderer=<null>"); return; }
+                    Vector3 screen = camera == null ? Vector3.zero : camera.WorldToScreenPoint(renderer.bounds.center);
+                    DebugLog.Msg(tag + label + " renderer=" + ObjectId(renderer) + " path=" + Path(renderer.transform)
+                        + " enabled=" + renderer.enabled + " active=" + renderer.gameObject.activeInHierarchy
+                        + " forceOff=" + renderer.forceRenderingOff + " layer=" + renderer.gameObject.layer
+                        + " renderingMask=" + renderer.renderingLayerMask + " sorting=" + renderer.sortingLayerID + "/" + renderer.sortingOrder
+                        + " screen=" + screen + " bounds=" + renderer.bounds + Properties(renderer, "isVisible"));
+                    foreach (Component component in renderer.GetComponentsInChildren<Component>(true))
+                        if (component.GetType().Name == "PopupRenderer")
+                        {
+                            object root = component.GetType().GetProperty("PopupRoot", Members)?.GetValue(component, null);
+                            DebugLog.Msg(tag + label + " popupRenderer root=" + ObjectId(root)
+                                + Properties(root, "IsEnabled", "RenderingLayerMask", "IsBeingDisabledOrDestroyed")
+                                + Properties(component, "IsDesiredHidden", "IsDesiredHiddenInHierarchy"));
+                        }
+                    foreach (Material material in renderer.sharedMaterials)
+                        if (material != null)
+                        {
+                            Texture texture = material.mainTexture;
+                            var keywords = material.GetType().GetProperty("shaderKeywords", Members)?.GetValue(material, null) as string[];
+                            DebugLog.Msg(tag + label + " material=" + ObjectId(material) + " queue=" + material.renderQueue
+                                + " shader=" + ObjectId(material.shader) + Properties(material.shader, "maximumLOD", "isSupported", "renderQueue")
+                                + " texture=" + ObjectId(texture) + Properties(texture, "width", "height", "updateCount")
+                                + " color=" + (material.HasProperty("_Color") ? material.color.ToString() : "n/a")
+                                + " keywords=" + string.Join(",", keywords ?? Array.Empty<string>()) + Properties(material, "passCount"));
+                        }
+                }
+                void Caption(string label, DropdownMenuItem row)
+                {
+                    UberText text = row?.m_text;
+                    if (text == null) { DebugLog.Msg(tag + label + " text=<null>"); return; }
+                    DebugLog.Msg(tag + label + " value=" + row.GetValue() + " text=" + text.Text.Replace("\n", " ")
+                        + " owner=" + ObjectId(text) + " active=" + text.gameObject.activeInHierarchy + " enabled=" + text.enabled
+                        + " hidden=" + text.isHidden() + " RTT=" + text.RenderToTexture + " queueIncrement=" + text.RenderQueue
+                        + " font=" + ObjectId(text.TrueTypeFont) + " fontSize=" + text.FontSize + " charSize=" + text.CharacterSize
+                        + " color=" + text.TextColor + " gradient=" + text.GradientUpperColor + "/" + text.GradientLowerColor
+                        + " pose=" + text.transform.position + " scale=" + text.transform.lossyScale);
+                    string runtime = "";
+                    foreach (string field in new[] { "m_updated", "m_CurrentLayer", "m_HasRenderingLayerMaskOverride", "m_RenderingLayerMaskOverride", "m_popupRoot", "m_popupRenderingEnabled" })
+                        runtime += " " + field + "=" + typeof(UberText).GetField(field, Members)?.GetValue(text);
+                    DebugLog.Msg(tag + label + " runtime" + runtime);
+                    RendererState(label + "/glyph", CounterTextLayout.GlyphRenderer(text));
+                    if (text.RenderToTexture) RendererState(label + "/surface", CounterTextLayout.TextureSurface(text));
+                }
+                Caption("selected", control.m_selectedItem);
+                Caption("template", control.m_menuItemTemplate);
+                int rows = 0;
+                foreach (DropdownMenuItem row in control.m_menuItemContainer.GetComponentsInChildren<DropdownMenuItem>(true))
+                    if (row != control.m_menuItemTemplate && row != control.m_selectedItem)
+                    {
+                        if (rows < 3) Caption("row" + rows, row);
+                        rows++;
+                    }
+                DebugLog.Msg(tag + "popupRows=" + rows);
+                int art = 0;
+                foreach (Renderer renderer in control.m_menu.GetComponentsInChildren<Renderer>(true))
+                    if (renderer.GetComponentInParent<UberText>() == null && renderer.gameObject.activeInHierarchy)
+                    {
+                        RendererState("popupArt" + art, renderer);
+                        if (++art == 4) break;
+                    }
+            }
+            catch (Exception ex) { DebugLog.Exception("Mods dropdown render trace unavailable", ex); }
+        }
+        private static string ObjectId(object value)
+        {
+            if (value == null) return "<null>";
+            if (value is UnityEngine.Object native)
+                return native == null ? "<destroyed>" : native.name + "#" + native.GetHashCode();
+            return value.GetType().Name + "#" + value.GetHashCode();
+        }
+
         private static string Properties(object value, params string[] names)
         {
+            if (value == null) return "";
             string result = "";
             foreach (string name in names)
             {
