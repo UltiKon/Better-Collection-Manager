@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -32,6 +33,7 @@ namespace BetterCollectionManager
         private static readonly System.Reflection.MethodInfo PositionTrays = AccessTools.Method(typeof(DeckTrayDeckListContent), "RefreshTraySectionPositions");
         private static readonly System.Reflection.MethodInfo PositionNew = AccessTools.Method(typeof(DeckTrayDeckListContent), "UpdateNewDeckButton");
         private static readonly System.Reflection.MethodInfo FormatElements = AccessTools.Method(typeof(CollectionDeckBoxVisual), "GetActiveFormatElements");
+        private static readonly System.Reflection.MethodInfo DeleteAnimation = AccessTools.Method(typeof(DeckTrayDeckListContent), "DeleteDeckAnimation");
         internal static void Install(HarmonyLib.Harmony harmony)
         {
             void Patch(Type type, string method, string prefix = null, string postfix = null, Type[] arguments = null)
@@ -86,7 +88,7 @@ namespace BetterCollectionManager
         {
             DeckArchive.Run(() => { Invalidate(); Load(); s_archived = true; s_page = 0; Refresh(); });
         }
-        internal static void Refresh()
+        internal static void Refresh(bool resetScroll = true)
         {
             if (s_content == null || !Eligible()) return;
             DeckArchive.Run(() =>
@@ -94,9 +96,33 @@ namespace BetterCollectionManager
                 if (s_archived) Load();
                 UpdateTrays.Invoke(s_content, new object[] { true, true });
                 CountChanged.Invoke(s_content, null);
-                s_content.m_deckTray.m_scrollbar?.SetScrollImmediate(0f);
+                if (resetScroll) s_content.m_deckTray.m_scrollbar?.SetScrollImmediate(0f);
                 UpdateCaption();
             });
+        }
+        internal static void Restored(string key)
+        {
+            DeckTrayDeckListContent content = s_content;
+            long id = 0;
+            bool animate = content != null && ArchiveView(content) && Ids.TryGetValue(key, out id);
+            if (animate)
+            {
+                animate = false;
+                for (int i = 0; content.GetTraySection(i) is TraySection section; i++)
+                    if (section.m_deckBox.GetDeckID() == id) { animate = true; break; }
+            }
+            Invalidate();
+            if (content == null || !Eligible()) return;
+            if (s_archived) Load();
+            if (!animate) { Refresh(resetScroll: false); return; }
+            string account = s_account;
+            Action complete = () =>
+            {
+                if (content == s_content && s_account == account && ArchiveView(content)) Refresh(resetScroll: false);
+            };
+            // Only reuse native visual removal: poof, sound and row movement.
+            // The restored server deck is never passed to the deletion API.
+            content.StartCoroutine((IEnumerator)DeleteAnimation.Invoke(content, new object[] { id, complete }));
         }
         public static bool ActiveDecks(DeckTrayDeckListContent __instance, ref List<CollectionDeck> __result)
         {
@@ -120,7 +146,7 @@ namespace BetterCollectionManager
         }
         public static bool OpenArchived(DeckTrayDeckListContent __instance, TraySection traySection)
         {
-            if (DeckArchive.Busy) return false;
+            if (DeckArchive.Busy || __instance.IsDeletingDecks()) return false;
             if (!Entries.TryGetValue(traySection.m_deckBox.GetDeckID(), out ArchivedDeck entry)) return true;
             if (CollectionManager.Get().IsInEditMode()) return true;
             if (!__instance.IsModeActive() || __instance.m_deckTray.IsUpdatingTrayMode()) return false;
@@ -161,6 +187,7 @@ namespace BetterCollectionManager
         {
             if (DeckArchive.Busy) return false;
             if (!ArchiveView(__instance)) return true;
+            if (__instance.IsDeletingDecks()) return false;
             if (Pages > 1) { s_page = (s_page + 1) % Pages; Refresh(); }
             return false;
         }
@@ -230,7 +257,8 @@ namespace BetterCollectionManager
         }
         private static void ConfirmArchived(ArchivedDeck entry)
         {
-            if (DeckArchive.Busy || !CollectionQualitySettings.DeckArchiveEnabled) return;
+            if (DeckArchive.Busy || !CollectionQualitySettings.DeckArchiveEnabled
+                || (s_content != null && s_content.IsDeletingDecks())) return;
             string account = DeckArchive.AccountKey();
             DialogManager.Get().ShowPopup(new AlertPopup.PopupInfo {
                 m_id = DeckArchivePopup.Id, m_headerText = GameStrings.Get("GLUE_COLLECTION_DELETE_CONFIRM_HEADER"),
@@ -256,6 +284,7 @@ namespace BetterCollectionManager
             if (!CollectionQualitySettings.DeckArchiveEnabled && !DeckArchive.Busy
                 && !DeckArchiveEditor.Owns(CollectionManager.Get()?.GetEditedDeck()))
             {
+                if (s_content != null && s_content.IsDeletingDecks()) return;
                 if (s_content != null) { ShowSaved(); Shutdown(); }
                 return;
             }

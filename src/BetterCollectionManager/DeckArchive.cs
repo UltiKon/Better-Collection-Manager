@@ -215,7 +215,7 @@ namespace BetterCollectionManager
                 if (Capture(CollectionManager.Get().GetDeck(deckId)).Serialize() != pending.Snapshot.Serialize())
                     throw new InvalidOperationException("The client changed some restored cards or cosmetics. The saved deck is available; the original archive has been kept.");
                 pending.Store.Delete(pending.Snapshot.Key); DeckArchiveEditor.Delete(pending.Snapshot.Key); s_restore = null;
-                DeckArchiveUi.Invalidate(); DeckArchiveUi.ShowSaved();
+                DeckArchiveUi.Restored(pending.Snapshot.Key);
             });
         }
         private static void RunRestore(Action action)

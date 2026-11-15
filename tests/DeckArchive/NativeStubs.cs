@@ -174,10 +174,12 @@ namespace BetterCollectionManager
     internal static class DeckArchiveUi
     {
         internal static int Saved;
+        internal static readonly List<string> RestoredKeys = new();
         internal static void Install(HarmonyLib.Harmony harmony) { }
         internal static void Invalidate() { }
         internal static void Refresh() { }
         internal static void ShowSaved() => Saved++;
+        internal static void Restored(string key) => RestoredKeys.Add(key);
         internal static void Update() { }
         internal static void Shutdown() { }
         internal static bool IsLocalId(long id) => false;

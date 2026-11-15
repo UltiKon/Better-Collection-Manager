@@ -10,6 +10,7 @@ string root = Path.Combine(Path.GetTempPath(), "bcm-archive-tests-" + Guid.NewGu
 void Reset()
 {
     DeckArchive.Shutdown();
+    DeckArchiveUi.RestoredKeys.Clear(); DeckArchiveUi.Saved = 0;
     CollectionManager.Instance = new(); Network.Instance = new(); Network.Online = true;
     BattleNet.Current = new Account(); Time.realtimeSinceStartup = 0;
     CollectionQualitySettings.SettingsPath = Path.Combine(root, Guid.NewGuid().ToString("N"), "settings.json");
@@ -100,11 +101,19 @@ try
     DeckArchive.Contents(target.ID); Check(DeckArchive.Busy, "Unsolicited contents event cannot confirm restore");
     Ack(target.ID); Check(Network.Get().Readbacks == 1, "Success requests server readback");
     Check(DeckArchive.Store().Read(saved.Key) != null, "Save acknowledgment alone keeps archive");
+    Check(DeckArchiveUi.RestoredKeys.Count == 0 && DeckArchiveUi.Saved == 0,
+        "Unconfirmed restoration leaves the archived tray entry and view unchanged");
     DeckArchive.Contents(target.ID);
     Check(!DeckArchive.Busy && DeckArchive.Store().ReadAll((_, _) => { }).Count == 0, "Matching readback removes archive");
+    Check(DeckArchiveUi.RestoredKeys.SequenceEqual(new[] { saved.Key }) && DeckArchiveUi.Saved == 0,
+        "Confirmed restoration removes only its local tray entry without switching to Saved");
+    Check(CollectionManager.Get().GetDeck(target.ID) == target && !target.IsBeingDeleted(),
+        "Removing the archived presentation keeps the restored server deck intact");
 
     Reset(); saved = Save(); DeckArchive.RestoreDeck(saved.Key); target = Created(saved); Ack(target.ID, false);
     Check(!DeckArchive.Busy && DeckArchive.Store().Read(saved.Key) != null, "Server rejection keeps archive");
+    Check(DeckArchiveUi.RestoredKeys.Count == 0 && DeckArchiveUi.Saved == 0,
+        "Failed restoration does not remove a tray entry or switch the view");
     int requests = Network.Get().Requests; DeckArchive.RestoreDeck(saved.Key);
     Check(Network.Get().Requests == requests, "Retry recognizes already created identical deck without duplicate creation");
     Check(DeckArchive.Busy && DeckArchive.Store().Read(saved.Key) != null, "Retry still requires server readback before deleting archive");

@@ -57,6 +57,7 @@ InternalMethod("DeckTrayDeckListContent", "UpdateAllTrays", "Void", "Boolean", "
 InternalMethod("DeckTrayDeckListContent", "OnDeckBoxVisualRelease", "Void", "TraySection");
 InternalMethod("DeckTrayDeckListContent", "OnNewDeckButtonPress", "Void");
 InternalMethod("DeckTrayDeckListContent", "OnDeckDeleted", "Void", "CollectionDeck");
+InternalMethod("DeckTrayDeckListContent", "DeleteDeckAnimation", "System.Collections.IEnumerator", "Int64", "System.Action");
 InternalMethod("DeckTrayDeckListContent", "FireDeckCountChangedEvent", "Void");
 Method("DeckTrayDeckListContent", "get_CanDragToReorderDecks", "Boolean");
 Method("DeckTrayDeckListContent", "CanShowNewDeckButton", "Boolean");

@@ -5,6 +5,12 @@ Changes are grouped by UTC commit date. The [user guide](docs/USER-GUIDE.md) and
 this file records the features and fixes delivered on each
 date. Superseded intermediate layouts and experiments are not separate features.
 
+## Unreleased
+
+- Restored decks disappear from Archived with the native deletion animation and
+  sound after server confirmation. Keep the current archive view and scroll
+  position instead of switching to Saved.
+
 ## 0.3.0 — 2026-11-15
 
 - Added **Report A Bug** under Settings > Mods > Other, opening the project's

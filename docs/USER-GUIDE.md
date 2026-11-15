@@ -44,9 +44,10 @@ for Archive and an outward arrow for Restore. The view switch plays the native
 deck-selection sound. Other native popups keep their original layout.
 Choose **Restore instead** to return it to Saved, **Delete permanently** to
 remove the local archive, or **Cancel**. Restoration needs an online connection
-and a free slot out of Hearthstone's 27 saved decks. On success the collection
-returns to Saved. The archive is removed only after a successful server save
-and matching contents readback. If the operation fails or the client changes
+and a free slot out of Hearthstone's 27 saved decks. On success the restored
+entry disappears with the native deletion effect and sound; the collection stays
+in Archived and retains its scroll position. The archive is removed only after a
+successful server save and matching contents readback. If the operation fails or the client changes
 cards or cosmetics, the archive stays available. Check Saved before retrying;
 the mod remembers acknowledged restore targets and verifies those again rather
 than creating duplicate decks.
