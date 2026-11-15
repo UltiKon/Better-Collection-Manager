@@ -22,8 +22,8 @@ class PreparedRelease(unittest.TestCase):
             root = Path(directory)
             metadata = root / 'src/BetterCollectionManager/ModMetadata.cs'
             metadata.parent.mkdir(parents=True)
-            metadata.write_text('internal const string Version = "0.3.0";')
-            manifest_path = root / '.github/release-assets/0.3.0.manifest'
+            metadata.write_text('internal const string Version = "0.3.1";')
+            manifest_path = root / '.github/release-assets/0.3.1.manifest'
             manifest_path.parent.mkdir(parents=True)
             dll = b'MZ BSJB BepInEx release fixture'
             assets = {'BetterCollectionManager.dll': dll}
@@ -34,8 +34,8 @@ class PreparedRelease(unittest.TestCase):
                 with zipfile.ZipFile(output, 'w') as archive:
                     archive.writestr(member, data)
                     archive.writestr('SHA256SUMS.txt', hashlib.sha256(data).hexdigest() + '  ' + member + '\n')
-                assets[f'BetterCollectionManager-0.3.0-{loader}.zip'] = output.getvalue()
-            manifest = {'tag': '0.3.0', 'title': 'Added local storage of decks', 'assets': []}
+                assets[f'BetterCollectionManager-0.3.1-{loader}.zip'] = output.getvalue()
+            manifest = {'tag': '0.3.1', 'title': 'Fixed deck restoration feedback', 'assets': []}
             blobs = {}
             for index, (name, data) in enumerate(assets.items()):
                 sha = f'{index:040x}'
@@ -56,7 +56,7 @@ class PreparedRelease(unittest.TestCase):
                     patch.object(publish.urllib.request, 'urlopen', side_effect=download):
                 publish.main()
             self.assertEqual((root / 'release-assets/BetterCollectionManager.dll').read_bytes(), dll)
-            self.assertIn('RELEASE_TITLE=Added local storage of decks', environment.read_text())
+            self.assertIn('RELEASE_TITLE=Fixed deck restoration feedback', environment.read_text())
 
     def test_verified_assets_and_release_metadata(self):
         self.run_publish()

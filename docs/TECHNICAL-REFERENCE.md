@@ -13,7 +13,7 @@ The mod, installer and original project code are licensed under the
 Third-party components retain their own licenses; see
 [the third-party notices](../installer/ThirdParty/NOTICES.md).
 
-Distribution documentation updated: 2026-11-15. Version: 0.3.0.
+Distribution documentation updated: 2026-11-15. Version: 0.3.1.
 
 By UltiKon, Imik and contributors. Fresh installations use the values in the
 [default-settings snapshot](../config/BetterCollectionManager.cfg): Diamond before
@@ -30,7 +30,7 @@ command and settings migration. Use one loader variant per launch. The automated
 installer described below installs MelonLoader.
 
 For the automated setup, see [Installer/README.md](../installer/README.md). The separate
-`BetterCollectionManager-0.3.0-installer.zip` contains the mod and five full Mono libraries;
+`BetterCollectionManager-0.3.1-installer.zip` contains the mod and five full Mono libraries;
 it installs the pinned MelonLoader release and configures Battle.net. Windows and
 Wine/CrossOver use the Windows loader; native macOS has an experimental separate
 launcher. The setup requires Python 3.10+ and downloads MelonLoader on installation.

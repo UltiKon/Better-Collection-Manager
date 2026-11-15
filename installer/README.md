@@ -4,7 +4,7 @@
 
 This installer sets up the **MelonLoader** version of the Hearthstone collection
 mod. It does not install BepInEx. Use the complete
-**`BetterCollectionManager-0.3.0-installer.zip`**, which contains `payload/`;
+**`BetterCollectionManager-0.3.1-installer.zip`**, which contains `payload/`;
 the setup scripts in a source checkout alone do not contain that payload.
 
 This package contains the mod and the five reviewed Unity/Mono base libraries.

@@ -17,19 +17,19 @@ For example, a card you own in both Normal and Golden can appear as one split
 tile instead of two separate tiles. Your actual cards and ownership counts stay
 separate.
 
-Version: **0.3.0** · Documentation updated: **2026-11-15**
+Version: **0.3.1** · Documentation updated: **2026-11-15**
 
 ## How to install
 
 **BepInEx already installed? Download the
-[0.3.0 BepInEx DLL](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.0/BetterCollectionManager.dll)**
+[0.3.1 BepInEx DLL](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.1/BetterCollectionManager.dll)**
 and place it in `BepInEx/plugins/BetterCollectionManager/` inside the game folder.
 
 **You do not need to compile the mod to use it.** Both loader variants include a
 ready-made `BetterCollectionManager.dll`. Full packages with source,
 documentation and checksums are available for
-[BepInEx](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.0/BetterCollectionManager-0.3.0-bepinex.zip) and
-[MelonLoader](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.0/BetterCollectionManager-0.3.0-shareable.zip).
+[BepInEx](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.1/BetterCollectionManager-0.3.1-bepinex.zip) and
+[MelonLoader](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.1/BetterCollectionManager-0.3.1-shareable.zip).
 A mod loader is the separate tool that loads the DLL when Hearthstone starts.
 
 There are two loader versions of the mod. Choose the instructions for your package:
@@ -71,7 +71,7 @@ original DLLs.
 
 **macOS has not been tested**, including both CrossOver and the native launcher.
 
-Both 0.3.0 variants are built from the same source. The BepInEx build uses
+Both 0.3.1 variants are built from the same source. The BepInEx build uses
 BepInEx 5.4.23.6 references. Automated checks cover both DLLs' loader metadata,
 shared version and embedded resources, along with settings, archive transactions
 and UI behavior. A user has tested collection browsing, the local archive and

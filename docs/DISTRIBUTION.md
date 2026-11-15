@@ -11,13 +11,13 @@ BepInEx build, use the [BepInEx guide](README-BEPINEX.md). Hub/Darkmoon experime
 are disabled. Game or loader updates may require a new build; compilation does
 not confirm compatibility with your client.
 
-Version: **0.3.0** · Documentation updated: **2026-11-15**
+Version: **0.3.1** · Documentation updated: **2026-11-15**
 
 ## Installation
 
 ### If you have never installed a mod loader
 
-Use the separate **`BetterCollectionManager-0.3.0-installer.zip`** and follow the
+Use the separate **`BetterCollectionManager-0.3.1-installer.zip`** and follow the
 [installer guide](../installer/README.md). It contains the mod, setup scripts and
 five reviewed Mono libraries, downloads the pinned MelonLoader release and
 configures Battle.net. It requires **Python 3.10+**. Native macOS setup is

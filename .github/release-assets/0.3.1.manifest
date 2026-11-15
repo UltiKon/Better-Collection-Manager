@@ -1,0 +1,24 @@
+{
+  "tag": "0.3.1",
+  "title": "Fixed deck restoration feedback",
+  "assets": [
+    {
+      "name": "BetterCollectionManager.dll",
+      "size": 6031360,
+      "sha256": "92c28af23ffdb4bdb8d4246cca9d32cfc835c0619e1db24733750ebf0aceb0c9",
+      "blob": "c7e0f834612602c2c9a25023b33beedcb181c80d"
+    },
+    {
+      "name": "BetterCollectionManager-0.3.1-bepinex.zip",
+      "size": 10848711,
+      "sha256": "afe49888b34d0f173c011c3d2a57d2dffcbc44ddba433b47ae0c7fb28cf3cb7a",
+      "blob": "929027d8a210bb7cf22c0517ffc8bc296a2bbeb5"
+    },
+    {
+      "name": "BetterCollectionManager-0.3.1-shareable.zip",
+      "size": 10845569,
+      "sha256": "01ad18331e44f30ef6c2d839cc31a76ad6ac57326394d558aa96cb38308478ba",
+      "blob": "8a26d150af8d41b8fc68c695b9a0e47f3ee13ec3"
+    }
+  ]
+}
