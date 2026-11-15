@@ -215,7 +215,7 @@ namespace BetterCollectionManager
             s_proxies.Add(proxy, action); s_proxyCosts.Add(proxy, new ProxyCost { Value = 0 });
             return () => {
                 foreach (var list in lists) list.Clear();
-                PreferredQualityCollapse.CollapseInPlace(members, "Package", null);
+                PreferredQualityCollapse.CollapseInPlace(members);
                 members.Sort((a, b) => { int cost = a.ManaCost.CompareTo(b.ManaCost); return cost != 0 ? cost : StringComparer.CurrentCultureIgnoreCase.Compare(a.Name, b.Name); });
                 destination.Add(proxy); destination.AddRange(members);
             };

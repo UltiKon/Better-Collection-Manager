@@ -498,7 +498,7 @@ public abstract class ButtonListMenu : MonoBehaviour
             mesh.SetTriangles(new List<int> { 0, 1, 2, 0, 2, 3 }, 0, false); mesh.RecalculateBounds();
             artwork.AddComponent<MeshFilter>().sharedMesh = mesh; artwork.AddComponent<MeshRenderer>();
         }
-        if (name.StartsWith("BCM_Choose") || name == "BCM_QualityCancel" || name.StartsWith("BCM_Transfer") || name.StartsWith("BCM_Artwork") || name.StartsWith("BCM_Disenchant"))
+        if (name.StartsWith("BCM_Choose") || name == "BCM_QualityCancel" || name.StartsWith("BCM_Transfer") || name.StartsWith("BCM_Artwork") || name.StartsWith("BCM_Disenchant") || name == "BCM_ModsReportBug")
         {
             go.AddComponent<BoxCollider>().size = new Vector3(3f, .05f, .8f);
             artwork.AddComponent<MeshFilter>().sharedMesh = new Mesh { bounds = new Bounds(Vector3.zero, new Vector3(3f, .05f, .8f)) };

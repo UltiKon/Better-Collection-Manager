@@ -91,7 +91,7 @@ internal static class Program
         using var stream = File.OpenRead(path);
         using var pe = new PEReader(stream);
         var metadata = pe.GetMetadataReader();
-        Check(metadata.GetAssemblyDefinition().Version == new Version(0, 2, 0, 0), "The assembly must advertise release 0.2.0.");
+        Check(metadata.GetAssemblyDefinition().Version == new Version(ModMetadata.AssemblyVersion), "The assembly must advertise the current release version.");
         var references = metadata.AssemblyReferences.Select(handle => metadata.GetString(metadata.GetAssemblyReference(handle).Name)).ToArray();
         Check(references.Contains(bepinex ? "BepInEx" : "MelonLoader"), "The selected loader must be referenced.");
         Check(!references.Contains(bepinex ? "MelonLoader" : "BepInEx"), "The other loader must not be required.");
@@ -112,7 +112,7 @@ internal static class Program
                     metadata.GetMemberReference((MemberReferenceHandle)attribute.Constructor).Parent).Name) == "BepInPlugin");
             var value = metadata.GetBlobReader(plugin.Value);
             Check(value.ReadUInt16() == 1 && value.ReadSerializedString() == "BetterCollectionManager"
-                && value.ReadSerializedString() == "Better Collection Manager" && value.ReadSerializedString() == "0.2.0",
+                && value.ReadSerializedString() == "Better Collection Manager" && value.ReadSerializedString() == ModMetadata.Version,
                 "BepInEx must receive the stable plugin GUID, display name and version.");
             var callbacks = entryType.GetMethods().Select(handle => metadata.GetString(metadata.GetMethodDefinition(handle).Name)).ToArray();
             Check(new[] { "Awake", "Update", "LateUpdate", "OnApplicationQuit", "OnDestroy" }.All(callbacks.Contains),

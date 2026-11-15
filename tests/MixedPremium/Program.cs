@@ -42,7 +42,6 @@ internal static partial class Program
         CheckDeckImageNativeArt();
         CheckCustomFps();
         CheckCategoryStartup();
-        CheckPageDiagnostics();
         CheckComboCardText();
         CheckComboIntegration();
         CheckPressSoundTiming();
@@ -64,7 +63,7 @@ internal static partial class Program
             var golden = Card("pair", TAG_PREMIUM.GOLDEN, goldenOwned, rarity);
             var list = new List<CollectibleCard> { normal, golden };
             PreferredQualityCollapse.BeginUpdate();
-            Check(PreferredQualityCollapse.CollapseInPlace(list, "test", null) == 1 && list.Count == 1, "Owned Normal and Golden must occupy one tile");
+            Check(PreferredQualityCollapse.CollapseInPlace(list) == 1 && list.Count == 1, "Owned Normal and Golden must occupy one tile");
             Check(list[0] == golden, "Default premium preference changed");
             bool mixed = PreferredQualityCollapse.TryGetMixed("pair", out MixedPremiumPair pair);
             Check(mixed == (goldenOwned == 1), "Split must occur only when the old rule would show two versions");
@@ -83,25 +82,25 @@ internal static partial class Program
 
         PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.NORMAL, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND };
         var reversed = new List<CollectibleCard> { g, n };
-        PreferredQualityCollapse.CollapseInPlace(reversed, "reversed", null);
+        PreferredQualityCollapse.CollapseInPlace(reversed);
         Check(reversed.Count == 1 && reversed[0] == n, "Normal-first preference must also merge");
         Check(PreferredQualityCollapse.TryGetMixed("scope", out _), "One preferred Normal plus Golden should use a split");
         n.OwnedCount = 2;
         PreferredQualityCollapse.BeginUpdate();
         reversed = new List<CollectibleCard> { g, n };
-        PreferredQualityCollapse.CollapseInPlace(reversed, "two preferred normal copies", null);
+        PreferredQualityCollapse.CollapseInPlace(reversed);
         Check(reversed.Count == 1 && reversed[0] == n && !PreferredQualityCollapse.TryGetMixed("scope", out _),
             "Two preferred Normal copies must remain a full Normal tile even with Golden owned");
         n.OwnedCount = 1;
         PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.NORMAL, TAG_PREMIUM.DIAMOND, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.SIGNATURE };
         var specialSecond = new List<CollectibleCard> { n, g, Card("scope", TAG_PREMIUM.DIAMOND, 1) };
-        PreferredQualityCollapse.CollapseInPlace(specialSecond, "special second", null);
+        PreferredQualityCollapse.CollapseInPlace(specialSecond);
         Check(specialSecond.Count == 2 && specialSecond[0].PremiumType == TAG_PREMIUM.DIAMOND,
             "Golden ownership must not replace the second version selected by the premium order");
         PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.NORMAL };
         MixedPremiumCard.Ready = false;
         var fallback = new List<CollectibleCard> { n, g };
-        PreferredQualityCollapse.CollapseInPlace(fallback, "fallback", null);
+        PreferredQualityCollapse.CollapseInPlace(fallback);
         Check(fallback.Count == 2 && fallback[0] == n && fallback[1] == g, "Unavailable renderer must keep both deck copies accessible");
         MixedPremiumCard.Ready = true;
         PreferredQualityCollapse.BeginUpdate();
@@ -246,7 +245,7 @@ internal static partial class Program
         var normal = Card("mixed", TAG_PREMIUM.NORMAL, 1);
         var golden = Card("mixed", TAG_PREMIUM.GOLDEN, 1);
         var results = new List<CollectibleCard> { normal, golden };
-        PreferredQualityCollapse.CollapseInPlace(results, "lifecycle", null);
+        PreferredQualityCollapse.CollapseInPlace(results);
         var root = new GameObject("Visual");
         var visual = root.AddComponent<CollectionCardVisual>();
         var actorRoot = new GameObject("Golden");
@@ -327,7 +326,7 @@ internal static partial class Program
         MixedPremiumCard.OnUpdate();
         Check(CollectionManager.Instance.Display.PageRefreshes == 1, "Failure must schedule a native list refresh");
         var fallback = new List<CollectibleCard> { normal, golden };
-        PreferredQualityCollapse.CollapseInPlace(fallback, "fallback", null);
+        PreferredQualityCollapse.CollapseInPlace(fallback);
         Check(fallback.Count == 2, "A failed split must restore both separately selectable deck copies");
         MixedPremiumCard.ResetSession();
         Check(MixedPremiumCard.CanMerge("mixed"), "Session teardown must clear stale presentation failures");
@@ -350,7 +349,7 @@ internal static partial class Program
                 ? new[] { TAG_PREMIUM.GOLDEN, TAG_PREMIUM.NORMAL, TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND }
                 : new[] { TAG_PREMIUM.NORMAL, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND };
             var results = new List<CollectibleCard> { normal, golden };
-            PreferredQualityCollapse.CollapseInPlace(results, "rules", null);
+            PreferredQualityCollapse.CollapseInPlace(results);
             var root = new GameObject("RulesVisual");
             root.transform.localPosition = new Vector3(3, 0, 4);
             root.transform.localScale = new Vector3(2, 2, 2);
@@ -509,7 +508,7 @@ internal static partial class Program
             CollectionManager.Instance.Counts[("rules", primaryPremium)] = 2;
             PreferredQualityCollapse.BeginUpdate();
             results = new List<CollectibleCard> { normal, golden };
-            PreferredQualityCollapse.CollapseInPlace(results, "two preferred copies", null);
+            PreferredQualityCollapse.CollapseInPlace(results);
             MixedPremiumCard.Attach(visual);
             Check(!MixedPremiumCard.TryGetSelected(visual.Actors, out _) && primary.RulesText.gameObject.activeSelf,
                 "Two preferred copies must keep a full native tile and native rules text");
@@ -668,7 +667,7 @@ internal static partial class Program
         manager.Counts[("counts", TAG_PREMIUM.GOLDEN)] = 1;
         manager.Counts[("counts", TAG_PREMIUM.NORMAL)] = 2;
         var collapsed = new List<CollectibleCard>(variants);
-        PreferredQualityCollapse.CollapseInPlace(collapsed, "count", null);
+        PreferredQualityCollapse.CollapseInPlace(collapsed);
         Check(collapsed.Count == 1 && !PreferredQualityCollapse.TryGetMixed("counts", out _),
             "Counts must also apply to full preferred tiles without a visual split");
         var root = new GameObject("CountVisual");
@@ -819,7 +818,7 @@ internal static partial class Program
         manager.Counts[("counts", TAG_PREMIUM.DIAMOND)] = 1000;
         manager.Counts[("counts", TAG_PREMIUM.GOLDEN)] = 12;
         collapsed = new List<CollectibleCard>(variants);
-        PreferredQualityCollapse.CollapseInPlace(collapsed, "large count", null);
+        PreferredQualityCollapse.CollapseInPlace(collapsed);
         CollapsedPremiumCount.Attach(visual);
         Check(CountText(count) == "5000+12+0+1000", "Large real counts must not become the native 9+ placeholder");
         Check(count.m_normalCountText.Width > nativeWidth * 3f && !count.m_normalCountText.ResizeToFit
@@ -926,7 +925,7 @@ internal static partial class Program
         manager.Counts[("counts", TAG_PREMIUM.DIAMOND)] = 1;
         PreferredQualityCollapse.BeginUpdate();
         collapsed = new List<CollectibleCard>(variants);
-        PreferredQualityCollapse.CollapseInPlace(collapsed, "separate variants", null);
+        PreferredQualityCollapse.CollapseInPlace(collapsed);
         Check(collapsed.Count == 2 && !PreferredQualityCollapse.IsSingleTile("counts"), "Unmerged dual-premium tiles must not share an aggregate counter");
         actor.Premium = TAG_PREMIUM.DIAMOND;
         count.SetNative(1, 0);
@@ -945,7 +944,7 @@ internal static partial class Program
             manager.Counts[("counts", TAG_PREMIUM.NORMAL)] = owned;
             PreferredQualityCollapse.BeginUpdate();
             collapsed = new List<CollectibleCard> { normalOnly };
-            PreferredQualityCollapse.CollapseInPlace(collapsed, "single displayed quality", null);
+            PreferredQualityCollapse.CollapseInPlace(collapsed);
             actor.Premium = TAG_PREMIUM.NORMAL;
             count.SetNative(owned, trials);
             string originalText = count.m_normalCountText.Text;

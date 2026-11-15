@@ -74,7 +74,7 @@ namespace BetterCollectionManager
                 if (type == null || !CollectionType(type) || type == typeof(CollectionCardVisual)) continue;
                 foreach (MethodInfo method in type.GetMethods(NativeMembers | BindingFlags.DeclaredOnly))
                     if (!method.IsAbstract && !method.ContainsGenericParameters && !method.IsSpecialName)
-                        graph[method] = NativePopupDiagnostics.CalledMethods(method);
+                        graph[method] = NativeMethodReferences.CalledMethods(method);
             }
             var targets = new HashSet<MethodBase> { setActors };
             bool changed;

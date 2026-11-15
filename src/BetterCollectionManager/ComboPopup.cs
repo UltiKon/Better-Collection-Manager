@@ -93,12 +93,10 @@ namespace BetterCollectionManager
         private Exception m_setupFailure;
         private int m_page, m_firstCard, m_width, m_height;
         private int m_openedFrame;
-        private bool m_logAfterLayout;
-        private bool m_logSettled;
+        private bool m_layoutPending;
         private bool m_offClickPending;
         private bool m_editorOffClickPending, m_unfocusPending;
         private Rect m_editorPanel;
-        private float m_settledAt;
 
         public static void Install(HarmonyLib.Harmony harmony)
         {
@@ -374,12 +372,7 @@ namespace BetterCollectionManager
             ScreenEffectParameters effect = ScreenEffectParameters.BlurVignettePerspective;
             effect.Blur = new BlurParameters(1f, 1f);
             m_screenEffects.StartEffect(effect); m_effectActive = true;
-            m_logAfterLayout = true;
-            m_logSettled = true; m_settledAt = Time.unscaledTime + .5f;
-            LogVisibility("show");
-            if (DebugLog.VerboseDebug)
-                NativePopupDiagnostics.Capture(this, m_menu, CameraUtils.FindProjectionCameraForObject(m_menu.m_buttonContainer.gameObject),
-                    m_menu.m_background, m_menu.m_border);
+            m_layoutPending = true;
             m_editorPresented = m_combo == null;
             m_editorOpening = m_editorPresented; m_editorOpenedAt = Time.unscaledTime;
             if (m_stableLayoutDepth == 0) ApplyEditorOpening();
@@ -480,64 +473,6 @@ namespace BetterCollectionManager
                 if (button.gameObject.activeInHierarchy
                     && ComboSceneGeometry.ScreenBounds(button.gameObject, camera, out Rect control) && control.Contains(pointer)) return true;
             return false;
-        }
-        private void LogVisibility(string stage)
-        {
-            Camera camera = CameraUtils.FindProjectionCameraForObject(m_menu.m_buttonContainer.gameObject);
-            DebugLog.Msg("[Combo popup] " + stage + " shown=" + IsShown()
-                + " controllerActive=" + gameObject.activeInHierarchy + " panelActive=" + m_menu.m_buttonContainer.gameObject.activeInHierarchy
-                + " animated=" + s_openingAnimation?.GetValue(this)
-                + " rigScale=" + ((object)m_menu is Component rig ? rig.transform.localScale.ToString() : "unavailable")
-                + " camera=" + (camera == null ? "missing" : "enabled=" + camera.enabled + " mask=" + camera.cullingMask));
-            if (camera == null) return;
-            int activeRenderers = 0, cameraRenderers = 0;
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>(false))
-                if (renderer.enabled && renderer.gameObject.activeInHierarchy)
-                {
-                    activeRenderers++;
-                    if ((camera.cullingMask & (1 << renderer.gameObject.layer)) != 0) cameraRenderers++;
-                }
-            DebugLog.Msg("[Combo popup] renderers=" + activeRenderers + " inCameraMask=" + cameraRenderers);
-            if (m_combo != null)
-            {
-                DebugLog.Msg("[Combo popup] inspect components=" + m_combo.Cards.Count + " page=" + m_page);
-                foreach (ComboNativeArrow arrow in new[] { m_leftArrow, m_rightArrow })
-                    if (arrow != null)
-                        DebugLog.Msg("[Combo arrow] " + arrow.Root.name + " active=" + arrow.Root.activeInHierarchy
-                            + " bounds=" + (ComboSceneGeometry.ScreenBounds(arrow.Root, camera, out Rect arrowArea) ? arrowArea.ToString() : "unavailable")
-                            + " depth=" + camera.WorldToScreenPoint(arrow.Root.transform.position).z
-                            + " renderers=" + arrow.Root.GetComponentsInChildren<Renderer>(false).Length);
-            }
-            foreach (object surface in new object[] { m_menu.m_background, m_menu.m_border })
-            {
-                Component component = surface as Component;
-                DebugLog.Msg("[Combo popup] surface=" + surface.GetType().FullName
-                    + " bounds=" + (component != null && ComboSceneGeometry.ScreenBounds(component.gameObject, camera, out Rect area) ? area.ToString() : "unavailable"));
-                if (component != null)
-                {
-                    Renderer renderer = component.GetComponent<Renderer>();
-                    DebugLog.Msg("[Combo popup] surfaceObject=" + component.gameObject.name + " parent=" + component.transform.parent?.gameObject.name
-                        + " controllerAncestor=" + transform.IsChildOf(component.transform)
-                        + " ownRenderer=" + (renderer == null ? "missing" : "order=" + renderer.sortingOrder
-                            + " material=" + renderer.sharedMaterial?.name + " queue=" + renderer.sharedMaterial?.renderQueue));
-                }
-            }
-            foreach (Actor actor in m_actors)
-                if (actor != null)
-                {
-                    bool visible = ComboSceneGeometry.CardFaceBounds(actor, camera, out Rect face);
-                    DebugLog.Msg("[Combo preview] " + stage + " card=" + actor.GetEntityDef()?.GetCardId()
-                        + " active=" + actor.gameObject.activeInHierarchy + " face=" + (visible ? face.ToString() : "unavailable")
-                        + " scale=" + actor.transform.localScale + " depth=" + camera.WorldToScreenPoint(actor.transform.position).z);
-                }
-            foreach (UIBButton button in m_buttons)
-            {
-                bool measured = ComboSceneGeometry.ScreenBounds(button.gameObject, camera, out Rect rect);
-                Vector3 position = camera.WorldToScreenPoint(button.transform.position);
-                DebugLog.Msg("[Combo popup] " + button.gameObject.name + " active=" + button.gameObject.activeInHierarchy
-                    + " layer=" + button.gameObject.layer + " depth=" + position.z.ToString(System.Globalization.CultureInfo.InvariantCulture)
-                    + " bounds=" + (measured ? rect.ToString() : "unavailable"));
-            }
         }
         private void RefreshFields()
         {
@@ -1277,13 +1212,9 @@ namespace BetterCollectionManager
             if (m_cardsEditing && m_memberRowsDirty) LayoutMenu();
             SuppressMenuSurface();
             if (m_combo == null) SuppressNativeFieldText();
-            if (m_logAfterLayout)
+            if (m_layoutPending)
             {
-                LayoutMenu(); LogVisibility("next-frame"); m_logAfterLayout = false;
-            }
-            if (m_logSettled && Time.unscaledTime >= m_settledAt)
-            {
-                LogVisibility("settled"); m_logSettled = false;
+                LayoutMenu(); m_layoutPending = false;
             }
             Camera camera = CameraUtils.FindProjectionCameraForObject(m_menu.m_buttonContainer.gameObject);
             if (camera == null) return;
@@ -1338,9 +1269,9 @@ namespace BetterCollectionManager
             if (IsShown())
             {
                 if (m_combo != null) SoundManager.Get()?.LoadAndPlay("Card_Transition_In.prefab:3f3fbe896b8b260448e8c7e5d028d971");
-                LogVisibility("hide"); base.Hide();
+                base.Hide();
             }
-            m_logAfterLayout = false; m_logSettled = false;
+            m_layoutPending = false;
             m_offClickPending = false;
             m_editorOffClickPending = m_unfocusPending = false;
             m_editorPresented = false;

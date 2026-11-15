@@ -44,6 +44,72 @@ void InternalMethod(string owner, string name, string result, params string[] pa
     checks++;
 }
 InternalMethod("OptionsMenu", "OnNewGraphicsQuality", "Void", "Object", "Object");
+// Local deck archives: scope local presentation models to the collection tray.
+Field("DeckOptionsMenu", "m_deck", "CollectionDeck", false);
+Field("DeckOptionsMenu", "m_deckInfo", "CollectionDeckInfo", false);
+Field("CollectionManager", "m_pendingDeckCreate", "CollectionManager/PendingDeckCreateData", false);
+Field("DeckTrayDeckListContent", "m_waitingToDeleteDeck", "Boolean", false);
+InternalMethod("DeckOptionsMenu", "OnDeleteButtonReleased", "Void", "UIEvent");
+InternalMethod("CollectionDeckBoxVisual", "OnDeleteButtonPressed", "Void", "UIEvent");
+InternalMethod("DeckTrayDeckListContent", "GetActiveDecks", "System.Collections.Generic.List`1<CollectionDeck>");
+InternalMethod("DeckTrayDeckListContent", "UpdateDeckTrayVisuals", "Int32", "Boolean", "TAG_CLASS");
+InternalMethod("DeckTrayDeckListContent", "UpdateAllTrays", "Void", "Boolean", "Boolean");
+InternalMethod("DeckTrayDeckListContent", "OnDeckBoxVisualRelease", "Void", "TraySection");
+InternalMethod("DeckTrayDeckListContent", "OnNewDeckButtonPress", "Void");
+InternalMethod("DeckTrayDeckListContent", "OnDeckDeleted", "Void", "CollectionDeck");
+InternalMethod("DeckTrayDeckListContent", "FireDeckCountChangedEvent", "Void");
+Method("DeckTrayDeckListContent", "get_CanDragToReorderDecks", "Boolean");
+Method("DeckTrayDeckListContent", "CanShowNewDeckButton", "Boolean");
+Method("DeckTrayDeckListContent", "DeleteDeck", "Void", "Int64");
+Method("CollectionDeckBoxVisual", "GetCollectionDeck", "CollectionDeck");
+InternalMethod("CollectionDeckBoxVisual", "GetActiveFormatElements", "CollectionDeckBoxVisual/FormatElements");
+Field("CollectionDeckBoxVisual/FormatElements", "deckSelectSound", "String");
+Method("DeckTrayDeckListContent", "HideTraySectionsNotInBounds", "Void", "UnityEngine.Bounds");
+Field("DeckTrayDeckListContent", "m_newDeckButtonContainer", "UnityEngine.GameObject");
+Field("DeckTrayDeckListContent", "m_newDeckButton", "CollectionDeckTrayButton");
+Field("DeckTrayDeckListContent", "m_traySectionStartPos", "UnityEngine.Transform");
+InternalMethod("DeckTrayDeckListContent", "RefreshTraySectionPositions", "Void", "Boolean");
+InternalMethod("DeckTrayDeckListContent", "UpdateNewDeckButton", "Void", "TraySection");
+Field("CollectionDeckTrayButton", "m_buttonText", "UberText");
+Field("CollectionDeckTrayButton", "m_isPoppedUp", "Boolean", false);
+Method("CollectionDeckTrayButton", "SetIsUsable", "Void", "Boolean");
+Method("CollectionDeckTrayButton", "PlayPopUpAnimation", "Void", "CollectionDeckTrayButton/DelOnAnimationFinished", "Object", "System.Nullable`1<Single>");
+Method("UIBScrollableItem", "SetCustomActiveState", "Void", "UIBScrollableItem/ActiveStateCallback");
+Method("UIBScrollableItem", "GetWorldBounds", "Void", "UnityEngine.Vector3&", "UnityEngine.Vector3&");
+InternalMethod("AlertPopup", "UpdateButtons", "Void", "AlertPopup/ResponseDisplay");
+InternalMethod("AlertPopup", "UpdateLayout", "Void");
+InternalMethod("AlertPopup", "ButtonPress", "Void", "AlertPopup/Response");
+Method("AlertPopup", "GetInfo", "AlertPopup/PopupInfo");
+Method("NineSliceElement", "GetWorldDimensions", "UnityEngine.Vector2");
+Method("NineSliceElement", "SetWidth", "Void", "Single");
+Field("CollectionDeck", "m_sideboardManager", "SideboardManager", false);
+Method("SideboardManager", "GetOrCreateSideboard", "SideboardDeck", "String", "TAG_PREMIUM", "Boolean");
+Method("CollectionDeck", "InsertSlotWithCard", "CollectionDeckSlot", "String", "TAG_PREMIUM", "Boolean", "Int32");
+Method("CollectionDeck", "CanCardBeAddedAsOwned", "Boolean", "String", "TAG_PREMIUM");
+Method("CollectionManager", "GetDeck", "CollectionDeck", "Int64");
+Method("CollectionManager", "GetBaseDeck", "CollectionDeck", "Int64");
+Method("CollectionManager", "SetEditedDeck", "Void", "CollectionDeck", "Object");
+Method("CollectionManager", "DoneEditing", "Void");
+Method("CollectionDeck", "SendDeckRenameChange", "Void", "CollectionDeck", "Boolean", "PegasusShared.DeckType", "PegasusShared.DeckSourceType");
+Method("CollectionDeckTray", "SaveDeck", "Void", "CollectionDeck", "CollectionDeck/ChangeSource");
+Method("CollectionDeckTray", "OnBackOutOfDeckContentsImpl", "Boolean", "Boolean");
+Method("Network", "RenameDeck", "Void", "Int64", "String", "Boolean", "PegasusShared.DeckType", "PegasusShared.DeckSourceType");
+Method("Network", "DeleteDeck", "Void", "Int64", "PegasusShared.DeckType");
+InternalMethod("CollectionManager", "OnDeckCreated", "Void", "NetCache/DeckHeader", "System.Nullable`1<Int32>");
+InternalMethod("CollectionManager", "OnDBAction", "Void");
+InternalMethod("CollectionManager", "FireDeckContentsEvent", "Void", "Int64");
+InternalMethod("CollectionManager", "UpdateFromDeckContents", "Void", "System.Collections.Generic.List`1<PegasusUtil.DeckContents>");
+Method("Network", "GetDeckResponse", "Network/DBAction");
+Method("Network", "RequestDeckContents", "Void", "Int64[]");
+Method("Network", "CreateDeck", "Void", "PegasusShared.DeckType", "String", "Int32", "Boolean", "PegasusShared.FormatType", "Int64",
+    "PegasusShared.DeckSourceType", "System.Nullable`1<Int32>", "System.Nullable`1<Int32>", "System.Nullable`1<Int32>&", "String", "Int32");
+Method("CollectionDeck", "ClearSideboards", "Void");
+Method("CollectionDeck", "SendChanges", "Void", "CollectionDeck/ChangeSource");
+if (args.Contains("--archive-only"))
+{
+    Console.WriteLine($"Native deck archive API: {checks} checks passed.");
+    return;
+}
 Field("BookPageManager", "m_pageLeftArrowBone", "UnityEngine.GameObject");
 // Native deck-image export menu, snapshot and actor readiness APIs.
 Field("DeckOptionsMenu", "m_copyPasteDeckButton", "DeckCopyPasteButton", false);
@@ -163,7 +229,9 @@ Method("CollectibleCardFilter", "FilterSearchText", "Void", "String");
 Method("CollectionManagerDisplay", "FilterBySearchText", "Void", "String");
 Method("CollectibleDisplay", "IsBookOpened", "Boolean");
 Method("CollectibleDisplay", "IsReady", "Boolean");
+Field("CollectibleDisplay", "m_isBookCoverLoading", "Boolean", false);
 Method("CollectionManager", "IsFullyLoaded", "Boolean");
+Method("CollectionManager", "IsWaitingForBoxTransition", "Boolean");
 Method("BookPageManager", "IsFullyLoaded", "Boolean");
 Method("BookPageManager", "ArePagesTurning", "Boolean");
 Method("CollectiblePageManager", "HideCraftingModeCards", "Void", "BookPageManager/PageTransitionType", "Boolean");

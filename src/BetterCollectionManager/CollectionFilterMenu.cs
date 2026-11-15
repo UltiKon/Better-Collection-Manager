@@ -21,7 +21,6 @@ namespace BetterCollectionManager
         private static readonly ExpansionIconMarker s_expansionIconMarker = new ExpansionIconMarker();
         private static SetFilterItem s_expansionMarkerIcon;
         private static bool s_expansionMarkerPending;
-        private static string s_expansionStarDiagnosticStage, s_expansionStarSelectionDiagnostic;
         private static bool s_nativeShowInProgress;
         private static int s_lastToggleFrame = -1;
         private static FieldInfo s_selectedItemField;
@@ -91,7 +90,6 @@ namespace BetterCollectionManager
             }
             s_live = tray;
             s_toggle = toggle;
-            if (CollectionQualitySettings.HideEmptyFilters) EnsureWideExpansionPool();
             RefreshExpansionIcon();
             return true;
         }
@@ -167,6 +165,7 @@ namespace BetterCollectionManager
             if (!IsAttached)
                 return;
             if (PackageViewState.IsActive) PackageBrowser.Leave();
+            PrepareAvailability();
             KeywordSetTray.NotifyItemClicked();
             if (s_live.IsShown())
                 ShowNative(false);
@@ -180,6 +179,7 @@ namespace BetterCollectionManager
                 return;
             if (kind == FilterTrayKind.Packages) PackageBrowser.Enter();
             else if (PackageViewState.IsActive && kind != FilterTrayKind.Expansions) PackageBrowser.Leave();
+            if (kind != FilterTrayKind.Packages) PrepareAvailability();
             KeywordSetTray.NotifyItemClicked();
             KeywordSetTray.SetShown(true, kind, "filter submenu");
         }
@@ -198,6 +198,7 @@ namespace BetterCollectionManager
 
             try
             {
+                PrepareAvailability();
                 KeywordSetTray.NotifyItemClicked();
                 RemoveBackItem();
                 // Collection initialization has already populated the native
@@ -348,6 +349,14 @@ namespace BetterCollectionManager
             RefreshExpansionIcon();
         }
 
+        private static void PrepareAvailability()
+        {
+            // Availability needs the broad native pool only when the user opens
+            // the filters. Preparing it during Attach repeats the full results
+            // and page build while the collection book is still opening.
+            if (!ExpansionFilterState.IsActive) EnsureWideExpansionPool();
+        }
+
         public static bool EnsureWideExpansionPool()
         {
             if (PackageViewState.IsActive) return false;
@@ -449,13 +458,6 @@ namespace BetterCollectionManager
                                     && !RestrictsExpansions(item))) { icon = item; break; }
                 }
                 if (icon == null) icon = selected;
-                string selectionDiagnostic = "selected=" + choices.Count + "; active=" + ExpansionFilterState.IsActive
-                    + "; requested=" + multiple;
-                if (s_expansionStarSelectionDiagnostic != selectionDiagnostic)
-                {
-                    s_expansionStarSelectionDiagnostic = selectionDiagnostic;
-                    DebugLog.Msg("[Expansion star] diagnostics=star-only-v4; " + selectionDiagnostic);
-                }
                 if (icon != null) s_toggle.SetToggleIcon(icon.IconTexture, icon.IconOffset ?? UnityEngine.Vector2.zero);
                 UpdateExpansionStar(multiple, icon);
             }
@@ -468,12 +470,12 @@ namespace BetterCollectionManager
             s_expansionMarkerPending = visible;
             if (!visible)
             {
-                ReportExpansionStar("hidden", "selection does not require a multiple-expansion marker");
+
                 return;
             }
             if (icon?.IconTexture == null || s_toggle?.m_currentIconQuad == null)
             {
-                ReportExpansionStar("waiting-icon", "native texture or logo renderer is unavailable");
+
                 return;
             }
             try
@@ -481,15 +483,14 @@ namespace BetterCollectionManager
                 Texture2D marked = s_expansionIconMarker.Get(icon.IconTexture, s_toggle.m_currentIconQuad);
                 if (marked == null)
                 {
-                    ReportExpansionStar("waiting-texture", "native texture has not finished loading");
+
                     return;
                 }
                 // Use the same quad, material, UV offset, tint and camera as
                 // the visible native logo. No separate text object is drawn.
                 s_toggle.SetToggleIcon(marked, icon.IconOffset ?? UnityEngine.Vector2.zero);
                 s_expansionMarkerPending = false;
-                ReportExpansionStar("texture-ready", "source=" + icon.IconTexture.name
-                    + "; marked=" + marked.name + "; size=" + marked.width + "x" + marked.height);
+
             }
             catch (Exception ex)
             {
@@ -504,13 +505,6 @@ namespace BetterCollectionManager
                 UpdateExpansionStar(true, s_expansionMarkerIcon);
         }
 
-        private static void ReportExpansionStar(string stage, string details)
-        {
-            if (s_expansionStarDiagnosticStage == stage) return;
-            s_expansionStarDiagnosticStage = stage;
-            DebugLog.Msg("[Expansion star] " + stage + "; " + details);
-        }
-
         private static void ClearExpansionMarker()
         {
             if (s_toggle != null && s_expansionMarkerIcon?.IconTexture != null)
@@ -518,7 +512,6 @@ namespace BetterCollectionManager
             s_expansionIconMarker.Clear();
             s_expansionMarkerIcon = null;
             s_expansionMarkerPending = false;
-            s_expansionStarDiagnosticStage = s_expansionStarSelectionDiagnostic = null;
         }
 
         private static object GetSpecificCards(SetFilterItem source)

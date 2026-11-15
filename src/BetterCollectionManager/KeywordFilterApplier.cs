@@ -57,7 +57,6 @@ namespace BetterCollectionManager
 
         public static void RefreshCollectionPages(CollectionPageAnchor anchor = null, int? page = null, CollectionPageAnchor transitionFrom = null)
         {
-            CollectionPageDiagnostics.Mark("refresh requested");
             try
             {
                 CollectibleDisplay display = CollectionManager.Get()?.GetCollectibleDisplay();
@@ -68,14 +67,12 @@ namespace BetterCollectionManager
                     return;
                 }
 
-                long started = System.Diagnostics.Stopwatch.GetTimestamp();
                 int previousPage = pageManager.CurrentPageNum;
                 anchor = anchor ?? CapturePageAnchor();
                 // Restoring a saved location can navigate from a different
                 // browser. Compare the artwork currently on screen, while the
                 // saved anchor continues to determine the destination page.
                 transitionFrom = transitionFrom ?? anchor;
-                long captured = System.Diagnostics.Stopwatch.GetTimestamp();
                 if (s_updateFilteredCards == null)
                     s_updateFilteredCards = AccessTools.Method(typeof(CollectiblePageManager), "UpdateFilteredCards");
 
@@ -86,8 +83,6 @@ namespace BetterCollectionManager
                     else pageManager.NotifyOfCollectionChanged();
                 }
                 finally { FilterAvailability.EndCustomRefresh(); }
-                long filtered = System.Diagnostics.Stopwatch.GetTimestamp();
-                CollectionPageDiagnostics.Mark("native results updated");
                 object collection = AccessTools.Field(pageManager.GetType(), "m_cardsCollection")?.GetValue(pageManager);
 
                 if (page.HasValue) AccessTools.Field(pageManager.GetType(), "m_currentPageNum")?.SetValue(pageManager, System.Math.Max(1, page.Value));
@@ -95,22 +90,11 @@ namespace BetterCollectionManager
                 {
                     AccessTools.Field(pageManager.GetType(), "m_currentPageNum")?.SetValue(pageManager, anchor.Resolve(collection));
                 }
-                long resolved = System.Diagnostics.Stopwatch.GetTimestamp();
-                CollectionPageDiagnostics.Mark("refresh page contents");
                 bool animate = FilterButtonFeedback.IsFilterAction && display.GetViewMode() == CollectionUtils.ViewMode.CARDS
                     && (pageManager.CurrentPageNum != previousPage
                         || (transitionFrom != null && !transitionFrom.MatchesVisiblePage(collection, pageManager.CurrentPageNum)));
                 FilterButtonFeedback.RunPageRefresh(() => RefreshPageContents(pageManager, animate,
                     pageManager.CurrentPageNum < previousPage));
-                long finished = System.Diagnostics.Stopwatch.GetTimestamp();
-                double milliseconds = 1000.0 / System.Diagnostics.Stopwatch.Frequency;
-                if ((finished - started) * milliseconds >= 25.0)
-                    DebugLog.Msg($"Filter refresh timing: snapshot={(captured - started) * milliseconds:F1}ms "
-                        + $"native={(filtered - captured) * milliseconds:F1}ms resolve={(resolved - filtered) * milliseconds:F1}ms "
-                        + $"contents={(finished - resolved) * milliseconds:F1}ms");
-                DebugLog.Msg(
-                    $"Filter refresh kw={KeywordFilterState.IsActive} extra={ExtraFilterState.IsActive} " +
-                    $"{KeywordFilterState.Describe()} {ExtraFilterState.Describe()}");
             }
             catch (System.Exception ex)
             {
@@ -118,7 +102,7 @@ namespace BetterCollectionManager
             }
         }
 
-        // The in-game trace exposes this overload and the BookPageManager enum.
+        // Use the native overload with the BookPageManager animation enum.
         // Use reflection because a stripped game may expose it non-publicly.
         internal static MethodInfo FindAnimatedRefresh(System.Type type)
         {
@@ -177,7 +161,6 @@ namespace BetterCollectionManager
             {
                 if (s_animatedRefresh != null)
                 {
-                    CollectionPageDiagnostics.Mark("animated refresh: " + (backwards ? "SINGLE_PAGE_LEFT" : "SINGLE_PAGE_RIGHT"));
                     s_animatedRefresh.Invoke(manager, new[] { backwards ? s_pageLeft : s_pageRight });
                     return;
                 }

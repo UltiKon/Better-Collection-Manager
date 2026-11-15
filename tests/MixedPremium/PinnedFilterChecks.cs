@@ -576,12 +576,9 @@ internal static partial class Program
         Input.mousePosition = viewport.center;
         Input.mouseScrollDelta = new Vector2(0f, -100f);
         update.Invoke(menu, null);
-        Check(Read("m_settingsScroll") > 0f && empty.gameObject.activeInHierarchy
+        Check(Read("m_settingsScroll") > 0f
             && Math.Abs(menu.BodyHeight - height) < .002f && Near(menu.BodyWidth, width),
-            "Wheel scrolling reveals overflow settings while retaining the original menu dimensions");
-        empty.Click();
-        Check(CollectionQualitySettings.HideEmptyFilters, "The overflow checkbox remains interactive");
-        empty.Click();
+            "Wheel scrolling moves overflow settings while retaining the original menu dimensions");
         var scrollField = typeof(ModsSettingsMenu).GetField("m_settingsScroll", flags);
         var applyScroll = typeof(ModsSettingsMenu).GetMethod("ApplySettingsScroll", flags);
         bool ScrollTo(Func<bool> visible)
@@ -594,6 +591,11 @@ internal static partial class Program
             }
             return false;
         }
+        Check(ScrollTo(() => empty.gameObject.activeInHierarchy && empty.IsEnabled()),
+            "The empty-filter option remains reachable when the other column has more sections");
+        empty.Click();
+        Check(CollectionQualitySettings.HideEmptyFilters, "The overflow checkbox remains interactive");
+        empty.Click();
         var craftingSearch = menu.GetComponentsInChildren<DropdownControl>(true).Single(control => control.gameObject.name == "BCM_ModsCollectionopensearch");
         var protection = all.Single(box => box.gameObject.name == "BCM_ModsNeverDustSignaturesDiamonds");
         var nativeBar = (GameObject)typeof(ModsSettingsMenu).GetField("m_settingsScrollbar", flags).GetValue(menu);
@@ -602,6 +604,24 @@ internal static partial class Program
         craftingSearch.SelectOption(CollectionOpenSearchMode.New);
         Check(CollectionQualitySettings.OpenSearch == CollectionOpenSearchMode.New, "Scrolling makes the native New opening-search setting selectable");
         craftingSearch.SelectOption(CollectionOpenSearchMode.Off);
+        var archive = all.Single(box => box.gameObject.name == "BCM_ModsDeckArchiveEnabled");
+        Check(ScrollTo(() => archive.gameObject.activeInHierarchy && archive.IsEnabled()),
+            "The dedicated Deck archive section is reachable through the settings scrollbar");
+        bool archiveEnabled = CollectionQualitySettings.DeckArchiveEnabled;
+        archive.Click();
+        Check(CollectionQualitySettings.DeckArchiveEnabled != archiveEnabled, "The archive checkbox in its own section saves its setting");
+        archive.Click();
+        var reportBug = menu.Buttons.Single(button => button.gameObject.name == "BCM_ModsReportBug");
+        Check(ScrollTo(() => reportBug.gameObject.activeInHierarchy && SettingsRowFullyVisible(reportBug)),
+            "The Other action button must remain fully reachable through the settings scrollbar");
+        var other = all.Single(box => box.m_uberText.Text == "Hide redundant settings");
+        Rect reportBounds = ClosedFieldScreenBounds(reportBug.gameObject);
+        Rect otherTitle = SettingsSectionBounds(menu.GetComponentsInChildren<UberText>(true)
+            .Single(text => text.gameObject.name == "BCM_ModsLabelSectionOther"));
+        Check(reportBounds.yMax < SettingsCheckboxBounds(other).yMin
+            && Math.Abs(reportBounds.center.x - otherTitle.center.x) < SettingsPixelTolerance
+            && Math.Abs(reportBounds.width - otherTitle.width) < SettingsPixelTolerance,
+            "The action button follows the Other checkbox and matches the complete heading width without overlapping it");
         foreach (DeckImageOption option in DeckImageSettings.Options)
         {
             var imageBox = all.Single(box => box.gameObject.name == "BCM_ModsDeckImage" + option);

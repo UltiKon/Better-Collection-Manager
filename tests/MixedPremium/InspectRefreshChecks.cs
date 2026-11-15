@@ -45,7 +45,7 @@ internal static partial class Program
         f.Sibling = new List<CollectibleCard>(f.Raw);
         f.Other = new List<CollectibleCard> { f.Neighbor, neighborGold };
         PreferredQualityCollapse.BeginUpdate();
-        foreach (var list in new[] { f.Visible, f.Sibling, f.Other }) PreferredQualityCollapse.CollapseInPlace(list, "fixture", null);
+        foreach (var list in new[] { f.Visible, f.Sibling, f.Other }) PreferredQualityCollapse.CollapseInPlace(list);
         InspectCollectionRefresh.RecordResults(f.Filter, new[] { f.Visible, f.Sibling, f.Other, f.Sibling });
         return f;
     }
@@ -71,7 +71,7 @@ internal static partial class Program
             {
                 // Execute the real Harmony boundary: a scoped prefix must skip
                 // both the native method and the full mod postfix/cache reset.
-                bool runNative = BetterCollectionManager.Patches.CollectibleCardClassFilter_UpdateResults_Patch.Prefix(f.Filter, out long state);
+                bool runNative = BetterCollectionManager.Patches.CollectibleCardClassFilter_UpdateResults_Patch.Prefix(f.Filter, out bool state);
                 if (runNative) return false;
                 BetterCollectionManager.Patches.CollectibleCardClassFilter_UpdateResults_Patch.Postfix(f.Filter, state);
                 return true;
@@ -108,7 +108,7 @@ internal static partial class Program
             Check(f.Manager.GetAllCardsCalls == scans, "Scoped refresh never scans the full inventory");
             var actual = f.Visible.ToArray();
             var expected = new List<CollectibleCard>(f.Raw);
-            PreferredQualityCollapse.CollapseInPlace(expected, "full oracle", null);
+            PreferredQualityCollapse.CollapseInPlace(expected);
             Check(actual.SequenceEqual(expected) && f.Sibling.SequenceEqual(expected),
                 "Scoped results match a full rebuild, including multiclass/rune sibling lists in " + mode);
             Check(f.Visible.Skip(8).Take(8).SequenceEqual(expected.Skip(8).Take(8)),

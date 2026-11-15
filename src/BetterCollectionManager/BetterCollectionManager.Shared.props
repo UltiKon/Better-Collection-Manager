@@ -32,7 +32,7 @@
     <Compile Include="DropdownScrollbar.cs" />
     <Compile Include="ComboPopup.cs" />
     <Compile Include="ComboNativeSkin.cs" />
-    <Compile Include="NativePopupDiagnostics.cs" />
+    <Compile Include="NativeMethodReferences.cs" />
     <Compile Include="ComboCollectionCards.Packages.cs" />
     <Compile Include="ComboCollectionCards.cs" />
     <Compile Include="ComboCollectionCards.Native.cs" />
@@ -59,6 +59,13 @@
     <Compile Include="DeckImageNativeArt.cs" />
     <Compile Include="DeckImageCardArt.cs" />
     <Compile Include="DeckImageMenu.cs" />
+    <Compile Include="DeckArchiveStore.cs" />
+    <Compile Include="DeckArchive.cs" />
+    <Compile Include="DeckArchiveUi.cs" />
+    <Compile Include="DeckArchiveEditor.cs" />
+    <Compile Include="DeckArchivePopup.cs" />
+    <Compile Include="DeckArchiveSwitchPose.cs" />
+    <Compile Include="DeckArchiveActionIcon.cs" />
     <Compile Include="FilterModes.cs" />
     <Compile Include="FilterBitSet.cs" />
     <Compile Include="HubMenuSettings.cs" />
@@ -97,7 +104,6 @@
     <Compile Include="KeywordCatalog.cs" />
     <Compile Include="KeywordGroups.cs" />
     <Compile Include="KeywordFilterApplier.cs" />
-    <Compile Include="CollectionPageDiagnostics.cs" />
     <Compile Include="CollectionPageAnchor.cs" />
     <Compile Include="CraftingPageAnchor.cs" />
     <Compile Include="KeywordFilterState.cs" />

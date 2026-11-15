@@ -9,10 +9,15 @@ namespace BetterCollectionManager
     {
         private static ModsSettingsMenu s_shown;
         private const string MenuTitle = "Collection Mod Settings";
+        private const string BugReportUrl = "https://github.com/UltiKon/Better-Collection-Manager/issues";
         private readonly List<UIBButton> m_buttons = new List<UIBButton>();
+        private UIBButton m_reportBug;
+        private GameObject m_reportBugRow;
+        private Rect m_reportBugBounds;
+        private Vector3 m_reportBugScale, m_reportBugCaptionScale;
         private readonly List<GameObject> m_rows = new List<GameObject>();
         private readonly List<UberText> m_labels = new List<UberText>();
-        internal enum Section { Collection, PreferredQuality, Filters, Crafting, DeckImage, Other }
+        internal enum Section { Collection, PreferredQuality, Filters, Crafting, DeckImage, DeckArchive, Other }
         private static readonly int SectionCount = Enum.GetValues(typeof(Section)).Length;
         private DropdownControl m_openSearch, m_display, m_click, m_drag, m_filterRows, m_filterColumns, m_filterModeBehavior, m_deckImageQuality, m_deckImageAspect, m_deckImageBackground, m_deckImageResolution;
         private readonly UberText[] m_sectionTitles = new UberText[SectionCount];
@@ -33,7 +38,7 @@ namespace BetterCollectionManager
         private readonly List<DropdownControl> m_controls = new List<DropdownControl>();
         private readonly Dictionary<DropdownControl, Section> m_controlSections = new Dictionary<DropdownControl, Section>();
         private readonly List<Section> m_checkboxSections = new List<Section>();
-        private CheckBox m_askArtwork, m_disenchantPopup, m_neverDustSignaturesDiamonds, m_collapseInCrafting, m_hideRedundant, m_colorCodeCounter, m_collapse, m_rememberFilterModes, m_showClearAll, m_hideEmptyFilters, m_showLogicControls, m_showEditControls;
+        private CheckBox m_deckArchive, m_askArtwork, m_disenchantPopup, m_neverDustSignaturesDiamonds, m_collapseInCrafting, m_hideRedundant, m_colorCodeCounter, m_collapse, m_rememberFilterModes, m_showClearAll, m_hideEmptyFilters, m_showLogicControls, m_showEditControls;
         private readonly List<CheckBox> m_checkboxes = new List<CheckBox>();
         private readonly Dictionary<DeckImageOption, CheckBox> m_deckImageChecks = new Dictionary<DeckImageOption, CheckBox>();
         private readonly List<GameObject> m_checkboxRows = new List<GameObject>();
@@ -211,6 +216,18 @@ namespace BetterCollectionManager
                 CollectionQualitySettings.HideRedundant = value;
                 RefreshControls();
             });
+            m_reportBug = CreateMenuButton("BCM_ModsReportBug", "GLOBAL_BACK", _ => Application.OpenURL(BugReportUrl));
+            m_reportBug.m_ButtonText.GameStringLookup = m_reportBug.m_ButtonText.RichText = false;
+            m_reportBug.SetText("Report A Bug");
+            m_reportBug.SetEnabled(true, true);
+            FilterButtonFeedback.BindPressSound(m_reportBug);
+            LayerUtils.SetLayer(m_reportBug, m_targetLayer);
+            m_buttons.Add(m_reportBug);
+            m_reportBugRow = WrapRow(m_reportBug.gameObject);
+            m_reportBugScale = m_reportBug.transform.localScale;
+            m_reportBugCaptionScale = m_reportBug.m_ButtonText.transform.localScale;
+            m_deckArchive = CreateCheckbox("DeckArchiveEnabled", "Enable deck archive", Section.DeckArchive,
+                value => CollectionQualitySettings.DeckArchiveEnabled = value);
             m_rememberFilterModes = CreateCheckbox("RememberFilterModes", "Remember filter modes", Section.Filters, value => {
                 CollectionQualitySettings.RememberFilterModes = value;
             });
@@ -245,7 +262,7 @@ namespace BetterCollectionManager
         }
 
         private static string SectionLabel(Section section)
-            => section == Section.PreferredQuality ? "Preferred Quality" : section == Section.Filters ? "Filter menu" : section == Section.Other ? "Other" : section == Section.DeckImage ? "Deck image" : section == Section.Crafting ? "Crafting" : "Card Display / Handling";
+            => section == Section.PreferredQuality ? "Preferred Quality" : section == Section.Filters ? "Filter menu" : section == Section.Other ? "Other" : section == Section.DeckImage ? "Deck image" : section == Section.DeckArchive ? "Deck archive" : section == Section.Crafting ? "Crafting" : "Card Display / Handling";
 
         private void CaptureCheckboxAlignment()
         {
@@ -308,7 +325,7 @@ namespace BetterCollectionManager
             control.m_menuItemTemplate.m_text.Show();
             control.setItemChosenCallback(null);
             control.setMenuShownCallback(shown => {
-                if (shown) { PrepareDropdownRows(control); TraceDropdownOpened(control); }
+                if (shown) PrepareDropdownRows(control);
                 else m_dropdownClosedFrame = Time.frameCount;
             });
             control.clearItems();
@@ -347,34 +364,6 @@ namespace BetterCollectionManager
             m_rows.Add(WrapRow(go));
             m_labels.Add(label);
             return control;
-        }
-
-        private static int s_dropdownTraceBudget = 0, s_dropdownTraceSequence;
-        private DropdownControl m_dropdownTraceControl;
-        private int m_dropdownTraceFrame, m_dropdownTraceStage, m_dropdownTraceSequence;
-        internal static void TraceNativeGraphicsChange()
-        {
-            s_dropdownTraceBudget = 2;
-            DebugLog.Msg("[Mods dropdown render] Native graphics-quality change; comparison trace enabled.");
-        }
-        private void TraceDropdownOpened(DropdownControl control)
-        {
-            if (s_dropdownTraceBudget <= 0) return;
-            s_dropdownTraceBudget--;
-            m_dropdownTraceControl = control;
-            m_dropdownTraceFrame = Time.frameCount;
-            m_dropdownTraceStage = 0;
-            m_dropdownTraceSequence = ++s_dropdownTraceSequence;
-            NativePopupDiagnostics.CaptureDropdown(control, m_settingsCamera, m_dropdownTraceSequence, "open");
-        }
-        private void TickDropdownTrace()
-        {
-            if (m_dropdownTraceControl == null || !m_dropdownTraceControl.isMenuShown()) return;
-            int elapsed = Time.frameCount - m_dropdownTraceFrame;
-            int threshold = m_dropdownTraceStage == 0 ? 1 : m_dropdownTraceStage == 1 ? 5 : 20;
-            if (elapsed < threshold) return;
-            NativePopupDiagnostics.CaptureDropdown(m_dropdownTraceControl, m_settingsCamera, m_dropdownTraceSequence, "frame+" + elapsed);
-            if (++m_dropdownTraceStage == 3) m_dropdownTraceControl = null;
         }
 
         private readonly List<Renderer> m_dropdownArtwork = new List<Renderer>();
@@ -892,6 +881,7 @@ namespace BetterCollectionManager
                         && (m_checkboxes[i] != m_askArtwork || (DeckImageSettings.Background == DeckImageBackground.CardArtwork
                             && DeckImageSettings.Enabled(DeckImageOption.Background))));
                 m_disenchantPopup.SetChecked(CollectionQualitySettings.DisenchantPopup);
+                m_deckArchive.SetChecked(CollectionQualitySettings.DeckArchiveEnabled);
                 m_neverDustSignaturesDiamonds.SetEnabled(CollectionQualitySettings.DisenchantPopup, true);
                 m_hideRedundant.SetChecked(CollectionQualitySettings.HideRedundant);
                 m_openSearch.clearItems();
@@ -938,6 +928,10 @@ namespace BetterCollectionManager
         {
             if (m_labels.Count == 0) { base.LayoutMenu(); return; }
             RestoreSettingsScrollRows();
+            // Native Show hides all menu buttons before invoking this layout.
+            m_reportBug.gameObject.SetActive(true);
+            m_reportBug.transform.localScale = m_reportBugScale;
+            m_reportBug.m_ButtonText.transform.localScale = m_reportBugCaptionScale;
             // Raw UberText meshes can live in an offscreen render scene. They
             // must not contribute thousands of units to native slice heights.
             m_menu.m_buttonContainer.ClearSlices();
@@ -988,6 +982,7 @@ namespace BetterCollectionManager
                 width = columnWidth * 2f + unit * 0.6f;
                 height = MenuHeight(originalFields, originalChecks, headings, fields, OriginalCheckboxBounds(originalChecks, visibleChecks, checkboxes), titles, unit);
             }
+            if (!FitReportBugWidth(camera, titles[(int)Section.Other].width)) { m_layoutPending = true; return; }
             float left = origin.x - (columnWidth + unit * 0.6f) * 0.5f;
             float right = origin.x + (columnWidth + unit * 0.6f) * 0.5f;
             float collectionBottom = PlaceSection(camera, Section.Collection, left, origin.y,
@@ -996,7 +991,9 @@ namespace BetterCollectionManager
                 visible, visibleChecks, headings, fields, checkboxes, titles, unit);
             // The left column flows independently of quality priorities, so
             // hiding redundant input fields also moves the filter group up.
-            PlaceSection(camera, Section.Filters, left, collectionBottom - unit * 0.75f,
+            float filtersBottom = PlaceSection(camera, Section.Filters, left, collectionBottom - unit * 0.75f,
+                visible, visibleChecks, headings, fields, checkboxes, titles, unit);
+            PlaceSection(camera, Section.DeckArchive, left, filtersBottom - unit * 0.75f,
                 visible, visibleChecks, headings, fields, checkboxes, titles, unit);
             float craftingBottom = PlaceSection(camera, Section.Crafting, right, qualityBottom - unit * 0.75f,
                 visible, visibleChecks, headings, fields, checkboxes, titles, unit);
@@ -1085,7 +1082,34 @@ namespace BetterCollectionManager
                 }
                 checkboxes[n] = checkbox;
             }
-            return true;
+            return TryReportBugRect(camera, out m_reportBugBounds);
+        }
+
+        private bool TryReportBugRect(Camera camera, out Rect rect)
+        {
+            bool found = TryColliderRect(m_reportBug.GetComponentsInChildren<Collider>(true), camera, out rect, true);
+            foreach (MeshRenderer renderer in m_reportBug.GetComponentsInChildren<MeshRenderer>(true))
+                if (renderer.enabled && renderer.GetComponentInParent<UberText>() == null
+                    && TryArtworkRect(renderer, camera, out Rect art))
+                { rect = found ? UnionRect(rect, art) : art; found = true; }
+            m_reportBug.m_ButtonText.UpdateNow(true);
+            if (CounterTextLayout.TryScreenInkRect(m_reportBug.m_ButtonText, camera, out Rect ink))
+            { rect = found ? UnionRect(rect, ink) : ink; found = true; }
+            return found;
+        }
+
+        private bool FitReportBugWidth(Camera camera, float width)
+        {
+            if (m_reportBugBounds.width <= 0f || width <= 0f) return false;
+            float ratio = width / m_reportBugBounds.width;
+            Vector3 scale = m_reportBugScale;
+            scale.x *= ratio;
+            m_reportBug.transform.localScale = scale;
+            // Widen the native frame and hit area, preserving the caption size.
+            scale = m_reportBugCaptionScale;
+            scale.x /= ratio;
+            m_reportBug.m_ButtonText.transform.localScale = scale;
+            return TryReportBugRect(camera, out m_reportBugBounds);
         }
 
         private bool MeasureSectionTitles(Camera camera, Rect[] titles)
@@ -1184,6 +1208,7 @@ namespace BetterCollectionManager
                     2f * ClosedFieldHalfWidth(m_controls[i], camera, fields[i].center.x, fields[i].width * 0.5f)));
             foreach (Rect checkbox in checkboxes) width = Mathf.Max(width, checkbox.width);
             foreach (Rect title in titles) width = Mathf.Max(width, title.width);
+            width = Mathf.Max(width, m_reportBugBounds.width);
             return width + unit * 0.5f;
         }
 
@@ -1261,6 +1286,12 @@ namespace BetterCollectionManager
                         checkboxes[n].center.x + checkboxLeft - hit.xMin, cursor);
                 cursor -= checkboxes[n].height;
                 first = false;
+            }
+            if (section == Section.Other)
+            {
+                cursor -= unit * 0.5f;
+                MoveRow(camera, m_reportBugRow.transform, m_reportBugBounds, centerX, cursor);
+                cursor -= m_reportBugBounds.height;
             }
             return cursor;
         }
@@ -1353,7 +1384,6 @@ namespace BetterCollectionManager
                     if (control.isMenuShown()) OrderDropdownText(control);
                 }
                 UpdateSettingsClipping();
-                TickDropdownTrace();
                 // Native frame colliders can extend beyond the resized art.
                 // Use the visible panel even when that collider swallows release.
                 if (Input.GetMouseButtonUp(0) && !m_settingsPanel.Contains(Input.mousePosition))

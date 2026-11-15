@@ -42,6 +42,13 @@ namespace BetterCollectionManager
         private static bool s_hideRedundant;
         private static bool s_colorCodeCounter;
         private static bool s_disenchantPopup;
+        private static bool s_deckArchiveEnabled = true;
+        private static PreferenceEntry<bool> s_deckArchiveEntry;
+        public static bool DeckArchiveEnabled
+        {
+            get { EnsureLoaded(); return s_deckArchiveEnabled; }
+            set { EnsureLoaded(); if (value != s_deckArchiveEnabled) { s_deckArchiveEnabled = value; Save(false); } }
+        }
         private static PreferenceEntry<bool> s_disenchantPopupEntry;
         internal static int DisenchantPopupRevision { get; private set; }
         private static bool s_neverDustSignaturesDiamonds = true;
@@ -226,6 +233,7 @@ namespace BetterCollectionManager
             s_hideRedundant = true;
             s_colorCodeCounter = false;
             s_disenchantPopup = false;
+            s_deckArchiveEnabled = true;
             s_neverDustSignaturesDiamonds = true;
             s_collapseInCrafting = false;
             s_openSearch = CollectionOpenSearchMode.NewOrRefund;
@@ -245,6 +253,7 @@ namespace BetterCollectionManager
                 s_hideRedundantEntry = category.CreateEntry("HideRedundantSettings", s_hideRedundant, "Hide redundant settings");
                 s_openSearchEntry = category.CreateEntry("CollectionOpenSearch", s_openSearch.ToString(), "Search on collection opening: Off, New, Refund, NewOrRefund (only new matches per account)");
                 s_disenchantPopupEntry = category.CreateEntry("DisenchantPopup", s_disenchantPopup, "Experimental disenchant amount popup; review quantities carefully. Off uses native disenchant behavior and disables Never dust protection.");
+                s_deckArchiveEntry = category.CreateEntry("DeckArchiveEnabled", s_deckArchiveEnabled, "Enable local deck archives, the collection view switch and Archive/Restore in delete confirmations. Disabling keeps existing archive files.");
                 s_neverDustSignaturesDiamondsEntry = category.CreateEntry("NeverDustSignaturesDiamonds", s_neverDustSignaturesDiamonds, "Never disenchant Signature or Diamond copies of the inspected card");
                 s_collapseInCraftingEntry = category.CreateEntry("CollapseInCrafting", s_collapseInCrafting, "Collapse quality variants while crafting, keeping missing cards visible");
                 s_colorCodeCounterEntry = category.CreateEntry("ColorCodeCounter", s_colorCodeCounter, "Color code counter");
@@ -268,6 +277,7 @@ namespace BetterCollectionManager
                 s_hideRedundant = s_hideRedundantEntry.Value;
                 s_colorCodeCounter = s_colorCodeCounterEntry.Value;
                 s_disenchantPopup = s_disenchantPopupEntry.Value;
+                s_deckArchiveEnabled = s_deckArchiveEntry.Value;
                 s_neverDustSignaturesDiamonds = s_neverDustSignaturesDiamondsEntry.Value;
                 s_collapseInCrafting = s_collapseInCraftingEntry.Value;
                 s_openSearch = Parse(s_openSearchEntry.Value, s_openSearch);
@@ -300,6 +310,7 @@ namespace BetterCollectionManager
                     s_drag = Parse(Read(json, "drag"), s_drag);
                     if (bool.TryParse(Read(json, "hideRedundant"), out bool hideRedundant)) s_hideRedundant = hideRedundant;
                     if (bool.TryParse(Read(json, "disenchantPopup"), out bool disenchantPopup)) s_disenchantPopup = disenchantPopup;
+                    if (bool.TryParse(Read(json, "deckArchiveEnabled"), out bool deckArchive)) s_deckArchiveEnabled = deckArchive;
                     if (bool.TryParse(Read(json, "neverDustSignaturesDiamonds"), out bool neverDust)) s_neverDustSignaturesDiamonds = neverDust;
                     if (bool.TryParse(Read(json, "collapseInCrafting"), out bool collapseCrafting)) s_collapseInCrafting = collapseCrafting;
                     if (bool.TryParse(Read(json, "colorCodeCounter"), out bool colorCodeCounter)) s_colorCodeCounter = colorCodeCounter;
@@ -362,6 +373,7 @@ namespace BetterCollectionManager
                 if (s_hideRedundantEntry != null) s_hideRedundantEntry.Value = s_hideRedundant;
                 if (s_openSearchEntry != null) s_openSearchEntry.Value = s_openSearch.ToString();
                 if (s_disenchantPopupEntry != null) s_disenchantPopupEntry.Value = s_disenchantPopup;
+                if (s_deckArchiveEntry != null) s_deckArchiveEntry.Value = s_deckArchiveEnabled;
                 if (s_neverDustSignaturesDiamondsEntry != null) s_neverDustSignaturesDiamondsEntry.Value = s_neverDustSignaturesDiamonds;
                 if (s_collapseInCraftingEntry != null) s_collapseInCraftingEntry.Value = s_collapseInCrafting;
                 if (s_colorCodeCounterEntry != null) s_colorCodeCounterEntry.Value = s_colorCodeCounter;
@@ -387,6 +399,7 @@ namespace BetterCollectionManager
                     + "\",\"drag\":\"" + s_drag + "\",\"hideRedundant\":" + (s_hideRedundant ? "true" : "false")
                     + ",\"collectionOpenSearch\":\"" + s_openSearch + "\""
                     + ",\"disenchantPopup\":" + (s_disenchantPopup ? "true" : "false")
+                    + ",\"deckArchiveEnabled\":" + (s_deckArchiveEnabled ? "true" : "false")
                     + ",\"neverDustSignaturesDiamonds\":" + (s_neverDustSignaturesDiamonds ? "true" : "false")
                     + ",\"collapseInCrafting\":" + (s_collapseInCrafting ? "true" : "false")
                     + ",\"colorCodeCounter\":" + (s_colorCodeCounter ? "true" : "false")

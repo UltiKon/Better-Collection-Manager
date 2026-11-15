@@ -38,7 +38,7 @@
     <Compile Include="../../src/BetterCollectionManager/DropdownScrollbar.cs" />
     <Compile Include="../../src/BetterCollectionManager/ComboPopup.cs" Link="ComboPopup.cs" />
     <Compile Include="../../src/BetterCollectionManager/ComboNativeSkin.cs" Link="ComboNativeSkin.cs" />
-    <Compile Include="../../src/BetterCollectionManager/NativePopupDiagnostics.cs" Link="NativePopupDiagnostics.cs" />
+    <Compile Include="../../src/BetterCollectionManager/NativeMethodReferences.cs" Link="NativeMethodReferences.cs" />
     <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Packages.cs" />
     <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.cs" Link="ComboCollectionCards.cs" />
     <Compile Include="../../src/BetterCollectionManager/ComboCollectionCards.Native.cs" Link="ComboCollectionCards.Native.cs" />
@@ -94,7 +94,6 @@
     <Compile Include="../../src/BetterCollectionManager/KeywordSetTray.Expansions.cs" Link="KeywordSetTray.Expansions.cs" />
     <Compile Include="../../src/BetterCollectionManager/CollectionFilterMenu.cs" Link="CollectionFilterMenu.cs" />
     <Compile Include="../../src/BetterCollectionManager/ExpansionIconMarker.cs" Link="ExpansionIconMarker.cs" />
-    <Compile Include="../../src/BetterCollectionManager/CollectionPageDiagnostics.cs" />
     <Compile Include="../../src/BetterCollectionManager/CollectionPageAnchor.cs" Link="CollectionPageAnchor.cs" />
     <Compile Include="../../src/BetterCollectionManager/MixedPremiumPair.cs" Link="MixedPremiumPair.cs" />
     <Compile Include="../../src/BetterCollectionManager/MixedPremiumMesh.cs" Link="MixedPremiumMesh.cs" />

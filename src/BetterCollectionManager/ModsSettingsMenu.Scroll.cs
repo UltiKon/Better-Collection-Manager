@@ -17,7 +17,6 @@ namespace BetterCollectionManager
         private Rect m_settingsViewport;
         private float m_settingsScroll, m_settingsScrollRange, m_settingsScrollStep;
         private Camera m_settingsCamera;
-        private string m_settingsScrollDiagnostic;
 
         private static Rect[] OriginalCheckboxBounds(List<int> original, List<int> visible, Rect[] bounds)
         {
@@ -50,6 +49,7 @@ namespace BetterCollectionManager
             var objects = new List<GameObject>(m_rows);
             objects.AddRange(m_checkboxRows);
             objects.AddRange(m_sectionRows);
+            objects.Add(m_reportBugRow);
             float bottom = m_settingsViewport.yMax;
             foreach (GameObject go in objects)
             {
@@ -73,10 +73,6 @@ namespace BetterCollectionManager
             if (m_settingsScrollRange <= 0.5f) m_settingsScrollRange = 0f;
             m_settingsScroll = Mathf.Clamp(m_settingsScroll, 0f, m_settingsScrollRange);
             ApplySettingsScroll();
-            string diagnostic = "Mod Settings scroll: rows=" + m_scrollRows.Count + "; range=" + m_settingsScrollRange.ToString("F1")
-                + "; viewport=" + m_settingsViewport.width.ToString("F1") + "x" + m_settingsViewport.height.ToString("F1")
-                + "; native bar=" + (m_settingsScrollbar != null);
-            if (diagnostic != m_settingsScrollDiagnostic) { m_settingsScrollDiagnostic = diagnostic; DebugLog.Msg(diagnostic); }
         }
 
         private void ApplySettingsScroll()

@@ -70,12 +70,13 @@ internal static class Program
             CollectionQualitySettings.OpenSearch = CollectionOpenSearchMode.Off;
             CollectionQualitySettings.FilterMenuColumns = 3;
             CollectionQualitySettings.HideEmptyFilters = false;
+            CollectionQualitySettings.DeckArchiveEnabled = false;
             MelonPreferences.Categories.Clear();
             Reload(typeof(CollectionQualitySettings));
             CollectionQualitySettings.EnsureLoaded();
             Check(CollectionQualitySettings.Click == ClickQualityMode.ClickedHalf && CollectionQualitySettings.Drag == DragQualityMode.DraggedHalf
                 && CollectionQualitySettings.DisenchantPopup && CollectionQualitySettings.OpenSearch == CollectionOpenSearchMode.Off
-                && CollectionQualitySettings.FilterMenuColumns == 3 && !CollectionQualitySettings.HideEmptyFilters,
+                && CollectionQualitySettings.FilterMenuColumns == 3 && !CollectionQualitySettings.HideEmptyFilters && !CollectionQualitySettings.DeckArchiveEnabled,
                 "Existing JSON preferences must retain all overrides of the new defaults.");
 
             File.Delete(CollectionQualitySettings.SettingsPath);
@@ -87,11 +88,12 @@ internal static class Program
             native.CreateEntry("CollectionOpenSearch", "Off", "");
             native.CreateEntry("FilterMenuColumns", 1, "");
             native.CreateEntry("HideEmptyFilters", false, "");
+            native.CreateEntry("DeckArchiveEnabled", false, "");
             Reload(typeof(CollectionQualitySettings));
             CollectionQualitySettings.EnsureLoaded();
             Check(CollectionQualitySettings.Click == ClickQualityMode.ClickedHalf && CollectionQualitySettings.Drag == DragQualityMode.SameAsClick
                 && CollectionQualitySettings.DisenchantPopup && CollectionQualitySettings.OpenSearch == CollectionOpenSearchMode.Off
-                && CollectionQualitySettings.FilterMenuColumns == 1 && !CollectionQualitySettings.HideEmptyFilters,
+                && CollectionQualitySettings.FilterMenuColumns == 1 && !CollectionQualitySettings.HideEmptyFilters && !CollectionQualitySettings.DeckArchiveEnabled,
                 "Existing loader preferences must retain all overrides of the new defaults.");
             Console.WriteLine($"Passed {s_checks} requested-default, reset and saved-preference checks.");
         }

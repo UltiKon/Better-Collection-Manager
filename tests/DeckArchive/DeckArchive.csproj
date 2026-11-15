@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/BetterCollectionManager/DeckArchiveStore.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckArchive.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckArchiveEditor.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckArchivePopup.cs" />
+    <Compile Include="../../src/BetterCollectionManager/DeckArchiveSwitchPose.cs" />
+  </ItemGroup>
+</Project>

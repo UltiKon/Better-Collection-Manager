@@ -53,7 +53,7 @@ internal static partial class Program
             fixture.Manager.Counts[("quality", value.Item1)] = value.Item2;
         }
         PreferredQualityCollapse.BeginUpdate();
-        PreferredQualityCollapse.CollapseInPlace(variants, "quality fixture", null);
+        PreferredQualityCollapse.CollapseInPlace(variants);
         var go = new GameObject("QualityTile");
         fixture.Visual = go.AddComponent<CollectionCardVisual>();
         fixture.Actor = Child(go.transform, "Actor").AddComponent<Actor>();
@@ -128,7 +128,7 @@ internal static partial class Program
         {
             QualityFixture fixture = QualityCase(1, 1, 2, mode);
             var input = fixture.Manager.Cards.Values.ToList();
-            PreferredQualityCollapse.CollapseInPlace(input, "display", null);
+            PreferredQualityCollapse.CollapseInPlace(input);
             TAG_PREMIUM[] expected = mode == QualityDisplayMode.Stacking ? new[] { TAG_PREMIUM.SIGNATURE }
                 : mode == QualityDisplayMode.Split || mode == QualityDisplayMode.TwoHighest
                 ? new[] { TAG_PREMIUM.GOLDEN, TAG_PREMIUM.SIGNATURE }
@@ -152,7 +152,7 @@ internal static partial class Program
         PreferredPremiumPrefs.Order = new[] { TAG_PREMIUM.NORMAL, TAG_PREMIUM.GOLDEN, TAG_PREMIUM.SIGNATURE, TAG_PREMIUM.DIAMOND };
         CollectionQualitySettings.Display = QualityDisplayMode.PreferTwoCopies;
         var list = single.Manager.Cards.Values.ToList();
-        PreferredQualityCollapse.CollapseInPlace(list, "custom order", null);
+        PreferredQualityCollapse.CollapseInPlace(list);
         Check(list.Count == 1 && list[0].PremiumType == TAG_PREMIUM.NORMAL, "Pair selection must honor the saved quality order");
         PreferredQualityCollapse.BeginUpdate();
         Check(!PreferredQualityCollapse.TryGetVariants("quality", out _), "A new result set must clear old quality candidates");
@@ -237,7 +237,7 @@ internal static partial class Program
         var fallback = new List<CollectibleCard> { Card("fallback-stack", TAG_PREMIUM.GOLDEN, 1),
             Card("fallback-stack", TAG_PREMIUM.NORMAL, 1) };
         CollectionManager.Instance = null;
-        PreferredQualityCollapse.CollapseInPlace(fallback, "stack fallback", null);
+        PreferredQualityCollapse.CollapseInPlace(fallback);
         Check(fallback.Count == 2, "An unavailable stacking renderer must retain two accessible quality tiles");
         MixedPremiumCard.Ready = true;
         AssetLoader.Get().CreateRulesText = false;
@@ -492,7 +492,7 @@ internal static partial class Program
         fixture.Manager.Cards[("quality", TAG_PREMIUM.DIAMOND)] = diamond;
         fixture.Manager.Counts[("quality", TAG_PREMIUM.DIAMOND)] = 1;
         var allQualities = fixture.Manager.Cards.Values.ToList();
-        PreferredQualityCollapse.CollapseInPlace(allQualities, "all qualities", null);
+        PreferredQualityCollapse.CollapseInPlace(allQualities);
         fixture.Manager.Rules.MaxCopies = 4;
         foreach (TAG_PREMIUM expected in PreferredPremiumPrefs.Order)
             Check(AddGesture(fixture, false, out var actual) && actual == expected,
@@ -568,7 +568,7 @@ internal static partial class Program
         fixture = QualityCase(1, 1, 1);
         var scoped = new List<CollectibleCard> { fixture.Manager.Cards[("quality", TAG_PREMIUM.NORMAL)] };
         PreferredQualityCollapse.BeginUpdate();
-        PreferredQualityCollapse.CollapseInPlace(scoped, "filtered", null);
+        PreferredQualityCollapse.CollapseInPlace(scoped);
         fixture.Actor.Premium = TAG_PREMIUM.NORMAL;
         CollectionQualitySettings.Click = ClickQualityMode.PreferredOrder;
         Check(AddGesture(fixture, false, out first) && first == TAG_PREMIUM.NORMAL, "A scoped result must not select a quality filtered out of that result");
@@ -1169,7 +1169,7 @@ internal static partial class Program
             "The main title must retain the original raised baseline within its banner");
         var sectionBanners = menu.GetComponentsInChildren<Transform>(true)
             .Where(t => t.gameObject.name == "BCM_SectionBanner").ToArray();
-        Check(sectionBanners.Length == 6,
+        Check(sectionBanners.Length == 7,
             "All settings group headings must retain their native Options banners while offscreen rows scroll");
         foreach (Transform banner in sectionBanners)
         {
@@ -1200,7 +1200,7 @@ internal static partial class Program
         Check(!nativeBanner.activeSelf && bannerArtwork.GetComponent<MeshRenderer>().enabled && bannerText.Text == "Graphics",
             "Copying native banners must preserve the original Options header and visibility");
         var fields = menu.GetComponentsInChildren<DropdownControl>(true);
-        Check(fields.Length == 15 && menu.GetComponentsInChildren<DropdownControl>(false).Length >= 8 && menu.Buttons.Count == 0 && menu.Header == "Collection Mod Settings",
+        Check(fields.Length == 15 && menu.GetComponentsInChildren<DropdownControl>(false).Length >= 8 && menu.Buttons.Count == 1 && menu.Header == "Collection Mod Settings",
             $"Settings must show collection, priorities and filter controls together without a section picker (all={fields.Length}, visible={menu.GetComponentsInChildren<DropdownControl>(false).Length}, buttons={menu.Buttons.Count}, header={menu.Header})");
         Check(menu.GetComponentsInChildren<UberText>(true).All(t => !t.Text.Contains("Signature Appearance")
             && !t.Text.Contains("favorite")), "Cloning a dropdown must not import its section heading or favorite help text");
@@ -1211,9 +1211,9 @@ internal static partial class Program
         var click = fields.Single(d => d.Items[0] is ClickQualityMode);
         var drag = fields.Single(d => d.Items[0] is DragQualityMode);
         var checkboxes = menu.GetComponentsInChildren<CheckBox>(true);
-        Check(checkboxes.Length == 18 && menu.GetComponentsInChildren<CheckBox>(false).Any(box => box.m_uberText.Text == "Collapse quality variants")
+        Check(checkboxes.Length == 19 && menu.GetComponentsInChildren<CheckBox>(false).Any(box => box.m_uberText.Text == "Collapse quality variants")
             && menu.GetComponentsInChildren<CheckBox>(false).Any(box => box.m_uberText.Text == "Color code counter"),
-            "All eighteen settings checkboxes must exist and the handling controls stay visible while overflow scrolls");
+            "All nineteen settings checkboxes must exist and the handling controls stay visible while overflow scrolls");
         var checkbox = checkboxes.Single(c => c.m_uberText.Text == "Hide redundant settings");
         var counterCheckbox = checkboxes.Single(c => c.m_uberText.Text == "Color code counter");
         var rememberCheckbox = checkboxes.Single(c => c.m_uberText.Text == "Remember filter modes");
@@ -1389,7 +1389,7 @@ internal static partial class Program
         checkLock();
         Check(menu.GetComponentsInChildren<DropdownControl>(true).Length == fields.Length,
             "Reopening Mods must reuse its existing section controls rather than cloning new rows");
-        Check(menu.GetComponentsInChildren<Transform>(true).Count(t => t.gameObject.name == "BCM_SectionBanner") == 6,
+        Check(menu.GetComponentsInChildren<Transform>(true).Count(t => t.gameObject.name == "BCM_SectionBanner") == sectionBanners.Length,
             "Reopening Mods must reuse its existing banner copies");
         var offClick = typeof(ModsSettingsMenu).GetMethod("OnBlockerRelease", BindingFlags.Instance | BindingFlags.NonPublic);
         var settingsLateUpdate = typeof(ModsSettingsMenu).GetMethod("LateUpdate", BindingFlags.Instance | BindingFlags.NonPublic);

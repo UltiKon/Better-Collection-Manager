@@ -112,11 +112,6 @@ namespace BetterCollectionManager
                 EnsureContentsBone(liveTray);
                 go.SetActive(false);
                 s_shown = false;
-
-                DebugLog.Msg("KeywordSetTray: tray clone built");
-                DebugLog.Verbose(
-                    $"KeywordSetTray: cloned path={GetPath(go.transform)} " +
-                    $"scroller={(s_scroller != null)}");
             }
             catch (Exception ex)
             {
@@ -277,9 +272,6 @@ namespace BetterCollectionManager
                 ApplyVisibleAffectedClip();
                 ForceCameraMaskRefresh("rebuild-rows");
                 RememberBuiltRows();
-
-                DebugLog.Msg(
-                    $"KeywordSetTray: populated kind={s_activeKind} items={s_items.Count}");
             }
             catch (Exception ex)
             {
@@ -387,12 +379,6 @@ namespace BetterCollectionManager
                 SyncCameraMaskFromLive(liveTray);
 
                 s_scroller.ResetScrollStartPosition();
-
-                DebugLog.Msg(
-                    $"KeywordSetTray scroller copy: plane={s_scroller.m_ScrollPlane} " +
-                    $"heightMode={s_scroller.m_HeightMode} threshold={s_scroller.m_VisibleObjectThreshold:F3} " +
-                    $"scrollObj={(s_scroller.ScrollObject != null ? s_scroller.ScrollObject.name : "null")} " +
-                    $"boundsGo={(s_scroller.m_ScrollBounds != null ? s_scroller.m_ScrollBounds.name : "null")}");
             }
             catch (Exception ex)
             {
@@ -490,11 +476,6 @@ namespace BetterCollectionManager
                 // Clip objects must be OUR Contents (Sets uses FilterTray Contents under the mask).
                 if (s_contents != null)
                     ourMask.m_ClipObjects = s_contents.gameObject;
-
-                DebugLog.Msg(
-                    $"KeywordSetTray CameraMask sync: w={ourMask.m_Width:F3} h={ourMask.m_Height:F3} " +
-                    $"up={ourMask.m_UpVector} realtime={ourMask.m_RealtimeUpdate} " +
-                    $"clipObj={(ourMask.m_ClipObjects != null ? GetPath(ourMask.m_ClipObjects.transform) : "null")}");
             }
             catch (Exception ex)
             {
@@ -566,23 +547,7 @@ namespace BetterCollectionManager
                 UpdateVisibleMenuMask(mask, reinitialize: true);
                 RefreshRowTextAlignment();
 
-                int contentsLayer = s_contents != null ? s_contents.gameObject.layer : -1;
-                int itemLayer = -1;
-                string itemName = "(none)";
-                for (int i = 0; i < s_items.Count; i++)
-                {
-                    if (s_items[i] == null || !s_items[i].gameObject.activeInHierarchy)
-                        continue;
-                    itemLayer = s_items[i].gameObject.layer;
-                    itemName = s_items[i].Text ?? s_items[i].name;
-                    break;
-                }
 
-                DebugLog.Msg(
-                    $"KeywordSetTray ForceCameraMaskRefresh({reason}): enabled={mask.enabled} " +
-                    $"contentsLayer={contentsLayer} firstVisibleItem='{itemName}' layer={itemLayer} " +
-                    $"clipObj={(mask.m_ClipObjects != null ? mask.m_ClipObjects.name : "null")} " +
-                    $"w={mask.m_Width:F3} h={mask.m_Height:F3}");
             }
             catch (Exception ex)
             {
@@ -634,103 +599,6 @@ namespace BetterCollectionManager
             }
         }
 
-        private static void LogCameraMaskCompare(string context)
-        {
-            try
-            {
-                CameraMask liveMask = s_live != null && s_live.m_trayObject != null
-                    ? s_live.m_trayObject.GetComponent<CameraMask>()
-                    : null;
-                CameraMask ourMask = s_trayObject != null
-                    ? s_trayObject.GetComponent<CameraMask>()
-                    : null;
-
-                DumpOneCameraMask("SETS", context, liveMask, s_live != null ? s_live.m_trayObject : null);
-                DumpOneCameraMask("KEYWORD", context, ourMask, s_trayObject);
-            }
-            catch (Exception ex)
-            {
-                DebugLog.Exception("KeywordSetTray.LogCameraMaskCompare failed", ex);
-            }
-        }
-
-        private static void DumpOneCameraMask(string label, string context, CameraMask mask, GameObject tray)
-        {
-            if (mask == null)
-            {
-                DebugLog.Msg($"KeywordSetTray CameraMask dump [{label}/{context}]: mask=null");
-                return;
-            }
-
-            Camera renderCam = null;
-            object pass = null;
-            try
-            {
-                var camField = HarmonyLib.AccessTools.Field(typeof(CameraMask), "m_renderCamera");
-                renderCam = camField?.GetValue(mask) as Camera;
-                var passField = HarmonyLib.AccessTools.Field(typeof(CameraMask), "m_cameraMaskPass");
-                pass = passField?.GetValue(mask);
-            }
-            catch
-            {
-                // ignore
-            }
-
-            GameObject clip = mask.m_ClipObjects;
-            int clipLayer = clip != null ? clip.layer : -1;
-            int childMrOnMask = 0;
-            int childMrTotal = 0;
-            if (clip != null)
-            {
-                MeshRenderer[] mrs = clip.GetComponentsInChildren<MeshRenderer>(true);
-                childMrTotal = mrs != null ? mrs.Length : 0;
-                for (int i = 0; mrs != null && i < mrs.Length; i++)
-                {
-                    if (mrs[i] != null && mrs[i].gameObject.layer == clipLayer)
-                        childMrOnMask++;
-                }
-            }
-
-            // Approximate world clip rect corners (same math as CameraMask.UpdateCameraClipping).
-            Vector3 c0 = Vector3.zero;
-            Vector3 c1 = Vector3.zero;
-            Transform tf = mask.transform;
-            if (mask.m_UpVector == CameraMask.CAMERA_MASK_UP_VECTOR.Y)
-            {
-                c0 = new Vector3(
-                    tf.position.x - mask.m_Width * 0.5f * tf.lossyScale.x,
-                    tf.position.y,
-                    tf.position.z - mask.m_Height * 0.5f * tf.lossyScale.z);
-                c1 = new Vector3(
-                    tf.position.x + mask.m_Width * 0.5f * tf.lossyScale.x,
-                    tf.position.y,
-                    tf.position.z + mask.m_Height * 0.5f * tf.lossyScale.z);
-            }
-            else
-            {
-                c0 = new Vector3(
-                    tf.position.x - mask.m_Width * 0.5f * tf.lossyScale.x,
-                    tf.position.y - mask.m_Height * 0.5f * tf.lossyScale.y,
-                    tf.position.z);
-                c1 = new Vector3(
-                    tf.position.x + mask.m_Width * 0.5f * tf.lossyScale.x,
-                    tf.position.y + mask.m_Height * 0.5f * tf.lossyScale.y,
-                    tf.position.z);
-            }
-
-            DebugLog.Msg(
-                $"KeywordSetTray CameraMask dump [{label}/{context}]: " +
-                $"enabled={mask.enabled} activeInHierarchy={mask.gameObject.activeInHierarchy} " +
-                $"w={mask.m_Width:F3} h={mask.m_Height:F3} up={mask.m_UpVector} realtime={mask.m_RealtimeUpdate} " +
-                $"useCamLayer={mask.m_UseCameraFromLayer} entry={mask.RenderEntryPoint} " +
-                $"trayPos={Format(tf.position)} lossyScale={Format(tf.lossyScale)} " +
-                $"clipObj={(clip != null ? GetPath(clip.transform) : "null")} clipLayer={clipLayer} " +
-                $"meshRenderers={childMrOnMask}/{childMrTotal}@clipLayer " +
-                $"renderCam={(renderCam != null ? renderCam.name : "null")} pass={(pass != null)} " +
-                $"worldRectMin={Format(c0)} worldRectMax={Format(c1)} " +
-                $"parent={(tray != null && tray.transform.parent != null ? tray.transform.parent.name : "null")}");
-        }
-
         /// <summary>
         /// Keep / recreate ContentsBone under Contents (ClearContents used to Destroy it).
         /// </summary>
@@ -765,7 +633,6 @@ namespace BetterCollectionManager
                 GameObject boneGo = new GameObject("ContentsBone");
                 GameUtils.SetParent(boneGo, s_contents.gameObject, false);
                 s_contentsBone = boneGo.transform;
-                DebugLog.Msg("KeywordSetTray: recreated missing ContentsBone under Contents");
             }
 
             if (liveTray?.m_contentsBone != null && s_contentsBone != null)
@@ -775,120 +642,6 @@ namespace BetterCollectionManager
                 s_contentsBone.localRotation = liveBone.localRotation;
                 s_contentsBone.localScale = liveBone.localScale;
             }
-
-            DebugLog.Msg(
-                $"KeywordSetTray ContentsBone ok: path={GetPath(s_contentsBone)} " +
-                $"local={Format(s_contentsBone.localPosition)} world={Format(s_contentsBone.position)}");
-        }
-
-        /// <summary>Side-by-side Sets vs keyword Scroller/Bounds/ContentsBone dump for clip debugging.</summary>
-        private static void LogSetsVsKeywordScrollDump(string context)
-        {
-            try
-            {
-                UIBScrollable live = s_live != null ? s_live.m_scroller : null;
-                DumpOneScroller("SETS", context, live,
-                    s_live != null ? s_live.m_contents : null,
-                    s_live != null ? s_live.m_contentsBone : null);
-                DumpOneScroller("KEYWORD", context, s_scroller,
-                    s_contents != null ? s_contents.gameObject : null,
-                    s_contentsBone != null ? s_contentsBone.gameObject : null);
-
-                // Relative: ContentsBone local vs Bounds local (must match Sets).
-                if (live?.m_ScrollBounds != null && s_scroller?.m_ScrollBounds != null
-                    && s_live?.m_contentsBone != null && s_contentsBone != null)
-                {
-                    Transform lb = live.m_ScrollBounds.transform;
-                    Transform kb = s_scroller.m_ScrollBounds.transform;
-                    Vector3 liveBoneVsBounds = s_live.m_contentsBone.transform.position - lb.position;
-                    Vector3 kwBoneVsBounds = s_contentsBone.position - kb.position;
-                    Bounds liveWb = live.m_ScrollBounds.bounds;
-                    Bounds kwWb = s_scroller.m_ScrollBounds.bounds;
-                    DebugLog.Msg(
-                        $"KeywordSetTray Bounds DIFF [{context}]: " +
-                        $"localPos Δ={Format(kb.localPosition - lb.localPosition)} " +
-                        $"localScale Δ={Format(kb.localScale - lb.localScale)} " +
-                        $"boxSize Δ={Format(s_scroller.m_ScrollBounds.size - live.m_ScrollBounds.size)} " +
-                        $"worldSize Sets={Format(liveWb.size)} Kw={Format(kwWb.size)} " +
-                        $"worldMinZ Sets={liveWb.min.z:F3} Kw={kwWb.min.z:F3} " +
-                        $"worldMaxZ Sets={liveWb.max.z:F3} Kw={kwWb.max.z:F3} " +
-                        $"bone-bounds world Δ Sets={Format(liveBoneVsBounds)} Kw={Format(kwBoneVsBounds)} " +
-                        $"threshold Sets={live.m_VisibleObjectThreshold:F3} Kw={s_scroller.m_VisibleObjectThreshold:F3}");
-                }
-            }
-            catch (Exception ex)
-            {
-                DebugLog.Exception("KeywordSetTray.LogSetsVsKeywordScrollDump failed", ex);
-            }
-        }
-
-        private static void DumpOneScroller(
-            string label,
-            string context,
-            UIBScrollable scroll,
-            GameObject contents,
-            GameObject bone)
-        {
-            if (scroll == null)
-            {
-                DebugLog.Msg($"KeywordSetTray dump [{label}/{context}]: scroller=null");
-                return;
-            }
-
-            BoxCollider box = scroll.m_ScrollBounds;
-            Transform boxTf = box != null ? box.transform : null;
-            Bounds world = box != null ? box.bounds : default;
-            Camera cam = null;
-            try
-            {
-                var getCam = HarmonyLib.AccessTools.Method(typeof(UIBScrollable), "GetScrollCamera");
-                cam = getCam?.Invoke(scroll, null) as Camera;
-            }
-            catch
-            {
-                // ignore
-            }
-
-            string extentsSample = "(none)";
-            try
-            {
-                var list = scroll.GetVisibleAffectedObjects();
-                if (list != null)
-                {
-                    foreach (var vo in list)
-                    {
-                        if (vo?.Obj == null)
-                            continue;
-                        extentsSample = Format(vo.Extents);
-                        break;
-                    }
-                }
-            }
-            catch
-            {
-                // ignore
-            }
-
-            DebugLog.Msg(
-                $"KeywordSetTray dump [{label}/{context}]: " +
-                $"plane={scroll.m_ScrollPlane} reverse={scroll.m_ScrollDirectionReverse} " +
-                $"heightMode={scroll.m_HeightMode} threshold={scroll.m_VisibleObjectThreshold:F3} " +
-                $"scrollObj={(scroll.ScrollObject != null ? scroll.ScrollObject.name : "null")} " +
-                $"cam={(cam != null ? cam.name : "null")} " +
-                $"boundsGo={(boxTf != null ? boxTf.name : "null")} " +
-                $"boundsLocalPos={Format(boxTf != null ? boxTf.localPosition : Vector3.zero)} " +
-                $"boundsWorldPos={Format(boxTf != null ? boxTf.position : Vector3.zero)} " +
-                $"boundsLocalScale={Format(boxTf != null ? boxTf.localScale : Vector3.zero)} " +
-                $"boundsLossyScale={Format(boxTf != null ? boxTf.lossyScale : Vector3.zero)} " +
-                $"boxCenter={Format(box != null ? box.center : Vector3.zero)} " +
-                $"boxSize={Format(box != null ? box.size : Vector3.zero)} " +
-                $"worldBoundsCenter={Format(world.center)} worldBoundsSize={Format(world.size)} " +
-                $"worldMin={Format(world.min)} worldMax={Format(world.max)} " +
-                $"contentsLocal={(contents != null ? Format(contents.transform.localPosition) : "null")} " +
-                $"contentsWorld={(contents != null ? Format(contents.transform.position) : "null")} " +
-                $"boneLocal={(bone != null ? Format(bone.transform.localPosition) : "null")} " +
-                $"boneWorld={(bone != null ? Format(bone.transform.position) : "null")} " +
-                $"visibleExtents0={extentsSample} scrollVal={scroll.ScrollValue:F3}");
         }
 
         private static void ResetScrollToTop()
@@ -901,7 +654,6 @@ namespace BetterCollectionManager
                 s_scroller.ScrollValue = 0f;
                 s_scroller.ImmediateScrollValue = 0f;
                 s_scroller.UpdateScroll();
-                DebugLog.Msg("KeywordSetTray: scroll reset to 0 (first keyword group at top)");
             }
             catch (Exception ex)
             {
@@ -922,9 +674,6 @@ namespace BetterCollectionManager
                 // inset / extra SetActive layer (that caused ~4 tiles + empty wood + skipped rows).
                 s_scroller.UpdateAndFireVisibleAffectedObjects();
 
-                string firstVisible = "(none)";
-                string lastVisible = "(none)";
-                int visible = 0;
                 for (int i = 0; i < s_items.Count; i++)
                 {
                     SetFilterItem item = s_items[i];
@@ -944,20 +693,10 @@ namespace BetterCollectionManager
                     }
                     ApplyIdleChrome(item, selected);
 
-                    visible++;
-                    string name = item.Text ?? item.name;
-                    if (firstVisible == "(none)")
-                        firstVisible = name;
-                    lastVisible = name;
+
                 }
 
                 RefreshRowTextAlignment();
-
-                DebugLog.Msg(
-                    $"KeywordSetTray clip: visible={visible}/{s_items.Count} " +
-                    $"firstVisible='{firstVisible}' lastVisible='{lastVisible}' " +
-                    $"threshold={s_scroller.m_VisibleObjectThreshold:F3} " +
-                    $"(Sets UIBScrollable only; idle chrome off)");
             }
             catch (Exception ex)
             {
@@ -988,65 +727,6 @@ namespace BetterCollectionManager
                     break;
                 t = t.parent;
             }
-        }
-
-        private static void ForceAllItemsActive()
-        {
-            ActivateTrayHierarchy();
-            for (int i = 0; i < s_items.Count; i++)
-            {
-                SetFilterItem item = s_items[i];
-                if (item == null || item.gameObject == null)
-                    continue;
-                if (!item.gameObject.activeSelf)
-                    item.gameObject.SetActive(true);
-                try
-                {
-                    if (item.m_uberText != null)
-                    {
-                        item.m_uberText.gameObject.SetActive(true);
-                        item.m_uberText.UpdateNow(true);
-                    }
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-        }
-
-        private static int CountActiveItems()
-        {
-            int active = 0;
-            for (int i = 0; i < s_items.Count; i++)
-            {
-                if (s_items[i] != null && s_items[i].gameObject.activeInHierarchy)
-                    active++;
-            }
-            return active;
-        }
-
-        private static void LogActivationState(string context)
-        {
-            int active = CountActiveItems();
-            string first = "(none)";
-            string second = "";
-            if (s_items.Count > 0 && s_items[0] != null)
-            {
-                first =
-                    $"name={s_items[0].Text} activeInHierarchy={s_items[0].gameObject.activeInHierarchy} " +
-                    $"world={Format(s_items[0].transform.position)} local={Format(s_items[0].transform.localPosition)} " +
-                    $"h={s_items[0].Height:F3}";
-            }
-            if (s_items.Count > 1 && s_items[1] != null)
-            {
-                second =
-                    $" second=[name={s_items[1].Text} world={Format(s_items[1].transform.position)} h={s_items[1].Height:F3}]";
-            }
-            DebugLog.Msg(
-                $"KeywordSetTray {context}: trayActiveInHierarchy={(s_trayObject != null && s_trayObject.activeInHierarchy)} " +
-                $"contentsActiveInHierarchy={(s_contents != null && s_contents.gameObject.activeInHierarchy)} " +
-                $"rows={s_items.Count} activeInHierarchy={active} first=[{first}]{second}");
         }
 
         private static Transform ResolveContentsTransform(SetFilterTray live, GameObject trayClone)
@@ -1231,22 +911,6 @@ namespace BetterCollectionManager
                     return deep[i];
             }
             return null;
-        }
-
-        private static string GetPath(Transform t)
-        {
-            if (t == null)
-                return "(null)";
-            var parts = new List<string>();
-            Transform cur = t;
-            int guard = 0;
-            while (cur != null && guard++ < 24)
-            {
-                parts.Add(cur.name);
-                cur = cur.parent;
-            }
-            parts.Reverse();
-            return string.Join("/", parts.ToArray());
         }
 
         private static string Format(Vector3 v)

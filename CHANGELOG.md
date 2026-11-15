@@ -5,6 +5,46 @@ Changes are grouped by UTC commit date. The [user guide](docs/USER-GUIDE.md) and
 this file records the features and fixes delivered on each
 date. Superseded intermediate layouts and experiments are not separate features.
 
+## 0.3.0 — 2026-11-15
+
+- Added **Report A Bug** under Settings > Mods > Other, opening the project's
+  GitHub Issues page in the browser. Its width matches the section banner while
+  preserving the native caption size.
+- Colored the archive/restore tray icon bright blue through its texture and
+  vertex colors so native shaders do not depend on a material tint property.
+- Removed temporary collection-opening measurements, F8 traces, popup/render
+  dumps and standalone diagnostic tools. Removed unused legacy filter UI helpers;
+  normal error reporting and frame-budget timers remain.
+- Deferred preparation for hiding empty filters until the filter menu is opened,
+  removing an extra full results/page refresh during collection opening.
+- Added an optional **Deck archive** setting under Mods > Deck archive (on by default);
+  disabling keeps local files. Archive/Restore buttons use an in/out tray icon,
+  and the view toggle plays the native deck-selection sound.
+- Restored the native tiny-button press sound when opening a saved or archived
+  deck's delete confirmation through its X button. Archive settings now have
+  their own section below Filter menu in the left column.
+- Guarded archive UI refresh and layout cleanup after collection/account teardown
+  so stale deck trays cannot call GetDecks after NetCache is gone.
+- Added Saved / Archived (local) views to the collection deck tray, with local
+  archives separated by account and pagination beyond one tray of decks.
+- Integrated the view toggle at the top of the scrollable list, using the same
+  full-size asset as New Deck and sampling its open pose immediately so a
+  clipped or folded source cannot leave an empty placeholder.
+- Extended the native delete confirmation with a matching wide Archive/Restore
+  button, equal spacing and room for three actions. Native title/body, Confirm,
+  Cancel and Escape remain intact; other popups restore their original layout.
+- Archived decks open in the native editor and save changes locally, including
+  while offline or at the normal deck limit. Edits atomically replace the same
+  archive and keep a previous-version backup until permanent deletion.
+- Both deck deletion dialogs offer **Archive instead**. Archived decks offer
+  **Restore instead** or permanent deletion. Snapshots retain card editions,
+  quantities, qualities, sideboards, format, rune order and cosmetics.
+- Local writes are verified before deleting saved decks. Restoration requires
+  an online connection and a free deck slot; the archive is removed only after
+  the server acknowledges the save and a matching contents readback succeeds.
+  Failed or altered restores retain the archive, with saved target receipts to
+  avoid creating duplicate decks when retrying.
+
 ## 0.2.0 — 2026-11-14
 
 - Added **Copy as PNG** to the deck menu for clipboard exports, including

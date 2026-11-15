@@ -18,7 +18,6 @@ namespace BetterCollectionManager
         internal static void GraphicsChanged()
         {
             GraphicsRevision++;
-            ModsSettingsMenu.TraceNativeGraphicsChange();
         }
         private int m_menuGraphicsRevision;
         private OptionsMenu m_owner;

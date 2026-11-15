@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: publish-prepared-release
@@ -23,6 +24,17 @@ jobs:
       GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
+      - name: Wait for checks on this commit
+        shell: bash
+        run: |
+          check_run=""
+          for attempt in {1..30}; do
+            check_run=$(gh run list --workflow checks.yml --commit "$GITHUB_SHA" --event push --json databaseId --jq '.[0].databaseId // empty')
+            if [ -n "$check_run" ]; then break; fi
+            sleep 2
+          done
+          test -n "$check_run" || { echo 'No source-check run found for this commit'; exit 1; }
+          gh run watch "$check_run" --exit-status --interval 10
       - name: Download and verify prepared assets
         run: python3 tools/publish_prepared_release.py
       - name: Create draft and upload assets
@@ -32,6 +44,10 @@ jobs:
           else
             gh release create "$RELEASE_TAG" --draft --target "$GITHUB_SHA" --title "$RELEASE_TITLE" --notes-file ".github/release-notes/${RELEASE_TAG}.md"
           fi
-          gh release upload "$RELEASE_TAG" release-assets/* --clobber
+          # Upload the standalone BepInEx DLL before either loader package.
+          gh release upload "$RELEASE_TAG" release-assets/BetterCollectionManager.dll --clobber
+          gh release upload "$RELEASE_TAG" \
+            "release-assets/BetterCollectionManager-${RELEASE_TAG}-bepinex.zip" \
+            "release-assets/BetterCollectionManager-${RELEASE_TAG}-shareable.zip" --clobber
       - name: Publish complete release
         run: gh release edit "$RELEASE_TAG" --draft=false --latest

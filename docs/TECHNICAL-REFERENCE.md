@@ -13,7 +13,7 @@ The mod, installer and original project code are licensed under the
 Third-party components retain their own licenses; see
 [the third-party notices](../installer/ThirdParty/NOTICES.md).
 
-Distribution documentation updated: 2026-11-14. Version: 0.2.0.
+Distribution documentation updated: 2026-11-15. Version: 0.3.0.
 
 By UltiKon, Imik and contributors. Fresh installations use the values in the
 [default-settings snapshot](../config/BetterCollectionManager.cfg): Diamond before
@@ -30,7 +30,7 @@ command and settings migration. Use one loader variant per launch. The automated
 installer described below installs MelonLoader.
 
 For the automated setup, see [Installer/README.md](../installer/README.md). The separate
-`BetterCollectionManager-0.2.0-installer.zip` contains the mod and five full Mono libraries;
+`BetterCollectionManager-0.3.0-installer.zip` contains the mod and five full Mono libraries;
 it installs the pinned MelonLoader release and configures Battle.net. Windows and
 Wine/CrossOver use the Windows loader; native macOS has an experimental separate
 launcher. The setup requires Python 3.10+ and downloads MelonLoader on installation.
@@ -856,22 +856,11 @@ their individual component cards, including when only some are in the native
 result pool. Built-in packages are browsed in the independent Packages view; use **Turn Deck Into Package** or **Turn Deck Into Combo** to
 create a custom category tile with the bulk deck action described above.
 
-**Page-turn diagnostics:** press **F8** in the collection to capture native page,
-filter and sound calls in the normal MelonLoader log (`[Page trace]`). Turn one
-page with the native arrows, then apply a custom filter. F8 stops capture; it
-also stops after 20 seconds, 200 events or leaving the collection. The trace
-includes available method signatures, arguments, sound callers and whether the
-filter sound guard permits playback, plus enum names and values for transition
-parameters. Per-frame status probes such as `IsPlaying` and `CanUserTurnPages`
-are excluded so idle frames do not exhaust the event budget.
-It observes calls without invoking page
-operations. If the stripped input API exposes no compatible F8 binding, capture
-starts on collection entry instead. Native page/card sounds are permitted during
-the visible result refresh while duplicate filter-row click sounds stay blocked.
-Filter clicks use the traced `RefreshCurrentPageContents(PageTransitionType)`
+Filter clicks use the native `RefreshCurrentPageContents(PageTransitionType)`
 overload with a single-page transition, without navigating away from the resolved
-card anchor. Startup/background refreshes keep the immediate refresh. Native
-animation and sound behavior still needs in-game validation after this change.
+card anchor. Native page/card sounds are permitted during the visible result
+refresh while duplicate filter-row click sounds stay blocked. Startup/background
+refreshes keep the immediate refresh.
 
 Each submenu pins **Back** and the available **Show Logic Controls** /
 **Show Edit Controls** switches above the list. Only one group is expanded at a
@@ -954,7 +943,6 @@ Explicit custom-filter refreshes reuse an unchanged native input pool. Native
 searches, collection/metadata changes and catalog invalidation rebuild the index.
 Capture buffers are reused, and class buckets stream into them without a temporary
 combined card list. Result compaction preserves the order of surviving cards.
-Refreshes or menu updates taking at least 25 ms log their stage timings for diagnosis.
 
 **Settings → Mods → Filter menu → Hide filters without results** is off by default.
 It hides options that cannot contribute a match under the other active filters,
@@ -1052,12 +1040,11 @@ are never modified, and private copies are released when the menu is detached.
 The GPU copy selects an available native `Blit` signature at runtime, including
 stripped builds without the two-argument wrapper. It uses an explicit sRGB render
 target without requiring `GL.sRGBWrite`; material-only bindings receive a private
-copy material. The chosen native signature is included in the diagnostic log.
+copy material.
 Standard-only selections retain the light collection page theme even while
 filter availability uses a cached Wild pool; deck-specific themes remain native.
-If the marker is missing, the normal MelonLoader log includes `[Expansion star]`
-selection and `star-only-v4` copy/assignment diagnostics. Texture creation failures
-are reported with their exception; the original native icon stays in place.
+Texture creation failures are reported with their exception; the original native
+icon stays in place.
 Reopening restores the last submenu and its scroll position. Each
 visited submenu retains its own position, including the category list reached
 with Back. This state stays in memory and resets when leaving the collection;
@@ -1364,10 +1351,7 @@ Look for `[Better Collection Manager]` / messages from this mod:
 | Harmony patches applied successfully | Patches registered |
 | CM enter / Preferred mode ON | Collapse armed |
 | CM leave / Preferred mode OFF | Collapse disarmed |
-| UpdateResults collapse RUN | Collapse executed |
-| UpdateResults collapse SKIPPED: … | Skipped + reason |
 | Collection changed … refreshing | Page refresh after collection change |
-| Inspected-card refresh: … | Scoped quality/result update after an inspected-card removal |
 | Exceptions with stack traces | Failures |
 
 ### Turning down verbosity
@@ -1378,7 +1362,9 @@ In `DebugLog.cs`:
 public static bool VerboseDebug = false; // default; set to true only for diagnostics
 ```
 
-With `VerboseDebug = false`, per-list / sample CardId→premium dumps are quiet; enter/leave/skip/exception messages still log.
+With `VerboseDebug = false`, optional detailed operational messages stay quiet.
+Normal lifecycle messages, warnings and exceptions still log. Temporary collection
+timings, card-result samples, F8 traces and render dumps have been removed.
 
 ## Build
 
@@ -1837,8 +1823,6 @@ Inspect explicitly activates component-card prefabs and resets native cached
 visibility through `Actor.Hide`/`Show`. Card fitting uses the actual card face
 and mapped text ink, excluding unrelated effect geometry and cached font planes.
 A late native visibility reset is repaired while the inspect modal owns the card.
-The log includes `[Combo preview]` entries with card identity, face bounds, scale
-and camera depth to diagnose client-only rendering problems.
 
 Both Settings and editor scrollbar extraction use `NativeScrollbarArt`: XY and
 XZ track planes, separate grip renderer branches and baked skinned meshes are
@@ -2098,9 +2082,3 @@ collapse in every display mode, including quality loss, the final owned copy,
 trial copies, sibling class lists and native page slicing. A managed fixture with
 10,000 unrelated cards used about 2 KB for one scoped update; this does not measure
 native actor loading, dust/deck updates or live game frame time.
-
-`Collection results timing:` records updates lasting at least 25 ms, separating
-the original native `UpdateResults` time from the mod's preparation, filtering,
-quality collapse and insertion phases. This helps investigate pauses after
-crafting/disenchanting without assuming that all inspect-close time belongs to
-the mod. Diagnosing a particular pause still needs a current game log.

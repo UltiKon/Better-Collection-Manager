@@ -7,13 +7,10 @@ using MelonLoader;
 
 namespace BetterCollectionManager
 {
-    /// <summary>
-    /// Loader logging wrapper. Set <see cref="VerboseDebug"/> to false to silence
-    /// per-card / per-UpdateResults sample dumps while keeping enter/leave/skip/exception logs.
-    /// </summary>
+    /// <summary>Logging shared by both loaders.</summary>
     internal static class DebugLog
     {
-        /// <summary>OFF — per-card / PegRay / AlignPlaque dumps stay quiet.</summary>
+        /// <summary>Enables optional detailed operational messages.</summary>
         public static bool VerboseDebug = false;
 
 #if BEPINEX

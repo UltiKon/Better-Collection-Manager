@@ -31,7 +31,7 @@ internal static partial class Program
                 CollectionQualitySettings.Display = mode;
                 var results = source.ToList();
                 PreferredQualityCollapse.BeginUpdate();
-                PreferredQualityCollapse.CollapseInPlace(results, "crafting owned and missing", null);
+                PreferredQualityCollapse.CollapseInPlace(results);
                 Check(results.Count == 18 && results.Single(card => card.CardId == "owned-craft").PremiumType == TAG_PREMIUM.GOLDEN,
                     "Crafting collapse keeps the preferred owned quality and every missing card in " + mode);
                 var missing = results.Where(card => card.CardId.StartsWith("missing-craft-")).ToArray();
@@ -41,7 +41,7 @@ internal static partial class Program
                     "Missing cards fill later pages without hiding the final card or changing inventory");
                 var premiumOnly = source.Where(card => card.OwnedCount == 0 && card.PremiumType == TAG_PREMIUM.GOLDEN).ToList();
                 PreferredQualityCollapse.BeginUpdate();
-                PreferredQualityCollapse.CollapseInPlace(premiumOnly, "native missing premium filter", null);
+                PreferredQualityCollapse.CollapseInPlace(premiumOnly);
                 Check(premiumOnly.Count == 17 && premiumOnly.All(card => card.PremiumType == TAG_PREMIUM.GOLDEN),
                     "Native missing-quality filters never gain excluded Normal or owned variants");
             }

@@ -15,10 +15,10 @@ For Firestone integration, keep these values aligned:
 | --- | --- |
 | DLL basename / BepInEx GUID / General.Guid | `BetterCollectionManager` |
 | BepInEx config filename | `BetterCollectionManager.cfg` |
-| Plugin version / General.Version / GitHub release tag | `0.2.0` |
+| Plugin version / General.Version / GitHub release tag | `0.3.0` |
 | General.DownloadLink | `https://github.com/UltiKon/Better-Collection-Manager` |
 
-Use the exact tag `0.2.0` for this version; the metadata requirement uses the tag
+Use the exact tag `0.3.0` for this version; the metadata requirement uses the tag
 string. When changing the version, update the CFG snapshot, changelog, release
 examples and assembly-verification expectations too. The plugin refreshes its
 General metadata on startup so an older saved version does not survive an upgrade.
@@ -37,6 +37,8 @@ dotnet run --project tests/KeywordFilters/KeywordFilters.csproj -c Release
 dotnet run --project tests/HubMenu/HubMenu.csproj -c Release
 dotnet run --project tests/CollapseMode/CollapseMode.csproj -c Release
 dotnet run --project tests/Pagination/Pagination.csproj -c Release
+dotnet run --project tests/DeckImages/DeckImages.csproj -c Release
+dotnet run --project tests/DeckArchive/DeckArchive.csproj -c Release
 ```
 
 The GitHub Actions workflow runs these checks on clean checkouts and verifies
@@ -47,7 +49,7 @@ not verify a real installer bundle.
 
 ## Build and package both variants
 
-To rebuild both variants as **0.2.0** and create their separate ZIPs in one run:
+To rebuild both variants as **0.3.0** and create their separate ZIPs in one run:
 
 ```sh
 GAME_DIR="/path/to/Hearthstone" bash tools/build-release.sh
@@ -85,7 +87,7 @@ dotnet build src/BetterCollectionManager/BetterCollectionManager.BepInEx.csproj 
 py -3 tools/package_release.py --loader bepinex --dll artifacts/bepinex/BetterCollectionManager.dll
 ```
 
-Output: `dist/BetterCollectionManager-0.2.0-bepinex.zip`.
+Output: `dist/BetterCollectionManager-0.3.0-bepinex.zip`.
 
 ## Build and package MelonLoader
 
@@ -94,7 +96,7 @@ GAME_DIR="/path/to/Hearthstone" bash tools/build-linux.sh
 python3 tools/package_release.py --dll artifacts/melonloader/BetterCollectionManager.dll
 ```
 
-Output: `dist/BetterCollectionManager-0.2.0-shareable.zip`.
+Output: `dist/BetterCollectionManager-0.3.0-shareable.zip`.
 See the [Linux build guide](README-LINUX.md) for loader references and the
 [technical reference](TECHNICAL-REFERENCE.md#build) for Windows MSBuild.
 
@@ -125,7 +127,7 @@ PY
 python3 tools/package_installer.py
 ```
 
-Output: `dist/BetterCollectionManager-0.2.0-installer.zip`.
+Output: `dist/BetterCollectionManager-0.3.0-installer.zip`.
 Only publish it after validating the actual bundled payload and setup on the
 intended platforms. A manifest update is not evidence of runtime compatibility.
 

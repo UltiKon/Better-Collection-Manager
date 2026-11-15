@@ -103,9 +103,15 @@ internal static partial class Program
                 KeywordFilterUi.OnSetFilterChanged();
             };
         CollectionFilterMenu.InvalidateNativeExpansionPool();
-        Check(CollectionFilterMenu.EnsureWideExpansionPool() && nativeCalls == 1,
-            "The first expansion edit initializes the broad native universe once");
+        int initialRefreshes = KeywordFilterApplier.Refreshes;
+        var toggle = (CollectionSetFilterDropdownToggle)typeof(CollectionFilterMenu)
+            .GetField("s_toggle", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+        Check(CollectionFilterMenu.Attach(native, toggle) && nativeCalls == 0
+            && KeywordFilterApplier.Refreshes == initialRefreshes && !ExpansionFilterState.IsActive,
+            "Attaching filters during collection opening does not rebuild results or expand the native pool");
         CollectionFilterMenu.ShowExpansions(); MelonLoader.MelonCoroutines.Complete();
+        Check(nativeCalls == 1 && KeywordFilterApplier.Refreshes == initialRefreshes + 1 && ExpansionFilterState.IsActive,
+            "First opening of the filters prepares the broad native pool and publishes it once");
         var items = fixture.Items.ToArray(); var pins = fixture.PinnedItems.ToArray();
         var choices = native.m_items.Where(item => !item.IsHeader && item != original).Take(3).ToArray();
         int rebuilds = KeywordSetTray.FixtureRebuilds, refreshes = KeywordFilterApplier.Refreshes;

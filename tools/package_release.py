@@ -11,7 +11,7 @@ import struct
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE_DIRS = ('.github', 'src', 'config', 'data', 'docs', 'tests', 'tools', 'diagnostics', 'installer')
+SOURCE_DIRS = ('.github', 'src', 'config', 'data', 'docs', 'tests', 'tools', 'installer')
 SOURCE_SUFFIXES = {'.cs', '.csproj', '.props', '.sln', '.md', '.json', '.tsv', '.py', '.sh', '.cmd', '.command', '.yml', '.yaml'}
 IMAGE_RESOURCE_DIRS = {'data/DeckViewBackgrounds', 'data/DeckViewLabels'}
 EXCLUDED_PARTS = {'bin', 'obj', '__pycache__', '.git', '.vs'}

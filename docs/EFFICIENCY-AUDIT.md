@@ -334,3 +334,26 @@ colliders, actor reuse/release/rollback, index invalidation, bounded catalogs,
 incremental token search, and separate settings events. Actual Unity/Mono frame
 times and rendering still require an in-game check; local figures are not FPS data.
 Post-change measurements remain local in `artifacts/efficiency-audit/microbenchmarks-after.txt`.
+
+## Collection opening follow-up — November 14–15, 2026
+
+Attaching the filter menu previously prepared the broad expansion pool, triggering
+an extra results update and page refresh during collection opening. That work is
+now deferred until the first menu opening and reused for subsequent navigation.
+Managed regression checks cover both deferred attachment and first-open setup.
+
+The supplied Linux/Wine recordings contain 6,263/6,357 perf samples with no lost
+samples. BetterCollectionManager is mapped only in the with-mod recording;
+BepInEx, Harmony and unstripped corlib remain present in both recordings. Heavy
+main-thread CPU/read bursts and recurring UnityPlayer/Mono hotspots occur in
+both. This shows that BCM is not required for the observed pause; it neither
+proves zero mod overhead nor identifies the internal native function. Log flush
+batching and unresolved stacks prevent exact entry-to-ready latency attribution.
+The user's captures and the local comparison report remain under `artifacts/`.
+
+The experimental native profiler had already been withdrawn after a loading-screen
+stall. On November 15, temporary opening timers, F8 capture hooks, render dumps,
+card-result samples and standalone diagnostic tools were removed at the user's
+request. Unreferenced legacy filter UI methods were removed as well. Functional
+frame budgets, timeouts, lifecycle guards, deferred filter preparation, archive
+behavior and normal failure reporting remain in place.

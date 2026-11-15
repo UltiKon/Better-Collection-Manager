@@ -28,7 +28,6 @@ namespace BetterCollectionManager
             s_buildAborted = false;
             s_cmSessionActive = true;
             s_buildCoroutine = LoaderCoroutines.Start(BuildWhenReady());
-            CollectionPageDiagnostics.CollectionEntered();
             DebugLog.Msg("KeywordFilterUi: CM session active — BuildWhenReady scheduled");
         }
 

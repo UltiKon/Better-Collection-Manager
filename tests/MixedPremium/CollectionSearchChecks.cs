@@ -42,7 +42,7 @@ internal static partial class Program
         {
             var results = StableMatches(filter, cards);
             filter.FindCardsResult = new CollectionManager.FindCardsResult { m_cards = results };
-            PreferredQualityCollapse.BeginUpdate(); PreferredQualityCollapse.CollapseInPlace(results, "new search", null);
+            PreferredQualityCollapse.BeginUpdate(); PreferredQualityCollapse.CollapseInPlace(results);
             Check(results.Count == 25 && results.Skip(page * 8).Take(8).Select(c => c.CardId)
                 .SequenceEqual(Enumerable.Range(page * 8, Math.Min(8, 25 - page * 8)).Select(i => "new-" + i)),
                 "Marking earlier cards seen cannot compact away or skip a collapsed New page");

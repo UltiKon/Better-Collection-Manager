@@ -10,6 +10,59 @@ This guide starts after installation. To install the mod, use the
 - While browsing with a mouse, **left-click or right-click** opens a card preview.
   When editing a deck, left-click keeps its add-to-deck action.
 
+## Archive saved decks locally
+
+Enable or disable **Settings → Mods → Deck archive → Enable deck archive** (on by default).
+Disabling hides the switch and the additional delete-dialog action; existing
+archive files stay on disk. If a local deck is open, finish editing it first.
+
+Use **Show archived decks** / **Show saved decks** at the top of the scrollable
+deck list to toggle directly between views. This entry uses the same full-size
+asset as New Deck; the normal decks and New Deck follow below it.
+Archived decks show their usual name and hero in the tray and do not use a saved
+deck slot. Larger archives have a **Next archive page** button; the header
+shows the current page. After the last page, Next
+returns to the first.
+
+To archive a saved deck, click its **X**, or open the deck options and choose
+**Delete**, then choose **Archive instead** in the confirmation popup. The native
+**Confirm** action still deletes the deck normally, and **Cancel** leaves it unchanged. The mod
+writes and verifies the local snapshot before asking Hearthstone to delete the
+saved deck. If saving the file fails, the saved deck stays in place.
+
+In **Archived**, click a deck to open the normal deck editor. You can change
+its name, cards, sideboards, format and cosmetics locally. Changes autosave and
+are saved when leaving the editor. Local editing also works offline and with
+all 27 saved deck slots occupied. If a local write fails, the previous archive
+stays intact and the editor retains your changes for another save attempt.
+
+Click the archived deck's **X**, or choose **Delete** in its options menu, to open
+the native confirmation popup. It keeps the native title and body, Confirm and
+Cancel, with an additional matching wide button for Archive/Restore and space
+for all three actions. The added button has a tray icon with an inward arrow
+for Archive and an outward arrow for Restore. The view switch plays the native
+deck-selection sound. Other native popups keep their original layout.
+Choose **Restore instead** to return it to Saved, **Delete permanently** to
+remove the local archive, or **Cancel**. Restoration needs an online connection
+and a free slot out of Hearthstone's 27 saved decks. On success the collection
+returns to Saved. The archive is removed only after a successful server save
+and matching contents readback. If the operation fails or the client changes
+cards or cosmetics, the archive stays available. Check Saved before retrying;
+the mod remembers acknowledged restore targets and verifies those again rather
+than creating duplicate decks.
+
+Snapshots preserve the name, hero, format, exact card editions and quantities,
+Normal/Golden/Diamond/Signature qualities, sideboards, rune order and cosmetic
+choices. The client still applies current card ownership and deck rules during
+restoration. Restore an archived deck before playing it; local edits do not
+send deck changes to Hearthstone.
+
+Archives are local to this device and separated by Hearthstone account. They
+are stored under **BepInEx/config/BetterCollectionManager/deck_archive/** for
+BepInEx, or **Mods/BetterCollectionManager/deck_archive/** for MelonLoader.
+Back up this folder to keep archives when moving or reinstalling the mod.
+They are not synced by Hearthstone.
+
 ## Understand card qualities
 
 Normal, Golden, Signature and Diamond are different card qualities. The mod can
@@ -167,7 +220,7 @@ selected card quality does not change this background. The selected card name is
 shown while exporting and written to the log with its card ID.
 No external image service is used by the mod.
 
-The **Deck image** checkboxes immediately above **Other** control these extras:
+The **Deck image** checkboxes control these extras:
 
 | Checkbox | Image content |
 | --- | --- |
@@ -229,6 +282,10 @@ enable **Crafting → Collapse while crafting** to group crafting results while
 keeping missing cards visible.
 
 ## Settings and updates
+
+**Settings → Mods → Other → Report A Bug** opens the project's
+[GitHub Issues page](https://github.com/UltiKon/Better-Collection-Manager/issues)
+in your browser. Check existing reports before opening a new issue.
 
 Use the in-game menu for normal changes. Saved preferences take precedence over
 the documented defaults. You do not need to copy the supplied

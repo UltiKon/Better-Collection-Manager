@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        suite: [Defaults, MixedPremium, KeywordFilters, HubMenu, CollapseMode, Pagination]
+        suite: [Defaults, MixedPremium, KeywordFilters, HubMenu, CollapseMode, Pagination, DeckImages, DeckArchive]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4

@@ -380,10 +380,7 @@ namespace BetterCollectionManager
 {
     internal static class PreferredQualityMode { public static bool IsEnabled = true; }
     internal static class PackageViewState { public static bool IsActive; }
-    internal static class CollectionPageDiagnostics
-    {
-        public static void Mark(string stage) { }
-    }
+
     internal static class FilterButtonFeedback
     {
         private static int s_actionDepth;

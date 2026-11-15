@@ -66,23 +66,14 @@ namespace BetterCollectionManager
 
         internal static void RefreshAfterSelection()
         {
-            long started = System.Diagnostics.Stopwatch.GetTimestamp();
-            try
+            if (s_rowsControlShape != ControlShape) { RebuildRows(); return; }
+            if (CollectionQualitySettings.HideEmptyFilters)
             {
-                if (s_rowsControlShape != ControlShape) { RebuildRows(); return; }
-                if (CollectionQualitySettings.HideEmptyFilters)
-                {
-                    if (!TryRefreshFilterRows()) RebuildRows();
-                    return;
-                }
-                RefreshModeChrome();
-                RememberBuiltRows();
+                if (!TryRefreshFilterRows()) RebuildRows();
+                return;
             }
-            finally
-            {
-                double elapsed = (System.Diagnostics.Stopwatch.GetTimestamp() - started) * 1000.0 / System.Diagnostics.Stopwatch.Frequency;
-                if (elapsed >= 25.0) DebugLog.Msg($"Filter menu update timing: kind={s_activeKind} elapsed={elapsed:F1}ms");
-            }
+            RefreshModeChrome();
+            RememberBuiltRows();
         }
 
         private static void RefreshModeChrome()

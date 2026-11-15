@@ -145,7 +145,7 @@ internal static partial class Program
         var normal = Card("inspect", TAG_PREMIUM.NORMAL, 1);
         var golden = Card("inspect", TAG_PREMIUM.GOLDEN, 1);
         manager.Counts[("inspect", TAG_PREMIUM.NORMAL)] = manager.Counts[("inspect", TAG_PREMIUM.GOLDEN)] = 1;
-        PreferredQualityCollapse.CollapseInPlace(new List<CollectibleCard> { normal, golden }, "inspect", null);
+        PreferredQualityCollapse.CollapseInPlace(new List<CollectibleCard> { normal, golden });
         actor.Premium = TAG_PREMIUM.GOLDEN;
         actor.gameObject.AddComponent<MeshFilter>().sharedMesh = CardMesh();
         actor.gameObject.AddComponent<MeshRenderer>();

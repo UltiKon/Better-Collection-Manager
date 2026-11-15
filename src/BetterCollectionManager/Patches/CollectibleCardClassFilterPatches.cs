@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Blizzard.T5.Core;
 using HarmonyLib;
 
@@ -17,7 +16,6 @@ namespace BetterCollectionManager.Patches
         private static AccessTools.FieldRef<CollectibleCardClassFilter, Map<TAG_CLASS, List<CollectibleCard>>> s_resultsByClass;
         private static AccessTools.FieldRef<CollectibleCardClassFilter, List<CollectibleCard>> s_unfilteredDk;
         private static AccessTools.FieldRef<CollectibleCardClassFilter, List<CollectibleCard>> s_hiddenDk;
-        private static AccessTools.FieldRef<CollectibleCardClassFilter, int> s_cardsPerPage;
         private static bool s_fieldsReady;
         private static bool s_fieldsFailed;
 
@@ -31,9 +29,7 @@ namespace BetterCollectionManager.Patches
                 s_resultsByClass = AccessTools.FieldRefAccess<CollectibleCardClassFilter, Map<TAG_CLASS, List<CollectibleCard>>>("m_currentResultsByClass");
                 s_unfilteredDk = AccessTools.FieldRefAccess<CollectibleCardClassFilter, List<CollectibleCard>>("m_unfilteredDeathKnightCards");
                 s_hiddenDk = AccessTools.FieldRefAccess<CollectibleCardClassFilter, List<CollectibleCard>>("m_hiddenDeathKnightCards");
-                s_cardsPerPage = AccessTools.FieldRefAccess<CollectibleCardClassFilter, int>("m_cardsPerPage");
                 s_fieldsReady = true;
-                DebugLog.Msg("CollectibleCardClassFilter field accessors ready (m_currentResultsByClass, DK lists, m_cardsPerPage)");
             }
             catch (Exception ex)
             {
@@ -43,19 +39,18 @@ namespace BetterCollectionManager.Patches
         }
 
         [HarmonyPrefix]
-        public static bool Prefix(CollectibleCardClassFilter __instance, out long __state)
+        public static bool Prefix(CollectibleCardClassFilter __instance, out bool __state)
         {
-            __state = Stopwatch.GetTimestamp();
-            if (InspectCollectionRefresh.TryApply(__instance)) { __state = -1; return false; }
+            __state = InspectCollectionRefresh.TryApply(__instance);
+            if (__state) return false;
             InspectCollectionRefresh.Reset();
             return true;
         }
 
         [HarmonyPostfix]
-        public static void Postfix(CollectibleCardClassFilter __instance, long __state = 0)
+        public static void Postfix(CollectibleCardClassFilter __instance, bool __state = false)
         {
-            if (__state == -1) return;
-            long started = Stopwatch.GetTimestamp(), prepared = started, filtered = started;
+            if (__state) return;
             Action appendCombos = null;
             bool collapsed = false;
             PreferredQualityCollapse.BeginUpdate();
@@ -75,8 +70,6 @@ namespace BetterCollectionManager.Patches
                 List<CollectibleCard> unfilteredDk = s_unfilteredDk(__instance);
                 List<CollectibleCard> hiddenDk = s_hiddenDk(__instance);
                 appendCombos = ComboCollectionCards.Prepare(byClass);
-                prepared = Stopwatch.GetTimestamp();
-                filtered = prepared;
 
                 if (PackageViewState.IsActive)
                 {
@@ -96,68 +89,32 @@ namespace BetterCollectionManager.Patches
                 // Keyword + Type/Race/School filters (independent of preferred collapse).
                 if (KeywordFilterState.IsActive || ExtraFilterState.IsActive || ExpansionFilterState.IsActive)
                 {
-                    int kwRemoved = 0;
                     foreach (KeyValuePair<TAG_CLASS, List<CollectibleCard>> kvp in byClass)
                     {
                         if (kvp.Value != null && kvp.Value.Count > 0)
-                            kwRemoved += KeywordFilterApplier.ApplyInPlace(kvp.Value);
+                            KeywordFilterApplier.ApplyInPlace(kvp.Value);
                     }
                     if (unfilteredDk != null && unfilteredDk.Count > 0)
-                        kwRemoved += KeywordFilterApplier.ApplyInPlace(unfilteredDk);
+                        KeywordFilterApplier.ApplyInPlace(unfilteredDk);
                     if (hiddenDk != null && hiddenDk.Count > 0)
-                        kwRemoved += KeywordFilterApplier.ApplyInPlace(hiddenDk);
-                    DebugLog.Msg(
-                        $"UpdateResults filters removed ~{kwRemoved}; {KeywordFilterState.Describe()} {ExtraFilterState.Describe()}");
+                        KeywordFilterApplier.ApplyInPlace(hiddenDk);
                 }
 
-                filtered = Stopwatch.GetTimestamp();
-                PreferredQualityMode.SkipReason skipReason;
-                string skipDetail;
-                if (!PreferredQualityMode.ShouldCollapse(__instance, out skipReason, out skipDetail))
-                {
-                    DebugLog.Msg($"UpdateResults collapse SKIPPED: {skipReason} — {skipDetail}");
-                    return;
-                }
-
-                int cardsPerPage = s_cardsPerPage != null ? s_cardsPerPage(__instance) : 8;
-
-                int inputTotal = 0;
-                foreach (KeyValuePair<TAG_CLASS, List<CollectibleCard>> kvp in byClass)
-                {
-                    if (kvp.Value != null)
-                        inputTotal += kvp.Value.Count;
-                }
-
-                int dkUnfilteredBefore = unfilteredDk != null ? unfilteredDk.Count : 0;
-                int dkHiddenBefore = hiddenDk != null ? hiddenDk.Count : 0;
-
-                DebugLog.Msg($"UpdateResults collapse RUN (mode ON). Input class-bucket cards={inputTotal}, DK unfiltered={dkUnfilteredBefore}, DK hidden={dkHiddenBefore}, cardsPerPage={cardsPerPage}");
-
-                var sample = new List<string>();
-                int removed = 0;
+                if (!PreferredQualityMode.ShouldCollapse(__instance, out _, out _)) return;
 
                 foreach (KeyValuePair<TAG_CLASS, List<CollectibleCard>> kvp in byClass)
                 {
                     if (kvp.Value == null || kvp.Value.Count == 0)
                         continue;
-                    removed += PreferredQualityCollapse.CollapseInPlace(kvp.Value, kvp.Key.ToString(), sample);
+                    PreferredQualityCollapse.CollapseInPlace(kvp.Value);
                 }
 
                 if (unfilteredDk != null && unfilteredDk.Count > 0)
-                    removed += PreferredQualityCollapse.CollapseInPlace(unfilteredDk, "DK_unfiltered", sample);
+                    PreferredQualityCollapse.CollapseInPlace(unfilteredDk);
 
                 if (hiddenDk != null && hiddenDk.Count > 0)
-                    removed += PreferredQualityCollapse.CollapseInPlace(hiddenDk, "DK_hidden", sample);
+                    PreferredQualityCollapse.CollapseInPlace(hiddenDk);
 
-                int outputTotal = 0;
-                foreach (KeyValuePair<TAG_CLASS, List<CollectibleCard>> kvp in byClass)
-                {
-                    if (kvp.Value != null)
-                        outputTotal += kvp.Value.Count;
-                }
-
-                DebugLog.Msg($"UpdateResults collapse DONE: class-bucket {inputTotal} -> {outputTotal} (removed ~{removed}). Sample: {PreferredQualityCollapse.FormatSample(sample)}");
-                DebugLog.Verbose($"  paging note: GetPageContents* uses Skip/Take(m_cardsPerPage={cardsPerPage}) on these collapsed lists, so pages fill densely.");
                 collapsed = true;
             }
             catch (Exception ex)
@@ -166,7 +123,6 @@ namespace BetterCollectionManager.Patches
             }
             finally
             {
-                long inserting = Stopwatch.GetTimestamp();
                 try { appendCombos?.Invoke(); }
                 catch (Exception ex) { collapsed = false; DebugLog.Exception("Combo page insertion failed", ex); }
                 if (collapsed)
@@ -175,14 +131,6 @@ namespace BetterCollectionManager.Patches
                     catch (Exception ex) { InspectCollectionRefresh.Reset(); DebugLog.Exception("Inspected-card baseline unavailable", ex); }
                 }
                 CollectionOpenSearch.ResultsUpdated(__instance);
-                long finished = Stopwatch.GetTimestamp();
-                double ms = 1000.0 / Stopwatch.Frequency;
-                double native = __state > 0 ? (started - __state) * ms : 0;
-                double mod = (finished - started) * ms;
-                if (native + mod >= 25.0)
-                    DebugLog.Msg($"Collection results timing: native={native:F1}ms mod={mod:F1}ms "
-                        + $"prepare={(prepared - started) * ms:F1}ms filters={(filtered - prepared) * ms:F1}ms "
-                        + $"quality={(inserting - filtered) * ms:F1}ms insert={(finished - inserting) * ms:F1}ms");
             }
         }
 

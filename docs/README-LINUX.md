@@ -38,18 +38,6 @@ dotnet build src/BetterCollectionManager/BetterCollectionManager.Linux.csproj -c
   -p:GameInstallRoot="/path/to/Hearthstone" -p:MelonDllDir="<directory containing loader DLLs>"
 ```
 
-For optional read-only installation diagnostics:
-
-```sh
-GAME_DIR="/path/to/Hearthstone" bash tools/diagnose-startup-linux.sh
-```
-
-The diagnostics print paths and installation details from the machine where you
-run them. Inspect that output before sharing it. Diagnostics and the optional
-[StartupProbe](../diagnostics/StartupProbe/README.md) are not required to install the
-mod. Loader startup failures require separate investigation; building the mod
-does not fix loader initialization errors.
-
 Building the mod does not install the full Mono runtime DLLs. Set up the
 [required Mono libraries](../installer/README.md#mono-runtime-dlls) before
 launching the MelonLoader version.

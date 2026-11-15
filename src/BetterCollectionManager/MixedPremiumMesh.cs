@@ -220,7 +220,6 @@ namespace BetterCollectionManager
                 copy.bounds = source.bounds;
 
                 s_readableCopies[source] = copy;
-                DebugLog.Msg($"Mixed premium GPU mesh readback: {source.name}, vertices={source.vertexCount}, streams={source.vertexBufferCount}");
                 return copy;
             }
             catch

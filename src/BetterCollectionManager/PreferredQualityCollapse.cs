@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 
 namespace BetterCollectionManager
 {
@@ -50,10 +49,10 @@ namespace BetterCollectionManager
             s_mixed.Remove(cardId);
             s_singleTiles.Remove(cardId);
             s_variants.Remove(cardId);
-            CollapseInPlace(variants, "inspected " + cardId, null);
+            CollapseInPlace(variants);
         }
 
-        public static int CollapseInPlace(List<CollectibleCard> cards, string listLabel, List<string> sampleOut)
+        public static int CollapseInPlace(List<CollectibleCard> cards)
         {
             if (cards == null || cards.Count == 0)
                 return 0;
@@ -107,8 +106,6 @@ namespace BetterCollectionManager
                     s_mixed[cardId] = mixed;
                     s_singleTiles.Add(cardId);
                     cards.Add(chosen);
-                    if (sampleOut != null && sampleOut.Count < 12)
-                        sampleOut.Add($"{cardId}->{(mixed.IsStacking ? "stacked" : "Golden/Normal split")} tile");
                     continue;
                 }
 
@@ -117,31 +114,15 @@ namespace BetterCollectionManager
                 {
                     cards.Add(second);
                     cards.Add(chosen);
-                    if (sampleOut != null && sampleOut.Count < 12)
-                    {
-                        sampleOut.Add(
-                            $"{cardId}->{PreferredPremiumHelper.PremiumName(second.PremiumType)}+" +
-                            $"{PreferredPremiumHelper.PremiumName(chosen.PremiumType)} (2-copy lower→higher)");
-                    }
                 }
                 else
                 {
                     s_singleTiles.Add(cardId);
                     cards.Add(chosen);
-                    if (sampleOut != null && sampleOut.Count < 12 && group.Count > 1)
-                    {
-                        sampleOut.Add(
-                            $"{cardId}->{PreferredPremiumHelper.PremiumName(chosen.PremiumType)} (from {group.Count} premiums)");
-                    }
-                    else if (sampleOut != null && DebugLog.VerboseDebug && sampleOut.Count < 8)
-                    {
-                        sampleOut.Add($"{cardId}->{PreferredPremiumHelper.PremiumName(chosen.PremiumType)}");
-                    }
                 }
             }
 
             int removed = before - cards.Count;
-            DebugLog.Verbose($"  collapse [{listLabel}]: {before} -> {cards.Count} (removed {removed})");
             return removed;
         }
 
@@ -273,18 +254,5 @@ namespace BetterCollectionManager
             return order.Count;
         }
 
-        public static string FormatSample(List<string> sample)
-        {
-            if (sample == null || sample.Count == 0)
-                return "(no sample)";
-            var sb = new StringBuilder();
-            for (int i = 0; i < sample.Count; i++)
-            {
-                if (i > 0)
-                    sb.Append("; ");
-                sb.Append(sample[i]);
-            }
-            return sb.ToString();
-        }
     }
 }

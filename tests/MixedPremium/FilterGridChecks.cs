@@ -333,6 +333,7 @@ namespace BetterCollectionManager
     internal static partial class KeywordFilterUi
     {
         private static bool s_cmSessionActive = true, s_built = true;
+        internal static bool IsCollectionSessionActive => s_cmSessionActive;
         private static bool s_buildAborted;
         private static object s_buildCoroutine;
         public static int SessionBuilds;

@@ -13,7 +13,6 @@ internal static partial class Program
     private static void CheckExpansionIcons(KeywordSetTray.GridFixture fixture)
     {
         var native = fixture.Native;
-        DebugLog.ExpansionStarMessages.Clear();
         var toggle = (CollectionSetFilterDropdownToggle)typeof(CollectionFilterMenu)
             .GetField("s_toggle", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
         var originalLogo = toggle.m_currentIconQuad;
@@ -88,9 +87,6 @@ internal static partial class Program
             "Refreshing and late updates reuse the marked icon without per-frame GPU readback");
         Check(iconObject.transform.localScale.Equals(nativeIconScale),
             "Refreshing the asterisk preserves the native icon scale");
-        Check(DebugLog.ExpansionStarMessages.Any(message => message.Contains("requested=True"))
-            && DebugLog.ExpansionStarMessages.Any(message => message.Contains("texture-ready")),
-            "Diagnostics confirm that the marked texture was assigned to the native renderer");
         CheckMarkerPixels(iconRenderer);
         CollectionFilterMenu.SelectExpansion(old);
         Check(Theme() == FormatType.FT_WILD && nativeApplications == 1,

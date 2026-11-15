@@ -55,8 +55,6 @@ namespace BetterCollectionManager
                 copy.SetPixels(pixels);
                 copy.Apply(false, false);
                 m_entries.Add(new Entry { Source = source, Region = region, Marked = copy });
-                DebugLog.Msg("[Expansion star] star-only-v4 copied; source=" + source.name
-                    + "; uv=" + region + "; size=" + source.width + "x" + source.height);
                 return copy;
             }
             catch
@@ -76,7 +74,6 @@ namespace BetterCollectionManager
             if (m_blit == null)
             {
                 m_blit = ResolveBlit(m_graphicsType, out m_blitArguments);
-                DebugLog.Msg("[Expansion star] native texture copy: " + m_blit);
             }
             object[] arguments = (object[])m_blitArguments.Clone();
             arguments[0] = source;

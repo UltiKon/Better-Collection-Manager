@@ -10,20 +10,27 @@
 Better Collection Manager is a Hearthstone mod that makes your collection easier
 to browse. It groups different qualities of a card, lets you choose which quality
 to use in decks, and adds filters, categories, combos and packages. Export decks
-as PNG images with native card artwork and optional statistics.
+as PNG images with native card artwork and optional statistics. Archive decks
+locally, edit archived decks offline and restore them to a free saved slot.
 
 For example, a card you own in both Normal and Golden can appear as one split
 tile instead of two separate tiles. Your actual cards and ownership counts stay
 separate.
 
-Version: **0.2.0** · Documentation updated: **2026-11-14**
+Version: **0.3.0** · Documentation updated: **2026-11-15**
 
 ## How to install
 
-**You do not need to compile the mod to use it.** Use a
-[release ZIP](https://github.com/UltiKon/Better-Collection-Manager/releases) with a ready-made
-`BetterCollectionManager.dll`. A mod loader is the separate tool that loads this
-DLL when Hearthstone starts.
+**BepInEx already installed? Download the
+[0.3.0 BepInEx DLL](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.0/BetterCollectionManager.dll)**
+and place it in `BepInEx/plugins/BetterCollectionManager/` inside the game folder.
+
+**You do not need to compile the mod to use it.** Both loader variants include a
+ready-made `BetterCollectionManager.dll`. Full packages with source,
+documentation and checksums are available for
+[BepInEx](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.0/BetterCollectionManager-0.3.0-bepinex.zip) and
+[MelonLoader](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.3.0/BetterCollectionManager-0.3.0-shareable.zip).
+A mod loader is the separate tool that loads the DLL when Hearthstone starts.
 
 There are two loader versions of the mod. Choose the instructions for your package:
 
@@ -39,9 +46,6 @@ The BepInEx and MelonLoader DLLs have the same filename but are different builds
 Use one loader and one copy of the mod per launch. The automated installer sets up
 **MelonLoader only**.
 
-If BepInEx is already installed, download the standalone
-[0.2.0 BepInEx DLL](https://github.com/UltiKon/Better-Collection-Manager/releases/download/0.2.0/BetterCollectionManager.dll)
-and place it in `BepInEx/plugins/BetterCollectionManager/` inside the game folder.
 The standalone DLL is the BepInEx build; MelonLoader users need its separate ZIP.
 
 ### Mono runtime DLLs
@@ -67,11 +71,13 @@ original DLLs.
 
 **macOS has not been tested**, including both CrossOver and the native launcher.
 
-The BepInEx port has been compiled against BepInEx 5.4.23.6 and the supplied game
-references, but has not yet been tested in a running Hearthstone client. BepInEx
-startup must be verified separately for your platform. These are installation
-targets, not a claim that every operating system, game update or loader version
-has been tested. Building successfully does not confirm runtime compatibility.
+Both 0.3.0 variants are built from the same source. The BepInEx build uses
+BepInEx 5.4.23.6 references. Automated checks cover both DLLs' loader metadata,
+shared version and embedded resources, along with settings, archive transactions
+and UI behavior. A user has tested collection browsing, the local archive and
+settings under Linux/Nobara with Wine and BepInEx. Windows, MelonLoader runtime
+behavior and other platform combinations still need their own client checks;
+building successfully does not confirm runtime compatibility everywhere.
 
 ## Your first session
 
@@ -87,6 +93,21 @@ search and filters first. Existing saved settings take precedence over defaults.
 
 See the [user guide](docs/USER-GUIDE.md) for split-card controls, display options,
 ownership counters and common questions.
+
+## Local deck archive
+
+Use **Show archived decks** / **Show saved decks** at the top of the collection's
+deck list to switch views. In a deck's native delete confirmation, **Archive
+instead** saves a local copy before deleting the saved deck. Archived decks can
+be edited locally or restored to a free saved slot while online.
+
+Toggle **Settings → Mods → Deck archive → Enable deck archive** to enable or
+disable the feature (enabled by default). Disabling preserves your archives. They are stored per
+account on this device; back them up when moving installations. See the
+[archive guide](docs/USER-GUIDE.md#archive-saved-decks-locally) for details and paths.
+
+To report a problem, use **Settings → Mods → Other → Report A Bug** to open the
+[GitHub Issues page](https://github.com/UltiKon/Better-Collection-Manager/issues).
 
 ## PNG deck export
 
@@ -113,7 +134,6 @@ docs/                         Installation, user and developer guides
 tests/                        Regression suites and fixtures
 tools/                        Build, packaging and maintenance scripts
 installer/                    Automated MelonLoader installer and license notices
-diagnostics/                  Optional startup investigation tools
 artifacts/                    Local build outputs (ignored by Git)
 dist/                         Generated release ZIPs (ignored by Git)
 ```
@@ -163,6 +183,7 @@ dotnet run --project tests/HubMenu/HubMenu.csproj -c Release
 dotnet run --project tests/CollapseMode/CollapseMode.csproj -c Release
 dotnet run --project tests/Pagination/Pagination.csproj -c Release
 dotnet run --project tests/DeckImages/DeckImages.csproj -c Release
+dotnet run --project tests/DeckArchive/DeckArchive.csproj -c Release
 python3 -m unittest discover -s tests/Installer -v
 ```
 

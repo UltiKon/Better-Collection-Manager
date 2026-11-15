@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using HarmonyLib;
 
@@ -170,7 +169,6 @@ namespace BetterCollectionManager
             try
             {
                 if (!session.IsCurrent(filter)) return false;
-                long started = Stopwatch.GetTimestamp();
                 var native = session.Raw.OwnedVariants();
                 var collapsed = new List<CollectibleCard>(native);
                 KeywordFilterApplier.ApplyInPlace(collapsed);
@@ -180,8 +178,6 @@ namespace BetterCollectionManager
                 session.ReadCounts();
                 ComboCollectionCards.InspectedCardOwnershipChanged(session.Id, native.Count > 0);
                 FilterAvailability.InspectedCardOwnershipChanged(session.Id, native);
-                DebugLog.Msg($"Inspected-card refresh: {session.Id}, variants={native.Count}, tiles={collapsed.Count}, "
-                    + $"elapsed={(Stopwatch.GetTimestamp() - started) * 1000.0 / Stopwatch.Frequency:F1}ms");
                 return true;
             }
             catch (Exception ex)

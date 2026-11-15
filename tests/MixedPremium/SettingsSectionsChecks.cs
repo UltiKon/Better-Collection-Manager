@@ -13,7 +13,7 @@ internal static partial class Program
         Check(!controls.Any(c => c.gameObject.name == "BCM_ModsSettingssection"),
             "The common settings panel must not require a section picker");
         Check(menu.GetComponentsInChildren<DropdownControl>(true).Length == 15
-            && menu.GetComponentsInChildren<CheckBox>(true).Length == 18,
+            && menu.GetComponentsInChildren<CheckBox>(true).Length == 19,
             "Collection, priorities and filters must be available together on one page");
         Check(!controls.Any(control => control.gameObject.name == "BCM_ModsExportartwork"),
             "Artwork selection belongs to the export popup, not the settings panel.");
@@ -119,18 +119,6 @@ internal static partial class Program
             "A full native menu reopen returns text to its reference order when the artwork returns to 51.");
         imageFormat.m_menuItemTemplate.m_text.RenderQueue = savedTemplateQueue;
         UnityEngine.Object.Destroy(popupArt);
-        var tracedCaption = popupRows[0].m_text;
-        var tracedGlyph = CounterTextLayout.GlyphRenderer(tracedCaption);
-        bool previousOff = tracedGlyph.forceRenderingOff;
-        uint previousMask = tracedGlyph.renderingLayerMask;
-        tracedGlyph.forceRenderingOff = true; tracedGlyph.renderingLayerMask = 0;
-        int traceBefore = DebugLog.DropdownRenderMessages.Count;
-        NativePopupDiagnostics.CaptureDropdown(imageFormat, CameraUtils.Camera, 991, "fixture");
-        Check(DebugLog.DropdownRenderMessages.Skip(traceBefore).Any(line => line.Contains("forceOff=True") && line.Contains("renderingMask=0")),
-            "The comparison trace records invisible renderers even when their popup text and values are present.");
-        Check(tracedGlyph.forceRenderingOff && tracedGlyph.renderingLayerMask == 0 && popupRows[0].m_text == tracedCaption,
-            "Render diagnostics preserve the failing renderer state instead of changing the evidence.");
-        tracedGlyph.forceRenderingOff = previousOff; tracedGlyph.renderingLayerMask = previousMask;
         imageFormat.onUserCancelled();
         foreach (var row in popupRows) { row.m_text.Text = string.Empty; row.m_text.Hide(); }
         imageFormat.onUserPressedButton();

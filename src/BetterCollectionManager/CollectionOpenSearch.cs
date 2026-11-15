@@ -17,9 +17,9 @@ namespace BetterCollectionManager
         {
             internal CollectibleDisplay Display;
             internal float Deadline, QuietUntil, ReadySince = -1f, ObserveUntil = -1f, NextProbe;
-            internal string Diagnostic, Account, Path;
+            internal string Account, Path;
             internal SearchHistory History;
-            internal string SubmittedToken, SubmittedKind;
+            internal string SubmittedToken;
             internal List<SearchObservation> SubmittedMatches;
         }
         private static Opening s_pending;
@@ -33,11 +33,10 @@ namespace BetterCollectionManager
         {
             StableNewSearch.Reset();
             s_pending = new Opening { Display = display, Deadline = UnityEngine.Time.unscaledTime + 30f };
-            Note(s_pending, "queued; mode=" + CollectionQualitySettings.OpenSearch);
         }
         internal static void Leave()
         {
-            if (s_pending != null) Finish(s_pending, "cancelled: collection closed");
+            if (s_pending != null) Finish(s_pending);
             StableNewSearch.Reset();
         }
         // Native startup and the shared filter tray can finish in different frames.
@@ -50,16 +49,9 @@ namespace BetterCollectionManager
             opening.QuietUntil = now + SettleSeconds;
             if (opening.ObserveUntil >= 0f) opening.ObserveUntil = now + ObserveSeconds;
         }
-        private static void Note(Opening opening, string message)
-        {
-            if (opening.Diagnostic == message) return;
-            opening.Diagnostic = message;
-            DebugLog.Msg("Collection opening search: " + message);
-        }
-        private static void Wait(Opening opening, string reason)
-        { opening.ReadySince = -1f; Note(opening, "waiting: " + reason); }
-        private static void Finish(Opening opening, string reason)
-        { Note(opening, reason); if (ReferenceEquals(s_pending, opening)) s_pending = null; }
+        private static void Wait(Opening opening) { opening.ReadySince = -1f; }
+        private static void Finish(Opening opening)
+        { if (ReferenceEquals(s_pending, opening)) s_pending = null; }
 
         internal static void OnUpdate()
         {
@@ -69,44 +61,44 @@ namespace BetterCollectionManager
             catch (Exception ex)
             {
                 DebugLog.Exception("Collection opening search failed", ex);
-                Finish(opening, "stopped: error (see exception)");
+                Finish(opening);
             }
         }
         private static void Update(Opening opening)
         {
             float now = UnityEngine.Time.unscaledTime;
             if (CollectionQualitySettings.OpenSearch == CollectionOpenSearchMode.Off)
-            { Finish(opening, "skipped: disabled in Crafting settings"); return; }
+            { Finish(opening); return; }
             if (now > opening.Deadline)
-            { Finish(opening, "timed out; last state=" + opening.Diagnostic); return; }
+            { Finish(opening); return; }
             var display = opening.Display;
-            if (display == null) { Finish(opening, "cancelled: collection display destroyed"); return; }
+            if (display == null) { Finish(opening); return; }
             var manager = CollectionManager.Get();
             if (manager == null || manager.GetCollectibleDisplay() == null)
-            { Wait(opening, "collection registration"); return; }
+            { Wait(opening); return; }
             if (!ReferenceEquals(manager.GetCollectibleDisplay(), display))
-            { Finish(opening, "cancelled: another collection display is active"); return; }
-            if (!manager.IsFullyLoaded() || !display.IsReady()) { Wait(opening, "collection data/UI"); return; }
-            if (!display.IsBookOpened()) { Wait(opening, "book opening"); return; }
+            { Finish(opening); return; }
+            if (!manager.IsFullyLoaded() || !display.IsReady()) { Wait(opening); return; }
+            if (!display.IsBookOpened()) { Wait(opening); return; }
             var pages = display.GetPageManager();
-            if (pages == null || !pages.IsFullyLoaded()) { Wait(opening, "page manager loading"); return; }
-            if (pages.ArePagesTurning()) { Wait(opening, "page transition"); return; }
+            if (pages == null || !pages.IsFullyLoaded()) { Wait(opening); return; }
+            if (pages.ArePagesTurning()) { Wait(opening); return; }
             if (manager.IsInEditMode() || manager.GetEditedDeck() != null || display.GetViewMode() != CollectionUtils.ViewMode.CARDS
                 || display.GetViewSubmode() != CollectionUtils.ViewSubmode.DEFAULT || PackageViewState.IsActive
                 || CraftingManager.GetIsInCraftingMode() || (CraftingTray.Get()?.IsShown() ?? false))
-            { Finish(opening, "skipped: deck editing, crafting or another collection view"); return; }
+            { Finish(opening); return; }
             var filter = StableNewSearch.CurrentFilter();
-            if (filter == null) { Wait(opening, "native card filter"); return; }
+            if (filter == null) { Wait(opening); return; }
             string text = StableNewSearch.SearchText(filter);
             if (opening.SubmittedToken == null && !string.IsNullOrWhiteSpace(text))
-            { Finish(opening, "skipped: existing search"); return; }
+            { Finish(opening); return; }
             string account = AccountKey();
-            if (string.IsNullOrEmpty(account)) { Wait(opening, "account identity"); return; }
+            if (string.IsNullOrEmpty(account)) { Wait(opening); return; }
             if (opening.Account != null && opening.Account != account)
-            { Finish(opening, "cancelled: account changed"); return; }
+            { Finish(opening); return; }
             if (opening.ReadySince < 0f) opening.ReadySince = now;
             if (now < Math.Max(opening.QuietUntil, opening.ReadySince + SettleSeconds))
-            { Note(opening, "waiting: filters settling"); return; }
+            { return; }
 
             if (opening.SubmittedToken != null)
             {
@@ -116,14 +108,13 @@ namespace BetterCollectionManager
                     // the native page transition and startup filters must have finished.
                     foreach (SearchObservation match in opening.SubmittedMatches) opening.History.Remember(match);
                     opening.History.Save(opening.Path);
-                    Finish(opening, "applied " + opening.SubmittedKind + "; matching variants=" + opening.SubmittedMatches.Count + "; history saved");
+                    Finish(opening);
                     return;
                 }
                 if (!string.IsNullOrWhiteSpace(text))
-                { Finish(opening, "cancelled: automatic search replaced by another query"); return; }
+                { Finish(opening); return; }
                 opening.SubmittedToken = null; opening.SubmittedMatches = null;
                 opening.QuietUntil = now + SettleSeconds; opening.ObserveUntil = -1f;
-                Note(opening, "retrying: native initialization reset the search");
                 return;
             }
             if (now < opening.NextProbe) return;
@@ -158,7 +149,6 @@ namespace BetterCollectionManager
         private static void Apply(Opening opening, CollectibleCardFilter filter)
         {
             CollectionOpenSearchMode mode = CollectionQualitySettings.OpenSearch;
-            int totalMatches = 0;
             foreach (string kind in mode == CollectionOpenSearchMode.NewOrRefund ? new[] { "refund", "new" }
                 : mode == CollectionOpenSearchMode.New ? new[] { "new" } : mode == CollectionOpenSearchMode.Refund ? new[] { "refund" } : Array.Empty<string>())
             {
@@ -171,21 +161,17 @@ namespace BetterCollectionManager
                     RefundEvent = kind == "refund" ? Convert.ToInt32(CraftingManager.GetCardValue(card.CardId, card.PremiumType)?.OverrideEvent) : 0,
                     Sell = kind == "refund" && CraftingManager.Get().TryGetCardSellValue(card.CardId, card.PremiumType, out int sell) ? sell : 0
                 }).ToList();
-                totalMatches += matches.Count;
                 bool novel = matches.Any(opening.History.IsNovel);
-                DebugLog.Msg("Collection opening search: probe " + kind + "; matches=" + matches.Count + "; novel=" + novel);
                 if (!novel) continue;
                 opening.Display.FilterBySearchText(token);
                 if (!string.Equals(StableNewSearch.SearchText(filter), token, StringComparison.OrdinalIgnoreCase))
-                { Finish(opening, "stopped: native search setter did not apply the query"); return; }
-                opening.SubmittedToken = token; opening.SubmittedKind = kind; opening.SubmittedMatches = matches;
+                { Finish(opening); return; }
+                opening.SubmittedToken = token; opening.SubmittedMatches = matches;
                 opening.QuietUntil = UnityEngine.Time.unscaledTime + SettleSeconds;
-                Note(opening, "submitted " + kind + "; waiting for native page confirmation");
                 return;
             }
             if (UnityEngine.Time.unscaledTime >= opening.ObserveUntil)
-                Finish(opening, "skipped: " + (totalMatches == 0 ? "no matching owned cards" : "matches already recorded for this account"));
-            else Note(opening, "waiting: startup observation window");
+                Finish(opening);
         }
 
     }

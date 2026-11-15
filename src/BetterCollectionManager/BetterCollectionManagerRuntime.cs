@@ -68,7 +68,6 @@ namespace BetterCollectionManager
             if (m_collectionInitialized) return;
             m_collectionInitialized = true;
             SplashScreen.SplashScreenShown -= OnStartupImageShown;
-            var timer = System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 PreferredQualityMode.InitFieldAccess();
@@ -83,11 +82,11 @@ namespace BetterCollectionManager
                 ModsSettingsPatches.Install(HarmonyInstance);
                 DropdownReadabilityPatches.Install(HarmonyInstance);
                 FilterButtonFeedback.InstallSoundGuard(HarmonyInstance);
-                CollectionPageDiagnostics.Install(HarmonyInstance);
                 CraftingPageAnchor.Install(HarmonyInstance);
                 ComboCollectionCards.Install(HarmonyInstance);
                 ComboPopup.Install(HarmonyInstance);
                 DeckImageMenu.Install(HarmonyInstance);
+                DeckArchive.Install(HarmonyInstance);
                 // DFT and Battlegrounds/Tavern Brawl experiments disabled at user request.
                 // HubMenuPatches.Install(HarmonyInstance);
                 HarmonyInstance.PatchAll(typeof(CollectibleCardClassFilter_UpdateResults_Patch));
@@ -95,7 +94,7 @@ namespace BetterCollectionManager
                 HarmonyInstance.PatchAll(typeof(CollectionThemePatches));
                 foreach (Type nested in typeof(CollectionManagerDisplayPatches).GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public))
                     HarmonyInstance.PatchAll(nested);
-                DebugLog.Msg($"Collection hooks ready after startup image; initialization took {timer.ElapsedMilliseconds} ms.");
+                DebugLog.Msg("Collection hooks ready.");
             }
             catch (Exception ex)
             {
@@ -122,6 +121,7 @@ namespace BetterCollectionManager
             CollectionQualitySettings.ChangedKind -= SettingsChanged;
             DisenchantChoiceMenu.DestroyMenu();
             DeckImageMenu.Shutdown();
+            DeckArchive.Shutdown();
             NativeScrollbarArt.ReleasePrefabSources();
         }
 
@@ -137,6 +137,7 @@ namespace BetterCollectionManager
         {
             CollectionQualitySettings.FlushPreferences();
             DeckImageMenu.OnUpdate();
+            DeckArchive.Update();
             CollectionOpenSearch.OnUpdate();
             // Cover a splash that was already shown before the event subscription.
             if (!m_collectionInitialized && !m_startupWaitScheduled)
@@ -147,7 +148,6 @@ namespace BetterCollectionManager
             if (!PreferredQualityMode.IsEnabled) return;
             // DFT and Battlegrounds/Tavern Brawl experiments disabled at user request.
             // HubMenuPatches.OnUpdate();
-            CollectionPageDiagnostics.OnUpdate();
             KeywordFilterUi.OnUpdate();
             ComboCollectionCards.OnUpdate();
             MixedPremiumCard.OnUpdate();

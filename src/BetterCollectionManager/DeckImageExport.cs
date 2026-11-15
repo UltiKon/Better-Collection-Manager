@@ -92,7 +92,8 @@ namespace BetterCollectionManager
         {
             string title = deck.Name;
             float started = Time.realtimeSinceStartup;
-            var timing = System.Diagnostics.Stopwatch.StartNew();
+            // Yield between drawing steps when the frame budget is exhausted.
+            var drawBudget = System.Diagnostics.Stopwatch.StartNew();
             using var art = options.HasFlag(DeckImageOption.Background) && background == DeckImageBackground.CardArtwork
                 ? new DeckImageCardArt(new ImageCard { Id = backgroundCard.Id, Definition = backgroundCard.Definition, Premium = TAG_PREMIUM.NORMAL }) : null;
             if (art != null)
@@ -127,24 +128,21 @@ namespace BetterCollectionManager
             while (!canvasWork.IsCompleted) { CheckCurrent(deck); yield return null; }
             canvasWork.GetAwaiter().GetResult();
             CheckCurrent(deck);
-            double drawBudgetStarted = timing.Elapsed.TotalSeconds;
+            double drawBudgetStarted = drawBudget.Elapsed.TotalSeconds;
             foreach (Action step in DeckImagePresentation.HeaderSteps(renderer, layout, title, deckClass, wild, options))
             {
                 step();
-                if (timing.Elapsed.TotalSeconds - drawBudgetStarted >= .004)
+                if (drawBudget.Elapsed.TotalSeconds - drawBudgetStarted >= .004)
                 {
                     yield return null; CheckCurrent(deck);
-                    drawBudgetStarted = timing.Elapsed.TotalSeconds;
+                    drawBudgetStarted = drawBudget.Elapsed.TotalSeconds;
                 }
             }
-            double setupSeconds = timing.Elapsed.TotalSeconds;
-            double captureSeconds = 0, composeSeconds = 0;
             int index = 0;
-            Task<double> pendingPaint = null;
+            Task pendingPaint = null;
             foreach (ImageCard card in cards)
             {
                 CheckCurrent(deck);
-                double cardStarted = timing.Elapsed.TotalSeconds;
                 float deadline = Time.realtimeSinceStartup + 15f;
                 while (!renderer.PrepareCard(card))
                 {
@@ -168,45 +166,34 @@ namespace BetterCollectionManager
                 CheckCurrent(deck);
                 Func<DeckImageCardFrame> createFrame = renderer.CaptureCardJob(actor, layout.CardPixelWidth, card.SideboardNumber > 0);
                 renderer.ReleaseCard();
-                captureSeconds += timing.Elapsed.TotalSeconds - cardStarted;
                 // Native loading/capture of this card overlaps the previous
                 // card's CPU composition. Canvas writes remain strictly serial.
                 if (pendingPaint != null)
                 {
                     while (!pendingPaint.IsCompleted) { CheckCurrent(deck); yield return null; }
-                    composeSeconds += pendingPaint.GetAwaiter().GetResult();
+                    pendingPaint.GetAwaiter().GetResult();
                     pendingPaint = null;
                 }
                 var tile = layout.Cells[index];
                 if (card.DisplayCount > 9)
                 {
-                    var frameWork = Task.Run(() =>
-                    {
-                        var watch = System.Diagnostics.Stopwatch.StartNew();
-                        var frame = createFrame();
-                        return (Frame: frame, Seconds: watch.Elapsed.TotalSeconds);
-                    });
+                    var frameWork = Task.Run(createFrame);
                     s_work = frameWork;
                     while (!frameWork.IsCompleted) { CheckCurrent(deck); yield return null; }
                     var framed = frameWork.GetAwaiter().GetResult();
-                    composeSeconds += framed.Seconds;
-                    var body = framed.Frame.MeasureFitted(renderer.Canvas, tile);
+                    var body = framed.MeasureFitted(renderer.Canvas, tile);
                     DeckImagePresentation.CardQuantity(renderer, layout, body, card, wild);
                     pendingPaint = Task.Run(() =>
                     {
-                        var watch = System.Diagnostics.Stopwatch.StartNew();
-                        framed.Frame.PaintFitted(renderer.Canvas, tile);
-                        return watch.Elapsed.TotalSeconds;
+                        framed.PaintFitted(renderer.Canvas, tile);
                     });
                 }
                 else
                 {
                     pendingPaint = Task.Run(() =>
                     {
-                        var watch = System.Diagnostics.Stopwatch.StartNew();
                         renderer.PaintCard(createFrame(), tile,
                             body => DeckImagePresentation.CardQuantity(renderer, layout, body, card, wild));
-                        return watch.Elapsed.TotalSeconds;
                     });
                 }
                 s_work = pendingPaint;
@@ -215,37 +202,29 @@ namespace BetterCollectionManager
             if (pendingPaint != null)
             {
                 while (!pendingPaint.IsCompleted) { CheckCurrent(deck); yield return null; }
-                composeSeconds += pendingPaint.GetAwaiter().GetResult();
+                pendingPaint.GetAwaiter().GetResult();
             }
-            double finishStarted = timing.Elapsed.TotalSeconds;
-            drawBudgetStarted = timing.Elapsed.TotalSeconds;
+            drawBudgetStarted = drawBudget.Elapsed.TotalSeconds;
             foreach (Action step in DeckImagePresentation.StatisticsSteps(renderer, layout, statistics))
             {
                 step();
-                if (timing.Elapsed.TotalSeconds - drawBudgetStarted >= .004)
+                if (drawBudget.Elapsed.TotalSeconds - drawBudgetStarted >= .004)
                 {
                     yield return null; CheckCurrent(deck);
-                    drawBudgetStarted = timing.Elapsed.TotalSeconds;
+                    drawBudgetStarted = drawBudget.Elapsed.TotalSeconds;
                 }
             }
-            composeSeconds += timing.Elapsed.TotalSeconds - finishStarted;
-            double painted = timing.Elapsed.TotalSeconds;
             var encodingWork = Task.Run(() =>
             {
                 byte[] pngBytes = DeckImagePng.Encode(renderer.Canvas);
-                double pngFinished = timing.Elapsed.TotalSeconds;
                 byte[] dibBytes = DeckImageBitmap.ToDib(renderer.Canvas.Rgba, layout.Width, layout.Height);
-                return (Png: pngBytes, Dib: dibBytes, PngFinished: pngFinished);
+                return (Png: pngBytes, Dib: dibBytes);
             });
             s_work = encodingWork;
             while (!encodingWork.IsCompleted) { CheckCurrent(deck); yield return null; }
             var encodedImage = encodingWork.GetAwaiter().GetResult();
             CheckCurrent(deck);
             byte[] png = encodedImage.Png, dib = encodedImage.Dib;
-            double encoded = encodedImage.PngFinished;
-            DebugLog.Msg(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                "Deck image export timings ({0} cards, {1}x{2}): setup {3:F2}s, capture {4:F2}s, compose {5:F2}s, PNG {6:F2}s, bitmap {7:F2}s, total {8:F2}s.",
-                cards.Count, layout.Width, layout.Height, setupSeconds, captureSeconds, composeSeconds, encoded - painted, timing.Elapsed.TotalSeconds - encoded, timing.Elapsed.TotalSeconds));
             float clipboardDeadline = Time.realtimeSinceStartup + 1.5f;
             while (!DeckImageClipboard.TryCopy(png, dib))
             {

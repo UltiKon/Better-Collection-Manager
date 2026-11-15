@@ -320,7 +320,7 @@ def download_loader(directory, target):
     destination = directory / name
     url = f'https://github.com/LavaGang/MelonLoader/releases/download/v{VERSION}/{name}'
     print(f'Downloading official MelonLoader {VERSION}: {name}')
-    request = urllib.request.Request(url, headers={'User-Agent': 'BetterCollectionManager-Setup/0.2.0'})
+    request = urllib.request.Request(url, headers={'User-Agent': 'BetterCollectionManager-Setup/0.3.0'})
     with urllib.request.urlopen(request, timeout=60) as response, destination.open('wb') as stream:
         received = 0
         while chunk := response.read(1024 * 1024):

@@ -1,0 +1,24 @@
+{
+  "tag": "0.3.0",
+  "title": "Added local storage of decks",
+  "assets": [
+    {
+      "name": "BetterCollectionManager.dll",
+      "size": 6030336,
+      "sha256": "ebbd4389d4b32fd7fd4293aa866fb49fd1854d48724c1e4f592c43225854a084",
+      "blob": "b47daedece4408bcf9b8d02836c6d2550512c712"
+    },
+    {
+      "name": "BetterCollectionManager-0.3.0-bepinex.zip",
+      "size": 10846726,
+      "sha256": "d7565f7e28da95bcfd0745b88145fa5c4cd8b32f09b80d3fe7df0ae74b1073f6",
+      "blob": "63448387feccefcb80f7079e296661e8a8e005a3"
+    },
+    {
+      "name": "BetterCollectionManager-0.3.0-shareable.zip",
+      "size": 10843588,
+      "sha256": "14f97719ac0b617bce3ca3d29ac8e05ab8a3da1ea6742af668978a40ad629e06",
+      "blob": "630eb137e676c8c1ef96c39df00f8c4c2a286528"
+    }
+  ]
+}

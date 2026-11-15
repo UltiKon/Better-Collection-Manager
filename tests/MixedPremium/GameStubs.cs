@@ -91,6 +91,7 @@ public sealed class CollectionManager
     public static CollectionManager Get() => Instance;
     public bool Loaded = true;
     public bool IsFullyLoaded() => Loaded;
+    public bool IsWaitingForBoxTransition() => false;
     public int GetAllCardsCalls;
     public List<CollectibleCard> GetAllCards() { GetAllCardsCalls++; return new List<CollectibleCard>(Cards.Values); }
     public readonly Dictionary<(string, TAG_PREMIUM), int> Counts = new Dictionary<(string, TAG_PREMIUM), int>();
@@ -989,16 +990,10 @@ namespace BetterCollectionManager
     }
     internal static class DebugLog
     {
-        public static readonly System.Collections.Generic.List<string> DropdownRenderMessages = new System.Collections.Generic.List<string>();
-        public static readonly System.Collections.Generic.List<string> ExpansionStarMessages = new System.Collections.Generic.List<string>();
-        public static readonly System.Collections.Generic.List<string> PageTraceMessages = new System.Collections.Generic.List<string>();
         public static bool VerboseDebug = false;
         public static void Verbose(string text) { }
         public static void Msg(string text)
         {
-            if (text.StartsWith("[Mods dropdown render]", System.StringComparison.Ordinal)) DropdownRenderMessages.Add(text);
-            if (text.StartsWith("[Expansion star]", System.StringComparison.Ordinal)) ExpansionStarMessages.Add(text);
-            if (text.StartsWith("[Page trace]", System.StringComparison.Ordinal)) PageTraceMessages.Add(text);
         }
         public static void Error(string text) { }
         public static void Warning(string text) { }

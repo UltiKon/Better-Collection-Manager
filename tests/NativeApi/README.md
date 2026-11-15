@@ -7,7 +7,29 @@ dotnet run --project tests/NativeApi/NativeApi.csproj -- /path/to/Assembly-CShar
 ```
 
 This reads assembly metadata without loading Unity or executing game code. It
-checks the native recipe fields, token relationship API, portrait texture API and
+also checks the local deck archive's tray, delete-dialog and server-confirmation
+hooks. To run only those checks, append `--archive-only` after the assembly path.
+Run `dotnet run --project tests/DeckArchive/DeckArchive.csproj -c Release` for
+snapshot, disk-failure, account-isolation, local-editor and restore-confirmation fixtures.
+In the client, check both deletion entry points, the three popup buttons and
+Escape, the native New Deck switch at the top and both ends of the scroll range, empty
+and multi-page archives, leaving/reopening Collection, a full deck list,
+disconnects, and local editing of an incomplete deck with mixed qualities and
+sideboards. Check rename, card/sideboard changes, format conversion, reopening
+after restart, PNG/deck-code export and write-error recovery.
+Managed UI fixtures check immediate open-pose sampling from an inactive source,
+the native popup's added wide action and response dispatch, three-button body
+width, and restoration of normal popups after reuse. They do not render Unity.
+Also check the Archive/Restore tray icon, the deck-selection sound when switching,
+and disabling/re-enabling **Settings > Mods > Deck archive > Enable deck archive**. Existing
+archives must survive, normal delete confirmations must return, and any current
+local editing session must finish without losing edits.
+
+Filter availability preparation is deferred until the filter menu is first opened.
+The managed UI suite checks that attaching the controls does not trigger a native
+results/page refresh and that first opening prepares the pool once.
+
+The remaining metadata checks cover native recipe fields, token relationship API, portrait texture API and
 deck-animation entry points, overlay ancestry and keyword-tooltip API used by
 packages, as well as native rune banners, package lock plates, the collection
 drag entry point. The generic collection-page loader and its native ready-callback

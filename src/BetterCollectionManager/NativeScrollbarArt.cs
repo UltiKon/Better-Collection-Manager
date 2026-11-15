@@ -83,7 +83,7 @@ namespace BetterCollectionManager
                 // Load asset data only: never instantiate or open the collection.
                 Type scene = typeof(CollectionManager).Assembly.GetType("CollectionManagerScene");
                 string reference = scene?.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    .SelectMany(NativePopupDiagnostics.ReferencedStrings)
+                    .SelectMany(NativeMethodReferences.ReferencedStrings)
                     .FirstOrDefault(value => value.StartsWith("CollectionManager.prefab:", StringComparison.OrdinalIgnoreCase));
                 if (reference == null) { Report("Native scrollbar prefab unavailable: collection reference missing"); return; }
                 Load(reference, 0);
